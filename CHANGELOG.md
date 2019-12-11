@@ -1,3 +1,7 @@
+# 1.0.6
+- README updated
+- Packages updated
+
 # 1.0.5
 - Removed `any` types
 - README updated

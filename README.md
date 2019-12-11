@@ -7,6 +7,10 @@ This library is for working with A1 notations such as "A1" or "A1:B2". The libra
 ```
 npm i @flighter/a1-notation -d
 ```
+Or
+```
+yarn add @flighter/a1-notation
+```
 
 ### Download
 [1]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/object/index.js

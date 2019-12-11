@@ -4,7 +4,7 @@
 	"projectContext": 	"undefined",
 	"description": 		"Work with A1 notation like \"A1\" or \"A1:B2\"",
 	"name": 			"@flighter/a1-notation",
-	"version": 			"1.0.5",
+	"version": 			"1.0.6",
 	"main": 			"./dist/object/index.umd.js",
 	"types": 			"./dist/object/index.d.ts",
 	"author": 			"FLighter",
