@@ -1,3 +1,6 @@
+# 1.0.7
+- Packages updated
+
 # 1.0.6
 - README updated
 - Packages updated
