@@ -365,13 +365,16 @@ class A1
 		// No arguments
 		if(!arguments.length)
 			throw new A1Error().wasUnknown();
-		let type = typeof something;
+		const type = typeof something;
 		// Object
-		if(something && type === 'object')	this._initObject.apply(this, arguments);
+		if(something && type === 'object')
+      this._initObject.apply(this, arguments);
 		// Number
-		else if(type === 'number')			this._initNumber.apply(this, arguments);
+		else if(type === 'number')
+      this._initNumber.apply(this, arguments);
 		// String
-		else if(type === 'string')			this._initString.apply(this, arguments);
+		else if(type === 'string')
+      this._initString.apply(this, arguments);
 		// Unknown argument
 		else
 			throw new A1Error(something).wasUnknown();
