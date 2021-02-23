@@ -1,7 +1,7 @@
 /**
- *	@fileOverview Math operations and converting in A1 notation
- *	Supports A1 notation like "A1" and "A1:B2"
- *	@author FLighter
+ * @file Math operations and converting in A1 notation
+ * Supports A1 notation like "A1" and "A1:B2"
+ * @author FLighter
  */
 import options from './options/options';
 declare class A1 {

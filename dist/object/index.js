@@ -1561,130 +1561,6 @@ var A1 = (function () {
 	  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 	}
 
-	/**
-	 *	@fileOverview Converts column letter to number
-	 *	@author AdamL
-	 *	@see https://stackoverflow.com/questions/21229180/convert-column-index-into-corresponding-column-letter
-	 *	@param {string} col
-	 *
-	 *	@return {number}
-	 */
-	function A1Col1 (col) {
-	  var column = 0,
-	      length = col.length;
-
-	  for (var i = 0; i < length; i++) {
-	    column += (col.charCodeAt(i) - 64) * Math.pow(26, length - i - 1);
-	  }
-
-	  return column;
-	}
-
-	/**
-	 *	@fileOverview Converts column letter to number
-	 *	@author Flambino
-	 *	@see https://codereview.stackexchange.com/questions/90112/a1notation-conversion-to-row-column-index
-	 *	@param {string} col
-	 *
-	 *	@return {number}
-	 */
-	function A1Col2 (col) {
-	  var i,
-	      l,
-	      chr,
-	      sum = 0,
-	      A = 'A'.charCodeAt(0),
-	      radix = 'Z'.charCodeAt(0) - A + 1;
-
-	  for (i = 0, l = col.length; i < l; i++) {
-	    chr = col.charCodeAt(i);
-	    sum = sum * radix + chr - A + 1;
-	  }
-
-	  return sum;
-	}
-
-	// a string of all valid unicode whitespaces
-	// eslint-disable-next-line max-len
-	var whitespaces = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-
-	var whitespace = '[' + whitespaces + ']';
-	var ltrim = RegExp('^' + whitespace + whitespace + '*');
-	var rtrim = RegExp(whitespace + whitespace + '*$');
-
-	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
-	var createMethod$3 = function (TYPE) {
-	  return function ($this) {
-	    var string = String(requireObjectCoercible($this));
-	    if (TYPE & 1) string = string.replace(ltrim, '');
-	    if (TYPE & 2) string = string.replace(rtrim, '');
-	    return string;
-	  };
-	};
-
-	var stringTrim = {
-	  // `String.prototype.{ trimLeft, trimStart }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
-	  start: createMethod$3(1),
-	  // `String.prototype.{ trimRight, trimEnd }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
-	  end: createMethod$3(2),
-	  // `String.prototype.trim` method
-	  // https://tc39.es/ecma262/#sec-string.prototype.trim
-	  trim: createMethod$3(3)
-	};
-
-	var trim = stringTrim.trim;
-
-
-	var $parseInt = global_1.parseInt;
-	var hex = /^[+-]?0[Xx]/;
-	var FORCED$1 = $parseInt(whitespaces + '08') !== 8 || $parseInt(whitespaces + '0x16') !== 22;
-
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	var numberParseInt = FORCED$1 ? function parseInt(string, radix) {
-	  var S = trim(String(string));
-	  return $parseInt(S, (radix >>> 0) || (hex.test(S) ? 16 : 10));
-	} : $parseInt;
-
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	_export({ global: true, forced: parseInt != numberParseInt }, {
-	  parseInt: numberParseInt
-	});
-
-	/**
-	 *	@fileOverview Converts row string to number
-	 *	@param {string} row
-	 *
-	 *	@return {number}
-	 */
-	function A1Row (row) {
-	  return parseInt(row, 10);
-	}
-
-	/**
-	 *	@fileOverview Converts column number to letter
-	 *	@author AdamL
-	 *	@see https://stackoverflow.com/questions/21229180/convert-column-index-into-corresponding-column-letter
-	 *	@param {number} col
-	 *
-	 *	@return {string}
-	 */
-	function ColA1 (col) {
-	  var letter = '',
-	      temp;
-
-	  while (col > 0) {
-	    temp = (col - 1) % 26;
-	    letter = String.fromCharCode(temp + 65) + letter;
-	    col = (col - temp - 1) / 26;
-	  }
-
-	  return letter;
-	}
-
 	var DatePrototype = Date.prototype;
 	var INVALID_DATE = 'Invalid Date';
 	var TO_STRING = 'toString';
@@ -1743,6 +1619,56 @@ var A1 = (function () {
 	  redefine(Object.prototype, 'toString', objectToString, { unsafe: true });
 	}
 
+	// a string of all valid unicode whitespaces
+	// eslint-disable-next-line max-len
+	var whitespaces = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+	var whitespace = '[' + whitespaces + ']';
+	var ltrim = RegExp('^' + whitespace + whitespace + '*');
+	var rtrim = RegExp(whitespace + whitespace + '*$');
+
+	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+	var createMethod$3 = function (TYPE) {
+	  return function ($this) {
+	    var string = String(requireObjectCoercible($this));
+	    if (TYPE & 1) string = string.replace(ltrim, '');
+	    if (TYPE & 2) string = string.replace(rtrim, '');
+	    return string;
+	  };
+	};
+
+	var stringTrim = {
+	  // `String.prototype.{ trimLeft, trimStart }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+	  start: createMethod$3(1),
+	  // `String.prototype.{ trimRight, trimEnd }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
+	  end: createMethod$3(2),
+	  // `String.prototype.trim` method
+	  // https://tc39.es/ecma262/#sec-string.prototype.trim
+	  trim: createMethod$3(3)
+	};
+
+	var trim = stringTrim.trim;
+
+
+	var $parseInt = global_1.parseInt;
+	var hex = /^[+-]?0[Xx]/;
+	var FORCED$1 = $parseInt(whitespaces + '08') !== 8 || $parseInt(whitespaces + '0x16') !== 22;
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	var numberParseInt = FORCED$1 ? function parseInt(string, radix) {
+	  var S = trim(String(string));
+	  return $parseInt(S, (radix >>> 0) || (hex.test(S) ? 16 : 10));
+	} : $parseInt;
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	_export({ global: true, forced: parseInt != numberParseInt }, {
+	  parseInt: numberParseInt
+	});
+
 	var TO_STRING$1 = 'toString';
 	var RegExpPrototype = RegExp.prototype;
 	var nativeToString = RegExpPrototype[TO_STRING$1];
@@ -1764,14 +1690,92 @@ var A1 = (function () {
 	}
 
 	/**
-	 *	@fileOverview Converts row number to string
-	 *	@param {number} row
-	 *
-	 *	@return {string}
+	 * @file Contains converters from string to number and vice versa
 	 */
-	function RowA1 (row) {
+
+	/**
+	 * Converts column letter to number
+	 * @author AdamL
+	 * @see https://stackoverflow.com/questions/21229180/convert-column-index-into-corresponding-column-letter
+	 * @param {string} col
+	 *
+	 * @returns {number}
+	 */
+	var colStringToNumber1 = function colStringToNumber1(col) {
+	  var length = col.length;
+	  var column = 0;
+
+	  for (var i = 0; i < length; i++) {
+	    column += (col.charCodeAt(i) - 64) * Math.pow(26, length - i - 1);
+	  }
+
+	  return column;
+	};
+	/**
+	 * Converts column letter to number
+	 * @author Flambino
+	 * @see https://codereview.stackexchange.com/questions/90112/a1notation-conversion-to-row-column-index
+	 * @param {string} col
+	 *
+	 * @returns {number}
+	 */
+
+	var colStringToNumber2 = function colStringToNumber2(col) {
+	  var i,
+	      l,
+	      chr,
+	      sum = 0,
+	      A = 'A'.charCodeAt(0),
+	      radix = 'Z'.charCodeAt(0) - A + 1;
+
+	  for (i = 0, l = col.length; i < l; i++) {
+	    chr = col.charCodeAt(i);
+	    sum = sum * radix + chr - A + 1;
+	  }
+
+	  return sum;
+	};
+	/**
+	 * Converts column number to letter
+	 * @author AdamL
+	 * @see https://stackoverflow.com/questions/21229180/convert-column-index-into-corresponding-column-letter
+	 * @param {number} col
+	 *
+	 * @returns {string}
+	 */
+
+	var colNumberToString = function colNumberToString(col) {
+	  var letter = '',
+	      temp;
+
+	  while (col > 0) {
+	    temp = (col - 1) % 26;
+	    letter = String.fromCharCode(temp + 65) + letter;
+	    col = (col - temp - 1) / 26;
+	  }
+
+	  return letter;
+	};
+	/**
+	 * Converts row string to number
+	 * @param {string} row
+	 *
+	 * @returns {number}
+	 */
+
+	var rowStringToNumber = function rowStringToNumber(row) {
+	  return parseInt(row, 10);
+	};
+	/**
+	 * Converts row number to string
+	 * @param {number} row
+	 *
+	 * @returns {string}
+	 */
+
+	var rowNumberToString = function rowNumberToString(row) {
 	  return row.toString();
-	}
+	};
 
 	/**
 	 *	@fileOverview Checks validation
@@ -2220,8 +2224,8 @@ var A1 = (function () {
 	  }, {
 	    key: "get",
 	    value: function get() {
-	      var start = ColA1(this._colStart) + RowA1(this._rowStart),
-	          end = ColA1(this._colEnd) + RowA1(this._rowEnd);
+	      var start = colNumberToString(this._colStart) + rowNumberToString(this._rowStart),
+	          end = colNumberToString(this._colEnd) + rowNumberToString(this._rowEnd);
 	      return start === end ? start : "".concat(start, ":").concat(end);
 	    }
 	    /**
@@ -2507,8 +2511,8 @@ var A1 = (function () {
 
 	      var colStart = this._A1Col(cs, converter),
 	          colEnd = this._A1Col(ce, converter),
-	          rowStart = A1Row(rs),
-	          rowEnd = A1Row(re); // For non-standard A1
+	          rowStart = rowStringToNumber(rs),
+	          rowEnd = rowStringToNumber(re); // For non-standard A1
 
 
 	      return {
@@ -2529,7 +2533,7 @@ var A1 = (function () {
 	  }, {
 	    key: "_A1Col",
 	    value: function _A1Col(a1, converter) {
-	      return converter === 1 ? A1Col1(a1) : A1Col2(a1);
+	      return converter === 1 ? colStringToNumber1(a1) : colStringToNumber2(a1);
 	    }
 	    /******************
 	     *	STATIC METHODS
@@ -2588,7 +2592,7 @@ var A1 = (function () {
 	    key: "toCol",
 	    value: function toCol(col) {
 	      if (!isValidNumber(col)) throw new A1Error(col).wasNumber();
-	      return ColA1(col);
+	      return colNumberToString(col);
 	    }
 	    /**
 	     *	Converts the first row string to number
@@ -2627,7 +2631,7 @@ var A1 = (function () {
 	    key: "toRow",
 	    value: function toRow(row) {
 	      if (!isValidNumber(row)) throw new A1Error(row).wasNumber();
-	      return RowA1(row);
+	      return rowNumberToString(row);
 	    }
 	    /**
 	     *	@param {string} a1

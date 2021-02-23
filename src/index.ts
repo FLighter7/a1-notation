@@ -1,14 +1,16 @@
 /**
- *	@fileOverview Math operations and converting in A1 notation
- *	Supports A1 notation like "A1" and "A1:B2"
- *	@author FLighter
+ * @file Math operations and converting in A1 notation
+ * Supports A1 notation like "A1" and "A1:B2"
+ * @author FLighter
  */
 
-import A1Col1 			from './converters/A1-Col-1';// converter 1
-import A1Col2 			from './converters/A1-Col-2';// converter 2
-import A1Row 			from './converters/A1-Row';
-import ColA1 			from './converters/Col-A1';
-import RowA1 			from './converters/Row-A1';
+import {
+  colStringToNumber1,// converter 1
+  colStringToNumber2,// converter 2
+  colNumberToString,
+  rowStringToNumber,
+  rowNumberToString,
+} from './converters';
 import isValidA1 		from './validation/isValidA1';
 import isValidNumber 	from './validation/isValidNumber';
 import A1Error 			from './validation/A1Error';
@@ -47,8 +49,8 @@ class A1
     re = re || rs;
     const colStart = this._A1Col(cs, converter),
           colEnd   = this._A1Col(ce, converter),
-          rowStart = A1Row(rs),
-          rowEnd   = A1Row(re);
+          rowStart = rowStringToNumber(rs),
+          rowEnd   = rowStringToNumber(re);
     // For non-standard A1
     return {
       cs: colEnd > colStart ? colStart : colEnd,
@@ -66,7 +68,7 @@ class A1
    */
   private static _A1Col(a1: string, converter: 1 | 2): number
   {
-    return converter === 1 ? A1Col1(a1) : A1Col2(a1);
+    return converter === 1 ? colStringToNumber1(a1) : colStringToNumber2(a1);
   }
 
   /******************
@@ -118,7 +120,7 @@ class A1
   {
     if(!isValidNumber(col))
       throw new A1Error(col).wasNumber();
-    return ColA1(col);
+    return colNumberToString(col);
   }
   /**
    *	Converts the first row string to number
@@ -154,7 +156,7 @@ class A1
   {
     if(!isValidNumber(row))
       throw new A1Error(row).wasNumber();
-    return RowA1(row);
+    return rowNumberToString(row);
   }
   /**
    *	@param {string} a1
@@ -397,8 +399,8 @@ class A1
    */
   get(): string
   {
-    let start 	= ColA1(this._colStart)+RowA1(this._rowStart),
-      end 	= ColA1(this._colEnd)+RowA1(this._rowEnd);
+    let start 	= colNumberToString(this._colStart)+rowNumberToString(this._rowStart),
+      end 	= colNumberToString(this._colEnd)+rowNumberToString(this._rowEnd);
     return start === end ? start : `${start}:${end}`;
   }
   /**
