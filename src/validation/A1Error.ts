@@ -9,7 +9,7 @@ export default class A1Error<T> extends Error
 	constructor(unknown?: T)
 	constructor(something?: string | number | T)
 	{
-		let str = JSON.stringify(something);
+		const str = JSON.stringify(something);
 		super(str);
 		this.name 		= 'A1Error';
 		this.message 	= str;

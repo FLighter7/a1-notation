@@ -103,7 +103,7 @@ declare class A1 {
     /**
      *	It handles case:
      *	constructor(object: options)
-     *	@param {options[]} args
+     *	@param {options} options
      */
     private _initObject;
     /**

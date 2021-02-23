@@ -1,53 +1,50 @@
 {
-	"completed": true,
-	"projectName": "A1",
-	"projectContext": "undefined",
-	"description": "Work with A1 notation like \"A1\" or \"A1:B2\"",
-	"name": "@flighter/a1-notation",
-	"version": "1.0.7",
-	"main": "./dist/object/index.umd.js",
-	"types": "./dist/object/index.d.ts",
-	"author": "FLighter",
-	"license": "MIT",
-	"repository": "github:FLighter7/a1-notation",
-	"keywords": [
-		"A1",
-		"spreadsheet",
-		"table",
-		"range",
-		"cell"
-	],
-	"files": [
-		"/dist"
-	],
-	"scripts": {
-		"start": "npm run",
-		"test": "npx mocha ./tests/index.js",
-		"clear:win": "rmdir /S /Q dist && mkdir dist",
-		"clear:lin": "rm -I -v dist/*",
-		"init": "mkdir src dist tests && type NUL > src/index.ts && npm i",
-		"check:object": "npx tsc ./src/index.ts --noEmit",
-		"compile:object:dev": "npm run check:object && npx rollup --config rollup.config.object.js --environment IS_DEV:true",
-		"compile:object:prod": "npm run check:object && npx rollup --config rollup.config.object.js --environment IS_DEV:false",
-		"check:noobject": "npx tsc ./src/index.noObject.ts --noEmit",
-		"compile:noobject:dev": "npm run check:noobject && npx rollup --config rollup.config.noObject.js --environment IS_DEV:true",
-		"compile:noobject:prod": "npm run check:noobject && npx rollup --config rollup.config.noObject.js --environment IS_DEV:false",
-		"compile": "npm run compile:object:prod && npm run compile:noobject:prod"
-	},
-	"devDependencies": {
-		"rollup": "latest",
-		"typescript": "latest",
-		"tslib": "latest",
-		"@babel/core": "latest",
-		"@babel/preset-env": "latest",
-		"rollup-plugin-commonjs": "latest",
-		"rollup-plugin-node-resolve": "latest",
-		"rollup-plugin-typescript2": "latest",
-		"rollup-plugin-babel": "latest",
-		"rollup-plugin-uglify": "latest",
-		"rollup-plugin-terser": "latest",
-		"core-js": "latest",
-		"mocha": "latest",
-		"chai": "latest"
-	}
+  "completed": true,
+  "projectName": "A1",
+  "projectContext": "undefined",
+  "description": "Work with A1 notation like \"A1\" or \"A1:B2\"",
+  "name": "@flighter/a1-notation",
+  "version": "1.0.7",
+  "main": "./dist/object/index.umd.js",
+  "types": "./dist/object/index.d.ts",
+  "author": "FLighter",
+  "license": "MIT",
+  "repository": "github:FLighter7/a1-notation",
+  "keywords": [
+    "A1",
+    "spreadsheet",
+    "table",
+    "range",
+    "cell"
+  ],
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "start": "npm run",
+    "test": "npx mocha ./tests/index.js",
+    "clear:win": "rmdir /S /Q dist && mkdir dist",
+    "clear:lin": "rm -I -v dist/*",
+    "init": "mkdir src dist tests && type NUL > src/index.ts && npm i",
+    "check:object": "npx tsc ./src/index.ts --noEmit",
+    "compile:object:dev": "npm run check:object && npx rollup --config rollup.config.object.js --environment IS_DEV:true",
+    "compile:object:prod": "npm run check:object && npx rollup --config rollup.config.object.js --environment IS_DEV:false",
+    "compile": "npm run compile:object:prod"
+  },
+  "devDependencies": {
+    "rollup": "latest",
+    "typescript": "latest",
+    "tslib": "latest",
+    "@babel/core": "latest",
+    "@babel/preset-env": "latest",
+    "rollup-plugin-commonjs": "latest",
+    "rollup-plugin-node-resolve": "latest",
+    "rollup-plugin-typescript2": "latest",
+    "rollup-plugin-babel": "latest",
+    "rollup-plugin-uglify": "latest",
+    "rollup-plugin-terser": "latest",
+    "core-js": "latest",
+    "mocha": "latest",
+    "chai": "latest"
+  }
 }

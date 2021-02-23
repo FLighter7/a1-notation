@@ -13,7 +13,6 @@ import isValidA1 		from './validation/isValidA1';
 import isValidNumber 	from './validation/isValidNumber';
 import A1Error 			from './validation/A1Error';
 import options 			from './options/options';
-import advancedOptions 	from './options/advancedOptions';
 
 class A1
 {
@@ -46,10 +45,10 @@ class A1
       ] = a1.toUpperCase().match(this._reg);
     ce = ce || cs;
     re = re || rs;
-    let colStart 	= this._A1Col(cs, converter),
-      colEnd 		= this._A1Col(ce, converter),
-      rowStart 	= A1Row(rs),
-      rowEnd 		= A1Row(re);
+    const colStart = this._A1Col(cs, converter),
+          colEnd   = this._A1Col(ce, converter),
+          rowStart = A1Row(rs),
+          rowEnd   = A1Row(re);
     // For non-standard A1
     return {
       cs: colEnd > colStart ? colStart : colEnd,
@@ -187,130 +186,136 @@ class A1
    *	CONSTRUCTOR
    ***************/
 
-   /**
+  /**
    *	It handles case:
    *	constructor(object: options)
-   *	@param {options[]} args
+   *	@param {options} options
    */
-  private _initObject(...args: options[]): void
+  private _initObject(options: options): void
   {
-    const 	isString = <T>(some: T) => typeof some === 'string',
-        areEmpty = (all: advancedOptions, excludingKeys: string | string[]) =>
-        {
-          !Array.isArray(excludingKeys) && (excludingKeys = [excludingKeys]);
-          for(let key in all)
-            if(!excludingKeys.includes(key) && all[key].val)
-              return false;
-          return true;
-        };
-    let options 	= args[0],
-      {converter} = options;
-    if(converter && ![1, 2].includes(converter))
-      throw new A1Error({converter}).wasUnknown();
-    this._converter = converter || 1;
-    // Create object with types
-    let all: advancedOptions = {};
-    ['colStart', 'rowStart', 'colEnd', 'rowEnd', 'a1Start', 'a1End', 'nCols', 'nRows'].forEach(key =>
-    {
-      let val  = options[key];
-      all[key] =
-      {
-        isString: 	isString(val),
-        isNumber: 	isValidNumber(val),
-        val,
-      };
-    });
-    let {colStart, rowStart, colEnd, rowEnd, a1Start, a1End, nCols, nRows} = all;
+    const isString = <T>(some: T) => typeof some === 'string';
+    const isNumber = isValidNumber;
+    const isLetter    = (some: string) => /^[a-z]+$/i.test(some);
+    const isStrNumber = <T>(some: T) => typeof some === 'string' ? /^[0-9]+$/.test(some) : false;
+    const isStringifiedNumber = <T>(some: T) => isStrNumber(some) && isNumber(+some);
+
+    const {
+      a1Start,
+      a1End,
+      colStart,
+      colEnd,
+      rowStart,
+      rowEnd,
+      nCols,
+      nRows,
+      converter,
+    } = options;
+
+    // Set converter
+    this._converter = converter === 2 ? 2 : 1;
+
+    let cs: number,
+        ce: number,
+        rs: number,
+        re: number;
+
     /**
-     *	Executing by priority
+     * Define start range
      */
-    switch(true)
+
+    // From a1Start
+    if(isString(a1Start) && isValidA1(a1Start))
     {
-      /**
-       *	a1Start
-       */
-      case(a1Start.isString && areEmpty(all, 'a1Start')):
-        return this._initString(a1Start.val as string);
-      /**
-       *	a1Start, a1End
-       */
-      case(a1Start.isString && a1End.isString && areEmpty(all, ['a1Start', 'a1End'])):
-        return this._initString(a1Start.val as string, a1End.val as string);
-      /**
-       *	colStart, rowStart (string, string)
-       */
-      case(colStart.isString && rowStart.isString && areEmpty(all, ['colStart', 'rowStart'])):
-        return this._initString(colStart.val+(rowStart.val as string));
-      /**
-       *	colStart, rowStart (number, number)
-       */
-      case(colStart.isNumber && rowStart.isNumber && areEmpty(all, ['colStart', 'rowStart'])):
-        return this._initNumber(colStart.val as number, rowStart.val as number);
-      /**
-       *	colStart, rowStart, nRows (number, number, number)
-       */
-      case(colStart.isNumber && rowStart.isNumber && nRows.isNumber && areEmpty(all, ['colStart', 'rowStart', 'nRows'])):
-        return this._initNumber(colStart.val as number, rowStart.val as number, nRows.val as number);
-      /**
-       *	colStart, rowStart, nCols (number, number, number)
-       */
-      case(colStart.isNumber && rowStart.isNumber && nCols.isNumber && areEmpty(all, ['colStart', 'rowStart', 'nCols'])):
-        return this._initNumber(colStart.val as number, rowStart.val as number, 1, nCols.val as number);
-      /**
-       *	colStart, rowStart, nRows, nCols (number, number, number, number)
-       */
-      case(colStart.isNumber && rowStart.isNumber && nRows.isNumber && nCols.isNumber && areEmpty(all, ['colStart', 'rowStart', 'nRows', 'nCols'])):
-        return this._initNumber(colStart.val as number, rowStart.val as number, nRows.val as number, nCols.val as number);
-      /**
-       *	colStart, rowStart, colEnd (string, string, string)
-       */
-      case(colStart.isString && rowStart.isString && colEnd.isString && areEmpty(all, ['colStart', 'rowStart', 'colEnd'])):
-        return this._initString(`${colStart.val}${rowStart.val}:${colEnd.val}${rowStart.val}`);
-      /**
-       *	colStart, rowStart, colEnd (number, number, number)
-       */
-      case(colStart.isNumber && rowStart.isNumber && colEnd.isNumber && areEmpty(all, ['colStart', 'rowStart', 'colEnd'])):
-        return this._initNumber(
-            colStart.val as number,
-            rowStart.val as number,
-            1,
-            (colEnd.val as number) - (colStart.val as number) + 1
-        );
-      /**
-       *	colStart, rowStart, rowEnd (string, string, string)
-       */
-      case(colStart.isString && rowStart.isString && rowEnd.isString && areEmpty(all, ['colStart', 'rowStart', 'rowEnd'])):
-        return this._initString(`${colStart.val}${rowStart.val}:${colStart.val}${rowEnd.val}`);
-      /**
-       *	colStart, rowStart, rowEnd (number, number, number)
-       */
-      case(colStart.isNumber && rowStart.isNumber && rowEnd.isNumber && areEmpty(all, ['colStart', 'rowStart', 'rowEnd'])):
-        return this._initNumber(
-            colStart.val as number,
-            rowStart.val as number,
-            (rowEnd.val as number) - (rowStart.val as number) + 1
-        );
-      /**
-       *	colStart, rowStart, colEnd, rowEnd (string, string, string, string)
-       */
-      case(colStart.isString && rowStart.isString && colEnd.isString && rowEnd.isString && areEmpty(all, ['colStart', 'rowStart', 'colEnd', 'rowEnd'])):
-        return this._initString(`${colStart.val}${rowStart.val}:${colEnd.val}${rowEnd.val}`);
-      /**
-       *	colStart, rowStart, colEnd, rowEnd (number, number, number, number)
-       */
-      case(colStart.isNumber && rowStart.isNumber && colEnd.isNumber && rowEnd.isNumber && areEmpty(all, ['colStart', 'rowStart', 'colEnd', 'rowEnd'])):
-        return this._initNumber(
-            colStart.val as number,
-            rowStart.val as number,
-            (rowEnd.val as number) - (rowStart.val as number) + 1,
-            (colEnd.val as number) - (colStart.val as number) + 1
-        );
-      /**
-       *	Invalid arguments combination
-       */
-      default:
-        throw new A1Error(options).wasUnknown();
+      const a1StartParsed = A1._parse(a1Start, this._converter);
+      cs = a1StartParsed.cs;
+      rs = a1StartParsed.rs;
+      const equalCol = a1StartParsed.cs === a1StartParsed.ce,
+            equalRow = a1StartParsed.rs === a1StartParsed.re,
+            equal    = equalCol && equalRow;
+      if(!equal || (equal && a1Start.includes(':')))
+      {
+        ce = a1StartParsed.ce;
+        re = a1StartParsed.re;
+      }
     }
+
+    // From colStart
+    if(!cs && colStart)
+    {
+      if(isNumber(colStart))
+        cs = colStart as number;
+      else if(isString(colStart))
+      {
+        if(isLetter(colStart as string))
+          cs = A1._A1Col(colStart as string, this._converter);
+        else if(isStringifiedNumber(colStart))
+          cs = +colStart;
+      }
+    }
+
+    // From rowStart
+    if(!rs && (isNumber(rowStart) || isStringifiedNumber(rowStart)))
+      rs = +rowStart;
+
+    /**
+     * Define end range
+     */
+
+    // From a1End
+    if(!ce && !re && isString(a1End) && isValidA1(a1End))
+    {
+      const a1EndParsed = A1._parse(a1End, this._converter);
+      ce = a1EndParsed.ce;
+      re = a1EndParsed.re;
+    }
+
+    // From colEnd
+    if(!ce && colEnd)
+    {
+      if(isNumber(colEnd))
+        ce = colEnd as number;
+      else if(isString(colEnd))
+      {
+        if(isLetter(colEnd as string))
+          ce = A1._A1Col(colEnd as string, this._converter);
+        else if(isStringifiedNumber(colEnd))
+          ce = +colEnd;
+      }
+    }
+
+    // From rowEnd
+    if(!re && (isNumber(rowEnd) || isStringifiedNumber(rowEnd)))
+      re = +rowEnd;
+
+    // From nCols
+    if(!ce && cs && isNumber(nCols))
+      ce = cs + nCols - 1;
+
+    // From nRows
+    if(!re && rs && isNumber(nRows))
+      re = rs + nRows - 1;
+    
+    /**
+     * If only start/end range was defined
+     */
+    (cs && !ce) && (ce = cs);
+    (!cs && ce) && (cs = ce);
+    (rs && !re) && (re = rs);
+    (!rs && re) && (rs = re);
+
+    /**
+     * Check results
+     */
+    if(!cs || !rs || !ce || !re)
+      throw new A1Error(options).wasUnknown();
+
+    /**
+     * Set ranges
+     */
+    this._colStart = cs;
+    this._rowStart = rs;
+    this._colEnd   = ce;
+    this._rowEnd   = re;
   }
 
   /**
@@ -333,6 +338,7 @@ class A1
     this._colEnd 	= col + nCols - 1;	// how many cols in total (cols length)
     this._rowEnd 	= row + nRows - 1;	// how many rows in total (rows length)
   }
+
   /**
    *	It handles cases:
    *	constructor(range: string)
@@ -341,18 +347,19 @@ class A1
    */
   private _initString(...args: string[]): void
   {
-    let [rangeStart, rangeEnd] = args,
-      range = rangeEnd
-            ? `${rangeStart}:${rangeEnd}`// rangeStart: string, rangeEnd: string
-            : rangeStart;				 // range: string
+    const [rangeStart, rangeEnd] = args;
+    const range = rangeEnd
+      ? `${rangeStart}:${rangeEnd}`// rangeStart: string, rangeEnd: string
+      : rangeStart;                // range: string
     if(!isValidA1(range))
       throw new A1Error(range).wasString();
-    let {cs, rs, ce, re} = A1._parse(range, this._converter);
-    this._colStart 	= cs;
-    this._rowStart 	= rs;
-    this._colEnd 	= ce;
-    this._rowEnd 	= re;
+    const {cs, rs, ce, re} = A1._parse(range, this._converter);
+    this._colStart = cs;
+    this._rowStart = rs;
+    this._colEnd   = ce;
+    this._rowEnd   = re;
   }
+
   /**
    *	Constructor
    */
@@ -370,7 +377,7 @@ class A1
     const type = typeof something;
     // Object
     if(something && type === 'object')
-      this._initObject.apply(this, arguments);
+      this._initObject(something as options);
     // Number
     else if(type === 'number')
       this._initNumber.apply(this, arguments);

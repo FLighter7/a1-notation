@@ -1,16 +1,5 @@
 /**
- *	@fileOverview Constructor object options
- *
- *	Can be used:
-    1. a1Start
-    2. a1Start,  a1End
-    3. colStart, rowStart
-    4. colStart, rowStart, nRows
-    5. colStart, rowStart, nCols
-    6. colStart, rowStart, nCols,  nRows
-    7. colStart, rowStart, colEnd
-    8. colStart, rowStart, rowEnd
-    9. colStart, rowStart, colEnd, rowEnd
+ * @fileOverview Constructor object options
  */
 declare type options = {
     colStart?: string | number;

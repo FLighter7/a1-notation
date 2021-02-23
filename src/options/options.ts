@@ -1,25 +1,14 @@
 /**
  * @fileOverview Constructor object options
- *
- * Can be used:
-  1. a1Start
-  2. a1Start,  a1End
-  3. colStart, rowStart
-  4. colStart, rowStart, nRows
-  5. colStart, rowStart, nCols
-  6. colStart, rowStart, nCols,  nRows
-  7. colStart, rowStart, colEnd
-  8. colStart, rowStart, rowEnd
-  9. colStart, rowStart, colEnd, rowEnd
  */
 type options =
 {
-  colStart?:  string | number,
-  rowStart?:  string | number,
-  colEnd?:    string | number,
-  rowEnd?:    string | number,
-  a1Start?:   string,
-  a1End?:     string,
+  colStart?:  string | number,// "A" | "1" | 1
+  rowStart?:  string | number,// "1" | 1
+  colEnd?:    string | number,// "B" | "2" | 2
+  rowEnd?:    string | number,// "2" | 2
+  a1Start?:   string,// "A1:B2" | "A1"
+  a1End?:     string,// "B2"
   nCols?:     number,// how many cols in total (cols length)
   nRows?:     number,// how many rows in total (rows length)
   converter?: 1 | 2,
