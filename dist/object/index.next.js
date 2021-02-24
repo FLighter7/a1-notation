@@ -65,29 +65,60 @@ var A1 = (function () {
    *
    * @returns {string}
    */
-  const rowNumberToString = (row) => row.toString();
+  const rowNumberToString = (row) => String(row);
 
   /**
-   *	@fileOverview Checks validation
-   *	@param {string} a1
-   *
-   *	@return {boolean}
+   * @file Contains secondary functions
    */
-  function isValidA1 (a1) {
-      return /^[A-Z]+\d+(:[A-Z]+\d+)?$/i.test(a1);
-  }
-
   /**
-   *	@fileOverview Checks number validation
-   *	@param {T} n
-   *	@param {boolean} [positiveOnly = true]
+   * Returns the type of a value
+   * @param {unknown} some
    *
-   *	@return {boolean}
+   * @returns {string}
    */
-  function isValidNumber (n, positiveOnly = true) {
-      const isNumber = typeof n === 'number' && Number.isInteger(n);
-      return positiveOnly ? (isNumber && +n > 0) : isNumber;
-  }
+  const type = (some) => typeof some;
+  /**
+   * Checks if a value is a string
+   * @param {unknown} some
+   *
+   * @returns {boolean}
+   */
+  const isString = (some) => type(some) === 'string';
+  /**
+   * Checks if a value is a number
+   * @param {unknown} some
+   *
+   * @returns {boolean}
+   */
+  const isNumber = (some) => type(some) === 'number' && Number.isInteger(some);
+  /**
+   * Checks if a value is a positive number
+   * @param {unknown} some
+   *
+   * @returns {boolean}
+   */
+  const isPositiveNumber = (some) => isNumber(some) && some > 0;
+  /**
+   * Checks if a value is a stringified number like "1", "2", ...
+   * @param {unknown} some
+   *
+   * @returns {boolean}
+   */
+  const isStringifiedNumber = (some) => isString(some) && /^[0-9]+$/.test(some) && isNumber(+some);
+  /**
+   * Checks if a value is a letter between a-zA-Z
+   * @param {unknown} some
+   *
+   * @returns {boolean}
+   */
+  const isLetter = (some) => isString(some) && /^[a-z]+$/i.test(some);
+  /**
+   * Checks validation of A1 notation
+   * @param {unknown} some
+   *
+   * @returns {boolean}
+   */
+  const isValidA1 = (some) => isString(some) && /^[A-Z]+\d+(:[A-Z]+\d+)?$/i.test(some);
 
   /**
    *	@fileOverview A1 notation errors
@@ -131,15 +162,14 @@ var A1 = (function () {
           // No arguments
           if (!arguments.length)
               throw new A1Error().wasUnknown();
-          const type = typeof something;
           // Object
-          if (something && type === 'object')
+          if (something && type(something) === 'object')
               this._initObject(something);
           // Number
-          else if (type === 'number')
+          else if (isNumber(something))
               this._initNumber.apply(this, arguments);
           // String
-          else if (type === 'string')
+          else if (isString(something))
               this._initString.apply(this, arguments);
           // Unknown argument
           else
@@ -221,7 +251,7 @@ var A1 = (function () {
        *	@return {string}
        */
       static toCol(col) {
-          if (!isValidNumber(col))
+          if (!isPositiveNumber(col))
               throw new A1Error(col).wasNumber();
           return colNumberToString(col);
       }
@@ -254,7 +284,7 @@ var A1 = (function () {
        *	@return {string}
        */
       static toRow(row) {
-          if (!isValidNumber(row))
+          if (!isPositiveNumber(row))
               throw new A1Error(row).wasNumber();
           return rowNumberToString(row);
       }
@@ -290,20 +320,22 @@ var A1 = (function () {
        *	@param {options} options
        */
       _initObject(options) {
-          const isString = (some) => typeof some === 'string';
-          const isNumber = isValidNumber;
-          const isLetter = (some) => /^[a-z]+$/i.test(some);
-          const isStrNumber = (some) => typeof some === 'string' ? /^[0-9]+$/.test(some) : false;
-          const isStringifiedNumber = (some) => isStrNumber(some) && isNumber(+some);
           const { a1Start, a1End, colStart, colEnd, rowStart, rowEnd, nCols, nRows, converter, } = options;
           // Set converter
           this._converter = converter === 2 ? 2 : 1;
           let cs, ce, rs, re;
+          const getValue = (some, canBeLetter = true) => {
+              if (isPositiveNumber(some) || isStringifiedNumber(some))
+                  return +some;
+              if (canBeLetter && isLetter(some))
+                  return A1._A1Col(some, this._converter);
+              return 0;
+          };
           /**
            * Define start range
            */
           // From a1Start
-          if (isString(a1Start) && isValidA1(a1Start)) {
+          if (isValidA1(a1Start)) {
               const a1StartParsed = A1._parse(a1Start, this._converter);
               cs = a1StartParsed.cs;
               rs = a1StartParsed.rs;
@@ -313,48 +345,29 @@ var A1 = (function () {
                   re = a1StartParsed.re;
               }
           }
-          // From colStart
-          if (!cs && colStart) {
-              if (isNumber(colStart))
-                  cs = colStart;
-              else if (isString(colStart)) {
-                  if (isLetter(colStart))
-                      cs = A1._A1Col(colStart, this._converter);
-                  else if (isStringifiedNumber(colStart))
-                      cs = +colStart;
-              }
-          }
-          // From rowStart
-          if (!rs && (isNumber(rowStart) || isStringifiedNumber(rowStart)))
-              rs = +rowStart;
+          // From colStart & rowStart
+          if (!cs && colStart)
+              cs = getValue(colStart);
+          if (!rs && rowStart)
+              rs = getValue(rowStart, false);
           /**
            * Define end range
            */
           // From a1End
-          if (!ce && !re && isString(a1End) && isValidA1(a1End)) {
+          if (!ce && !re && isValidA1(a1End)) {
               const a1EndParsed = A1._parse(a1End, this._converter);
               ce = a1EndParsed.ce;
               re = a1EndParsed.re;
           }
-          // From colEnd
-          if (!ce && colEnd) {
-              if (isNumber(colEnd))
-                  ce = colEnd;
-              else if (isString(colEnd)) {
-                  if (isLetter(colEnd))
-                      ce = A1._A1Col(colEnd, this._converter);
-                  else if (isStringifiedNumber(colEnd))
-                      ce = +colEnd;
-              }
-          }
-          // From rowEnd
-          if (!re && (isNumber(rowEnd) || isStringifiedNumber(rowEnd)))
-              re = +rowEnd;
-          // From nCols
-          if (!ce && cs && isNumber(nCols))
+          // From colEnd & rowEnd
+          if (!ce && colEnd)
+              ce = getValue(colEnd);
+          if (!re && rowEnd)
+              re = getValue(rowEnd, false);
+          // From nCols & nRows
+          if (!ce && cs && isPositiveNumber(nCols))
               ce = cs + nCols - 1;
-          // From nRows
-          if (!re && rs && isNumber(nRows))
+          if (!re && rs && isPositiveNumber(nRows))
               re = rs + nRows - 1;
           /**
            * If only start/end range was defined
@@ -388,7 +401,7 @@ var A1 = (function () {
           nRows = nRows || 1;
           nCols = nCols || 1;
           let all = [col, row, nRows, nCols];
-          if (!all.every(n => isValidNumber(n)))
+          if (!all.every(n => isPositiveNumber(n)))
               throw new A1Error(all.join(', ')).wasNumber();
           this._colStart = col; // the first col
           this._rowStart = row; // the first row
@@ -504,7 +517,7 @@ var A1 = (function () {
        *	@return {this}
        */
       addX(count) {
-          if (!isValidNumber(count, false))
+          if (!isNumber(count))
               throw new A1Error(count).wasUnknown();
           count >= 0
               ? this._colEnd += count
@@ -521,7 +534,7 @@ var A1 = (function () {
        *	@return {this}
        */
       addY(count) {
-          if (!isValidNumber(count, false))
+          if (!isNumber(count))
               throw new A1Error(count).wasUnknown();
           count >= 0
               ? this._rowEnd += count
@@ -550,7 +563,7 @@ var A1 = (function () {
        *	@return {this}
        */
       removeX(count) {
-          if (!isValidNumber(count, false))
+          if (!isNumber(count))
               throw new A1Error(count).wasUnknown();
           if (count >= 0) {
               this._colEnd -= count;
@@ -571,7 +584,7 @@ var A1 = (function () {
        *	@return {this}
        */
       removeY(count) {
-          if (!isValidNumber(count, false))
+          if (!isNumber(count))
               throw new A1Error(count).wasUnknown();
           if (count >= 0) {
               this._rowEnd -= count;
@@ -604,7 +617,7 @@ var A1 = (function () {
        *	@return {this}
        */
       shiftX(offset) {
-          if (!isValidNumber(offset, false))
+          if (!isNumber(offset))
               throw new A1Error(offset).wasUnknown();
           let diff = this._colEnd - this._colStart, start = this._colStart + offset, end = this._colEnd + offset;
           this._colStart = start > 0 ? start : 1;
@@ -620,7 +633,7 @@ var A1 = (function () {
        *	@return {this}
        */
       shiftY(offset) {
-          if (!isValidNumber(offset, false))
+          if (!isNumber(offset))
               throw new A1Error(offset).wasUnknown();
           let diff = this._rowEnd - this._rowStart, start = this._rowStart + offset, end = this._rowEnd + offset;
           this._rowStart = start > 0 ? start : 1;

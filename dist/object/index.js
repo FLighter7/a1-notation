@@ -1561,64 +1561,6 @@ var A1 = (function () {
 	  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 	}
 
-	var DatePrototype = Date.prototype;
-	var INVALID_DATE = 'Invalid Date';
-	var TO_STRING = 'toString';
-	var nativeDateToString = DatePrototype[TO_STRING];
-	var getTime = DatePrototype.getTime;
-
-	// `Date.prototype.toString` method
-	// https://tc39.es/ecma262/#sec-date.prototype.tostring
-	if (new Date(NaN) + '' != INVALID_DATE) {
-	  redefine(DatePrototype, TO_STRING, function toString() {
-	    var value = getTime.call(this);
-	    // eslint-disable-next-line no-self-compare
-	    return value === value ? nativeDateToString.call(this) : INVALID_DATE;
-	  });
-	}
-
-	var TO_STRING_TAG = wellKnownSymbol('toStringTag');
-	var test = {};
-
-	test[TO_STRING_TAG] = 'z';
-
-	var toStringTagSupport = String(test) === '[object z]';
-
-	var TO_STRING_TAG$1 = wellKnownSymbol('toStringTag');
-	// ES3 wrong here
-	var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) == 'Arguments';
-
-	// fallback for IE11 Script Access Denied error
-	var tryGet = function (it, key) {
-	  try {
-	    return it[key];
-	  } catch (error) { /* empty */ }
-	};
-
-	// getting tag from ES6+ `Object.prototype.toString`
-	var classof = toStringTagSupport ? classofRaw : function (it) {
-	  var O, tag, result;
-	  return it === undefined ? 'Undefined' : it === null ? 'Null'
-	    // @@toStringTag case
-	    : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG$1)) == 'string' ? tag
-	    // builtinTag case
-	    : CORRECT_ARGUMENTS ? classofRaw(O)
-	    // ES3 arguments fallback
-	    : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
-	};
-
-	// `Object.prototype.toString` method implementation
-	// https://tc39.es/ecma262/#sec-object.prototype.tostring
-	var objectToString = toStringTagSupport ? {}.toString : function toString() {
-	  return '[object ' + classof(this) + ']';
-	};
-
-	// `Object.prototype.toString` method
-	// https://tc39.es/ecma262/#sec-object.prototype.tostring
-	if (!toStringTagSupport) {
-	  redefine(Object.prototype, 'toString', objectToString, { unsafe: true });
-	}
-
 	// a string of all valid unicode whitespaces
 	// eslint-disable-next-line max-len
 	var whitespaces = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
@@ -1668,26 +1610,6 @@ var A1 = (function () {
 	_export({ global: true, forced: parseInt != numberParseInt }, {
 	  parseInt: numberParseInt
 	});
-
-	var TO_STRING$1 = 'toString';
-	var RegExpPrototype = RegExp.prototype;
-	var nativeToString = RegExpPrototype[TO_STRING$1];
-
-	var NOT_GENERIC = fails(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
-	// FF44- RegExp#toString has a wrong name
-	var INCORRECT_NAME = nativeToString.name != TO_STRING$1;
-
-	// `RegExp.prototype.toString` method
-	// https://tc39.es/ecma262/#sec-regexp.prototype.tostring
-	if (NOT_GENERIC || INCORRECT_NAME) {
-	  redefine(RegExp.prototype, TO_STRING$1, function toString() {
-	    var R = anObject(this);
-	    var p = String(R.source);
-	    var rf = R.flags;
-	    var f = String(rf === undefined && R instanceof RegExp && !('flags' in RegExpPrototype) ? regexpFlags.call(R) : rf);
-	    return '/' + p + '/' + f;
-	  }, { unsafe: true });
-	}
 
 	/**
 	 * @file Contains converters from string to number and vice versa
@@ -1774,18 +1696,8 @@ var A1 = (function () {
 	 */
 
 	var rowNumberToString = function rowNumberToString(row) {
-	  return row.toString();
+	  return String(row);
 	};
-
-	/**
-	 *	@fileOverview Checks validation
-	 *	@param {string} a1
-	 *
-	 *	@return {boolean}
-	 */
-	function isValidA1 (a1) {
-	  return /^[A-Z]+\d+(:[A-Z]+\d+)?$/i.test(a1);
-	}
 
 	var aPossiblePrototype = function (it) {
 	  if (!isObject(it) && it !== null) {
@@ -1915,17 +1827,78 @@ var A1 = (function () {
 	});
 
 	/**
-	 *	@fileOverview Checks number validation
-	 *	@param {T} n
-	 *	@param {boolean} [positiveOnly = true]
-	 *
-	 *	@return {boolean}
+	 * @file Contains secondary functions
 	 */
-	function isValidNumber (n) {
-	  var positiveOnly = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-	  var isNumber = typeof n === 'number' && Number.isInteger(n);
-	  return positiveOnly ? isNumber && +n > 0 : isNumber;
-	}
+
+	/**
+	 * Returns the type of a value
+	 * @param {unknown} some
+	 *
+	 * @returns {string}
+	 */
+	var type = function type(some) {
+	  return _typeof(some);
+	};
+	/**
+	 * Checks if a value is a string
+	 * @param {unknown} some
+	 *
+	 * @returns {boolean}
+	 */
+
+	var isString = function isString(some) {
+	  return type(some) === 'string';
+	};
+	/**
+	 * Checks if a value is a number
+	 * @param {unknown} some
+	 *
+	 * @returns {boolean}
+	 */
+
+	var isNumber = function isNumber(some) {
+	  return type(some) === 'number' && Number.isInteger(some);
+	};
+	/**
+	 * Checks if a value is a positive number
+	 * @param {unknown} some
+	 *
+	 * @returns {boolean}
+	 */
+
+	var isPositiveNumber = function isPositiveNumber(some) {
+	  return isNumber(some) && some > 0;
+	};
+	/**
+	 * Checks if a value is a stringified number like "1", "2", ...
+	 * @param {unknown} some
+	 *
+	 * @returns {boolean}
+	 */
+
+	var isStringifiedNumber = function isStringifiedNumber(some) {
+	  return isString(some) && /^[0-9]+$/.test(some) && isNumber(+some);
+	};
+	/**
+	 * Checks if a value is a letter between a-zA-Z
+	 * @param {unknown} some
+	 *
+	 * @returns {boolean}
+	 */
+
+	var isLetter = function isLetter(some) {
+	  return isString(some) && /^[a-z]+$/i.test(some);
+	};
+	/**
+	 * Checks validation of A1 notation
+	 * @param {unknown} some
+	 *
+	 * @returns {boolean}
+	 */
+
+	var isValidA1 = function isValidA1(some) {
+	  return isString(some) && /^[A-Z]+\d+(:[A-Z]+\d+)?$/i.test(some);
+	};
 
 	var defineProperty$2 = objectDefineProperty.f;
 
@@ -2010,14 +1983,11 @@ var A1 = (function () {
 	    this._converter = 1; // converter 1 | 2
 	    // No arguments
 
-	    if (!arguments.length) throw new A1Error().wasUnknown();
+	    if (!arguments.length) throw new A1Error().wasUnknown(); // Object
 
-	    var type = _typeof(something); // Object
-
-
-	    if (something && type === 'object') this._initObject(something); // Number
-	    else if (type === 'number') this._initNumber.apply(this, arguments); // String
-	      else if (type === 'string') this._initString.apply(this, arguments); // Unknown argument
+	    if (something && type(something) === 'object') this._initObject(something); // Number
+	    else if (isNumber(something)) this._initNumber.apply(this, arguments); // String
+	      else if (isString(something)) this._initString.apply(this, arguments); // Unknown argument
 	        else throw new A1Error(something).wasUnknown();
 	  }
 	  /**
@@ -2042,23 +2012,7 @@ var A1 = (function () {
 	     *	@param {options} options
 	     */
 	    value: function _initObject(options) {
-	      var isString = function isString(some) {
-	        return typeof some === 'string';
-	      };
-
-	      var isNumber = isValidNumber;
-
-	      var isLetter = function isLetter(some) {
-	        return /^[a-z]+$/i.test(some);
-	      };
-
-	      var isStrNumber = function isStrNumber(some) {
-	        return typeof some === 'string' ? /^[0-9]+$/.test(some) : false;
-	      };
-
-	      var isStringifiedNumber = function isStringifiedNumber(some) {
-	        return isStrNumber(some) && isNumber(+some);
-	      };
+	      var _this = this;
 
 	      var a1Start = options.a1Start,
 	          a1End = options.a1End,
@@ -2072,12 +2026,20 @@ var A1 = (function () {
 
 	      this._converter = converter === 2 ? 2 : 1;
 	      var cs, ce, rs, re;
+
+	      var getValue = function getValue(some) {
+	        var canBeLetter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+	        if (isPositiveNumber(some) || isStringifiedNumber(some)) return +some;
+	        if (canBeLetter && isLetter(some)) return A1._A1Col(some, _this._converter);
+	        return 0;
+	      };
 	      /**
 	       * Define start range
 	       */
 	      // From a1Start
 
-	      if (isString(a1Start) && isValidA1(a1Start)) {
+
+	      if (isValidA1(a1Start)) {
 	        var a1StartParsed = A1._parse(a1Start, this._converter);
 
 	        cs = a1StartParsed.cs;
@@ -2090,42 +2052,29 @@ var A1 = (function () {
 	          ce = a1StartParsed.ce;
 	          re = a1StartParsed.re;
 	        }
-	      } // From colStart
+	      } // From colStart & rowStart
 
 
-	      if (!cs && colStart) {
-	        if (isNumber(colStart)) cs = colStart;else if (isString(colStart)) {
-	          if (isLetter(colStart)) cs = A1._A1Col(colStart, this._converter);else if (isStringifiedNumber(colStart)) cs = +colStart;
-	        }
-	      } // From rowStart
-
-
-	      if (!rs && (isNumber(rowStart) || isStringifiedNumber(rowStart))) rs = +rowStart;
+	      if (!cs && colStart) cs = getValue(colStart);
+	      if (!rs && rowStart) rs = getValue(rowStart, false);
 	      /**
 	       * Define end range
 	       */
 	      // From a1End
 
-	      if (!ce && !re && isString(a1End) && isValidA1(a1End)) {
+	      if (!ce && !re && isValidA1(a1End)) {
 	        var a1EndParsed = A1._parse(a1End, this._converter);
 
 	        ce = a1EndParsed.ce;
 	        re = a1EndParsed.re;
-	      } // From colEnd
+	      } // From colEnd & rowEnd
 
 
-	      if (!ce && colEnd) {
-	        if (isNumber(colEnd)) ce = colEnd;else if (isString(colEnd)) {
-	          if (isLetter(colEnd)) ce = A1._A1Col(colEnd, this._converter);else if (isStringifiedNumber(colEnd)) ce = +colEnd;
-	        }
-	      } // From rowEnd
+	      if (!ce && colEnd) ce = getValue(colEnd);
+	      if (!re && rowEnd) re = getValue(rowEnd, false); // From nCols & nRows
 
-
-	      if (!re && (isNumber(rowEnd) || isStringifiedNumber(rowEnd))) re = +rowEnd; // From nCols
-
-	      if (!ce && cs && isNumber(nCols)) ce = cs + nCols - 1; // From nRows
-
-	      if (!re && rs && isNumber(nRows)) re = rs + nRows - 1;
+	      if (!ce && cs && isPositiveNumber(nCols)) ce = cs + nCols - 1;
+	      if (!re && rs && isPositiveNumber(nRows)) re = rs + nRows - 1;
 	      /**
 	       * If only start/end range was defined
 	       */
@@ -2171,7 +2120,7 @@ var A1 = (function () {
 	      nCols = nCols || 1;
 	      var all = [col, row, nRows, nCols];
 	      if (!all.every(function (n) {
-	        return isValidNumber(n);
+	        return isPositiveNumber(n);
 	      })) throw new A1Error(all.join(', ')).wasNumber();
 	      this._colStart = col; // the first col
 
@@ -2338,7 +2287,7 @@ var A1 = (function () {
 	  }, {
 	    key: "addX",
 	    value: function addX(count) {
-	      if (!isValidNumber(count, false)) throw new A1Error(count).wasUnknown();
+	      if (!isNumber(count)) throw new A1Error(count).wasUnknown();
 	      count >= 0 ? this._colEnd += count : this._colStart += count;
 	      this._colStart <= 0 && (this._colStart = 1);
 	      return this;
@@ -2355,7 +2304,7 @@ var A1 = (function () {
 	  }, {
 	    key: "addY",
 	    value: function addY(count) {
-	      if (!isValidNumber(count, false)) throw new A1Error(count).wasUnknown();
+	      if (!isNumber(count)) throw new A1Error(count).wasUnknown();
 	      count >= 0 ? this._rowEnd += count : this._rowStart += count;
 	      this._rowStart <= 0 && (this._rowStart = 1);
 	      return this;
@@ -2387,7 +2336,7 @@ var A1 = (function () {
 	  }, {
 	    key: "removeX",
 	    value: function removeX(count) {
-	      if (!isValidNumber(count, false)) throw new A1Error(count).wasUnknown();
+	      if (!isNumber(count)) throw new A1Error(count).wasUnknown();
 
 	      if (count >= 0) {
 	        this._colEnd -= count;
@@ -2411,7 +2360,7 @@ var A1 = (function () {
 	  }, {
 	    key: "removeY",
 	    value: function removeY(count) {
-	      if (!isValidNumber(count, false)) throw new A1Error(count).wasUnknown();
+	      if (!isNumber(count)) throw new A1Error(count).wasUnknown();
 
 	      if (count >= 0) {
 	        this._rowEnd -= count;
@@ -2450,7 +2399,7 @@ var A1 = (function () {
 	  }, {
 	    key: "shiftX",
 	    value: function shiftX(offset) {
-	      if (!isValidNumber(offset, false)) throw new A1Error(offset).wasUnknown();
+	      if (!isNumber(offset)) throw new A1Error(offset).wasUnknown();
 	      var diff = this._colEnd - this._colStart,
 	          start = this._colStart + offset,
 	          end = this._colEnd + offset;
@@ -2470,7 +2419,7 @@ var A1 = (function () {
 	  }, {
 	    key: "shiftY",
 	    value: function shiftY(offset) {
-	      if (!isValidNumber(offset, false)) throw new A1Error(offset).wasUnknown();
+	      if (!isNumber(offset)) throw new A1Error(offset).wasUnknown();
 	      var diff = this._rowEnd - this._rowStart,
 	          start = this._rowStart + offset,
 	          end = this._rowEnd + offset;
@@ -2591,7 +2540,7 @@ var A1 = (function () {
 	  }, {
 	    key: "toCol",
 	    value: function toCol(col) {
-	      if (!isValidNumber(col)) throw new A1Error(col).wasNumber();
+	      if (!isPositiveNumber(col)) throw new A1Error(col).wasNumber();
 	      return colNumberToString(col);
 	    }
 	    /**
@@ -2630,7 +2579,7 @@ var A1 = (function () {
 	  }, {
 	    key: "toRow",
 	    value: function toRow(row) {
-	      if (!isValidNumber(row)) throw new A1Error(row).wasNumber();
+	      if (!isPositiveNumber(row)) throw new A1Error(row).wasNumber();
 	      return rowNumberToString(row);
 	    }
 	    /**
