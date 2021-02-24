@@ -26,10 +26,10 @@
     "clear:win": "rmdir /S /Q dist && mkdir dist",
     "clear:lin": "rm -I -v dist/*",
     "init": "mkdir src dist tests && type NUL > src/index.ts && npm i",
-    "check:object": "npx tsc ./src/index.ts --noEmit",
-    "compile:object:dev": "npm run check:object && npx rollup --config rollup.config.object.js --environment IS_DEV:true",
-    "compile:object:prod": "npm run check:object && npx rollup --config rollup.config.object.js --environment IS_DEV:false",
-    "compile": "npm run compile:object:prod"
+    "check": "npx tsc ./src/index.ts --noEmit",
+    "compile:dev": "npm run check && npx rollup --config rollup.config.js --environment IS_DEV:true",
+    "compile:prod": "npm run check && npx rollup --config rollup.config.js --environment IS_DEV:false",
+    "compile": "npm run compile:prod"
   },
   "devDependencies": {
     "rollup": "latest",

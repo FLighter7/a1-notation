@@ -1,5 +1,5 @@
 // Module
-const A1 	= require('../dist/object/index.umd.js');
+const A1 	= require('../dist/index.umd.js');
 
 // Tests
 const tests =

@@ -9,7 +9,7 @@ import config 		from './package.json';
 const 	projectName 		= config.projectName,
 		context 			= config.projectContext;// top-level context
 const 	input 				= './src/index.ts',
-		outFile 			= './dist/object/index',
+		outFile 			= './dist/index',
 		name 				= projectName,// module name
 		format 				= 'iife',
 		sourcemap 			= true,
