@@ -20,8 +20,8 @@ import {
   isLetter,
   isValidA1,
 } from './helpers';
-import A1Error 			from './validation/A1Error';
-import options 			from './options/options';
+import A1Error from './A1Error';
+import options from './options/options';
 
 class A1
 {
