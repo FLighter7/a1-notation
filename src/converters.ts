@@ -78,4 +78,4 @@ export const rowStringToNumber = (row: string): number => parseInt(row, 10);
  *
  * @returns {string}
  */
-export const rowNumberToString = (row: number): string => row.toString();
+export const rowNumberToString = (row: number): string => String(row);

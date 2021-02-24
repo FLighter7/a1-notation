@@ -11,8 +11,15 @@ import {
   rowStringToNumber,
   rowNumberToString,
 } from './converters';
-import isValidA1 		from './validation/isValidA1';
-import isValidNumber 	from './validation/isValidNumber';
+import {
+  type,
+  isString,
+  isNumber,
+  isPositiveNumber,
+  isStringifiedNumber,
+  isLetter,
+  isValidA1,
+} from './helpers';
 import A1Error 			from './validation/A1Error';
 import options 			from './options/options';
 
@@ -118,7 +125,7 @@ class A1
    */
   static toCol(col: number): string
   {
-    if(!isValidNumber(col))
+    if(!isPositiveNumber(col))
       throw new A1Error(col).wasNumber();
     return colNumberToString(col);
   }
@@ -154,7 +161,7 @@ class A1
    */
   static toRow(row: number): string
   {
-    if(!isValidNumber(row))
+    if(!isPositiveNumber(row))
       throw new A1Error(row).wasNumber();
     return rowNumberToString(row);
   }
@@ -195,12 +202,6 @@ class A1
    */
   private _initObject(options: options): void
   {
-    const isString = <T>(some: T) => typeof some === 'string';
-    const isNumber = isValidNumber;
-    const isLetter    = (some: string) => /^[a-z]+$/i.test(some);
-    const isStrNumber = <T>(some: T) => typeof some === 'string' ? /^[0-9]+$/.test(some) : false;
-    const isStringifiedNumber = <T>(some: T) => isStrNumber(some) && isNumber(+some);
-
     const {
       a1Start,
       a1End,
@@ -221,12 +222,21 @@ class A1
         rs: number,
         re: number;
 
+    const getValue = (some: unknown, canBeLetter: boolean = true): number =>
+    {
+      if(isPositiveNumber(some) || isStringifiedNumber(some))
+        return +some;
+      if(canBeLetter && isLetter(some))
+        return A1._A1Col(some as string, this._converter);
+      return 0;
+    };
+
     /**
      * Define start range
      */
 
     // From a1Start
-    if(isString(a1Start) && isValidA1(a1Start))
+    if(isValidA1(a1Start))
     {
       const a1StartParsed = A1._parse(a1Start, this._converter);
       cs = a1StartParsed.cs;
@@ -241,62 +251,36 @@ class A1
       }
     }
 
-    // From colStart
+    // From colStart & rowStart
     if(!cs && colStart)
-    {
-      if(isNumber(colStart))
-        cs = colStart as number;
-      else if(isString(colStart))
-      {
-        if(isLetter(colStart as string))
-          cs = A1._A1Col(colStart as string, this._converter);
-        else if(isStringifiedNumber(colStart))
-          cs = +colStart;
-      }
-    }
-
-    // From rowStart
-    if(!rs && (isNumber(rowStart) || isStringifiedNumber(rowStart)))
-      rs = +rowStart;
+      cs = getValue(colStart);
+    if(!rs && rowStart)
+      rs = getValue(rowStart, false);
 
     /**
      * Define end range
      */
 
     // From a1End
-    if(!ce && !re && isString(a1End) && isValidA1(a1End))
+    if(!ce && !re && isValidA1(a1End))
     {
       const a1EndParsed = A1._parse(a1End, this._converter);
       ce = a1EndParsed.ce;
       re = a1EndParsed.re;
     }
 
-    // From colEnd
+    // From colEnd & rowEnd
     if(!ce && colEnd)
-    {
-      if(isNumber(colEnd))
-        ce = colEnd as number;
-      else if(isString(colEnd))
-      {
-        if(isLetter(colEnd as string))
-          ce = A1._A1Col(colEnd as string, this._converter);
-        else if(isStringifiedNumber(colEnd))
-          ce = +colEnd;
-      }
-    }
+      ce = getValue(colEnd);
+    if(!re && rowEnd)
+      re = getValue(rowEnd, false);
 
-    // From rowEnd
-    if(!re && (isNumber(rowEnd) || isStringifiedNumber(rowEnd)))
-      re = +rowEnd;
-
-    // From nCols
-    if(!ce && cs && isNumber(nCols))
+    // From nCols & nRows
+    if(!ce && cs && isPositiveNumber(nCols))
       ce = cs + nCols - 1;
-
-    // From nRows
-    if(!re && rs && isNumber(nRows))
+    if(!re && rs && isPositiveNumber(nRows))
       re = rs + nRows - 1;
-    
+
     /**
      * If only start/end range was defined
      */
@@ -333,7 +317,7 @@ class A1
     nRows = nRows || 1;
     nCols = nCols || 1;
     let all = [col, row, nRows, nCols];
-    if(!all.every(n => isValidNumber(n)))
+    if(!all.every(n => isPositiveNumber(n)))
       throw new A1Error(all.join(', ')).wasNumber();
     this._colStart 	= col;				// the first col
     this._rowStart 	= row;				// the first row
@@ -376,15 +360,14 @@ class A1
     // No arguments
     if(!arguments.length)
       throw new A1Error().wasUnknown();
-    const type = typeof something;
     // Object
-    if(something && type === 'object')
+    if(something && type(something) === 'object')
       this._initObject(something as options);
     // Number
-    else if(type === 'number')
+    else if(isNumber(something))
       this._initNumber.apply(this, arguments);
     // String
-    else if(type === 'string')
+    else if(isString(something))
       this._initString.apply(this, arguments);
     // Unknown argument
     else
@@ -501,7 +484,7 @@ class A1
    */
   addX(count: number): this
   {
-    if(!isValidNumber(count, false))
+    if(!isNumber(count))
       throw new A1Error(count).wasUnknown();
     count >= 0
       ? this._colEnd 	 += count
@@ -519,7 +502,7 @@ class A1
    */
   addY(count: number): this
   {
-    if(!isValidNumber(count, false))
+    if(!isNumber(count))
       throw new A1Error(count).wasUnknown();
     count >= 0
       ? this._rowEnd 	 += count
@@ -550,7 +533,7 @@ class A1
    */
   removeX(count: number): this
   {
-    if(!isValidNumber(count, false))
+    if(!isNumber(count))
       throw new A1Error(count).wasUnknown();
     if(count >= 0)
     {
@@ -574,7 +557,7 @@ class A1
    */
   removeY(count: number): this
   {
-    if(!isValidNumber(count, false))
+    if(!isNumber(count))
       throw new A1Error(count).wasUnknown();
     if(count >= 0)
     {
@@ -611,7 +594,7 @@ class A1
    */
   shiftX(offset: number): this
   {
-    if(!isValidNumber(offset, false))
+    if(!isNumber(offset))
       throw new A1Error(offset).wasUnknown();
     let diff 	= this._colEnd - this._colStart,
       start 	= this._colStart + offset,
@@ -630,7 +613,7 @@ class A1
    */
   shiftY(offset: number): this
   {
-    if(!isValidNumber(offset, false))
+    if(!isNumber(offset))
       throw new A1Error(offset).wasUnknown();
     let diff 	= this._rowEnd - this._rowStart,
       start 	= this._rowStart + offset,
