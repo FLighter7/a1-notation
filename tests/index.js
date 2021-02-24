@@ -48,38 +48,7 @@ const tests =
 	},
 };
 
-tests.static.isValid(A1);
-tests.static.getCol(A1);
-tests.static.getLastCol(A1);
-tests.static.toCol(A1);
-tests.static.getRow(A1);
-tests.static.getLastRow(A1);
-tests.static.toRow(A1);
-tests.static.getWidth(A1);
-tests.static.getHeight(A1);
-
-tests.constructor.range(A1);
-tests.constructor.twoArguments(A1);
-tests.constructor.colRowNRows(A1);
-tests.constructor.colRowNRowsNCols(A1);
-tests.constructor.object(A1);
-
-tests.dynamic.get(A1);
-tests.dynamic.toString(A1);
-tests.dynamic.toJSON(A1);
-tests.dynamic.getCol(A1);
-tests.dynamic.getLastCol(A1);
-tests.dynamic.getRow(A1);
-tests.dynamic.getLastRow(A1);
-tests.dynamic.getWidth(A1);
-tests.dynamic.getHeight(A1);
-tests.dynamic.copy(A1);
-tests.dynamic.addX(A1);
-tests.dynamic.addY(A1);
-tests.dynamic.add(A1);
-tests.dynamic.removeX(A1);
-tests.dynamic.removeY(A1);
-tests.dynamic.remove(A1);
-tests.dynamic.shiftX(A1);
-tests.dynamic.shiftY(A1);
-tests.dynamic.shift(A1);
+// Run them
+for(const scope in tests)
+  for(const method in tests[scope])
+    tests[scope][method](A1);
