@@ -1,7 +1,7 @@
 # A1 notation
 
 ### About
-This library is for working with A1 notations such as "A1" or "A1:B2". The library exported as a UMD module.
+This library is for working with A1 notations such as "A1" or "A1:B2". The library is exported as a UMD module.
 
 ### Install
 ```
