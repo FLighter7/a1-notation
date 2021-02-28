@@ -27,7 +27,7 @@ options =
 
 #### Options priorities
 
-Options priorities consist of two parts, where (e.g. for the range "A1:B2") the first part is "A1" and the second is "B2". For the first part priorities are: `a1Start -> colStart -> rowStart -> column or/and row from the second part, it they were not provided`. For the second part priorities are: `a1Start -> a1End -> colEnd -> rowEnd -> nCols -> nRows -> column or/and row from the first part, it they were not provided`.
+Options priorities consist of two parts, where (e.g. for the range "A1:B2") the first part is "A1" and the second is "B2". For the first part priorities are: `a1Start -> colStart -> rowStart -> column or/and row from the second part, if they were not provided`. For the second part priorities are: `a1Start -> a1End -> colEnd -> rowEnd -> nCols -> nRows -> column or/and row from the first part, if they were not provided`.
 
 **Warning:** `{a1Start: "A1:A1", a1End: "B2"} -> A1:A1`, because ":" is provided.
 
