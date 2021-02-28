@@ -80,3 +80,6 @@ const A1 = require('@flighter/a1-notation');
 
 ## License
 [MIT](LICENSE)
+
+## Changelog
+[The latest updates](CHANGELOG.md)
