@@ -22,6 +22,7 @@ import {
 } from './helpers';
 import A1Error from './A1Error';
 import options from './options';
+import {Axis} from './enums';
 
 class A1
 {
@@ -504,7 +505,7 @@ class A1
    */
   setCol(val: string | number): this
   {
-    return this._setFields(val, '_colStart', 'col');
+    return this._setFields(val, '_colStart', Axis.X);
   }
 
   /**
@@ -515,7 +516,7 @@ class A1
    */
   setLastCol(val: string | number): this
   {
-    return this._setFields(val, '_colEnd', 'col');
+    return this._setFields(val, '_colEnd', Axis.X);
   }
 
   /**
@@ -526,7 +527,7 @@ class A1
    */
   setRow(val: string | number): this
   {
-    return this._setFields(val, '_rowStart', 'row', false);
+    return this._setFields(val, '_rowStart', Axis.Y, false);
   }
 
   /**
@@ -537,7 +538,7 @@ class A1
    */
   setLastRow(val: string | number): this
   {
-    return this._setFields(val, '_rowEnd', 'row', false);
+    return this._setFields(val, '_rowEnd', Axis.Y, false);
   }
 
   /**
@@ -550,7 +551,7 @@ class A1
    */
   addX(count: number): this
   {
-    return this._addFields(count, 'col');
+    return this._addFields(count, Axis.X);
   }
 
   /**
@@ -563,7 +564,7 @@ class A1
    */
   addY(count: number): this
   {
-    return this._addFields(count, 'row');
+    return this._addFields(count, Axis.Y);
   }
 
   /**
@@ -588,7 +589,7 @@ class A1
    */
   removeX(count: number): this
   {
-    return this._removeFields(count, 'col');
+    return this._removeFields(count, Axis.X);
   }
 
   /**
@@ -601,7 +602,7 @@ class A1
    */
   removeY(count: number): this
   {
-    return this._removeFields(count, 'row');
+    return this._removeFields(count, Axis.Y);
   }
 
   /**
@@ -626,7 +627,7 @@ class A1
    */
   shiftX(offset: number): this
   {
-    return this._shiftFields(offset, 'col');
+    return this._shiftFields(offset, Axis.X);
   }
 
   /**
@@ -639,7 +640,7 @@ class A1
    */
   shiftY(offset: number): this
   {
-    return this._shiftFields(offset, 'row');
+    return this._shiftFields(offset, Axis.Y);
   }
 
   /**
@@ -658,7 +659,7 @@ class A1
    * Sets a value to the specified field
    * @param {string | number} val
    * @param {string} field
-   * @param {'col' | 'row'} axis
+   * @param {Axis} axis
    * @param {boolean} [canBeLetter = true]
    *
    * @returns {this}
@@ -666,7 +667,7 @@ class A1
   private _setFields(
     val: string | number,
     field: string,
-    axis: 'col' | 'row',
+    axis: Axis,
     canBeLetter: boolean = true,
   ): this
   {
@@ -686,11 +687,11 @@ class A1
   /**
    * Adds N cells to the range along the x/y-axis
    * @param {number} count
-   * @param {'col' | 'row'} axis
+   * @param {Axis} axis
    *
    * @returns {this}
    */
-  private _addFields(count: number, axis: 'col' | 'row'): this
+  private _addFields(count: number, axis: Axis): this
   {
     if(!isNumber(count))
       throw new A1Error(count).u();
@@ -706,11 +707,11 @@ class A1
   /**
    * Removes N cells from the range along the x/y-axis
    * @param {number} count
-   * @param {'col' | 'row'} axis
+   * @param {Axis} axis
    *
    * @returns {this}
    */
-  private _removeFields(count: number, axis: 'col' | 'row'): this
+  private _removeFields(count: number, axis: Axis): this
   {
     if(!isNumber(count))
       throw new A1Error(count).u();
@@ -732,11 +733,11 @@ class A1
   /**
    * Shifts the specified fields along x/y-axis
    * @param {number} offset
-   * @param {'col' | 'row'} axis
+   * @param {Axis} axis
    *
    * @returns {this}
    */
-  private _shiftFields(offset: number, axis: 'col' | 'row'): this
+  private _shiftFields(offset: number, axis: Axis): this
   {
     if(!isNumber(offset))
       throw new A1Error(offset).u();
