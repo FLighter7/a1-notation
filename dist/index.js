@@ -2003,7 +2003,7 @@ var A1 = (function () {
 	    key: "_initObject",
 
 	    /***************
-	     *	CONSTRUCTOR
+	     * CONSTRUCTOR
 	     ***************/
 
 	    /**
@@ -2163,7 +2163,7 @@ var A1 = (function () {
 	      this._rowEnd = re;
 	    }
 	    /***********
-	     *	METHODS
+	     * METHODS
 	     ***********/
 
 	    /**
@@ -2196,7 +2196,7 @@ var A1 = (function () {
 	     *	@property {number} rowsCount
 	     *	@property {number} colsCount
 	     *
-	     *	@return {Result} full information about range
+	     *	@return {Result} full information about the range
 	     */
 
 	  }, {
@@ -2320,9 +2320,7 @@ var A1 = (function () {
 	  }, {
 	    key: "add",
 	    value: function add(countX, countY) {
-	      this.addX(countX);
-	      this.addY(countY);
-	      return this;
+	      return this.addX(countX).addY(countY);
 	    }
 	    /**
 	     *	Removes N cells from range along the x-axis
@@ -2383,9 +2381,7 @@ var A1 = (function () {
 	  }, {
 	    key: "remove",
 	    value: function remove(countX, countY) {
-	      this.removeX(countX);
-	      this.removeY(countY);
-	      return this;
+	      return this.removeX(countX).removeY(countY);
 	    }
 	    /**
 	     *	Shifts the range along the x-axis
@@ -2438,9 +2434,7 @@ var A1 = (function () {
 	  }, {
 	    key: "shift",
 	    value: function shift(offsetX, offsetY) {
-	      this.shiftX(offsetX);
-	      this.shiftY(offsetY);
-	      return this;
+	      return this.shiftX(offsetX).shiftY(offsetY);
 	    }
 	  }], [{
 	    key: "_parse",
@@ -2485,7 +2479,7 @@ var A1 = (function () {
 	      return converter === 1 ? colStringToNumber1(a1) : colStringToNumber2(a1);
 	    }
 	    /******************
-	     *	STATIC METHODS
+	     * STATIC METHODS
 	     ******************/
 
 	    /**

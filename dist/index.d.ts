@@ -3,7 +3,7 @@
  * Supports A1 notation like "A1" and "A1:B2"
  * @author FLighter
  */
-import options from './options/options';
+import options from './options';
 declare class A1 {
     private static _reg;
     /**
@@ -31,7 +31,7 @@ declare class A1 {
      */
     private static _A1Col;
     /******************
-     *	STATIC METHODS
+     * STATIC METHODS
      ******************/
     /**
      *	Checks A1 notation
@@ -98,7 +98,7 @@ declare class A1 {
      */
     static getHeight(a1: string): number;
     /***************
-     *	CONSTRUCTOR
+     * CONSTRUCTOR
      ***************/
     /**
      *	It handles case:
@@ -122,7 +122,7 @@ declare class A1 {
      */
     private _initString;
     /**
-     *	Constructor
+     * Constructor
      */
     constructor(object: options);
     constructor(range: string);
@@ -131,7 +131,7 @@ declare class A1 {
     constructor(col: number, row: number, nRows: number);
     constructor(col: number, row: number, nRows: number, nCols: number);
     /***********
-     *	METHODS
+     * METHODS
      ***********/
     /**
      *	@return {string} in A1 notation
@@ -151,7 +151,7 @@ declare class A1 {
      *	@property {number} rowsCount
      *	@property {number} colsCount
      *
-     *	@return {Result} full information about range
+     *	@return {Result} full information about the range
      */
     toJSON(): {
         colStart: number;

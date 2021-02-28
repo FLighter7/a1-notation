@@ -209,7 +209,7 @@ var A1 = (function () {
           return converter === 1 ? colStringToNumber1(a1) : colStringToNumber2(a1);
       }
       /******************
-       *	STATIC METHODS
+       * STATIC METHODS
        ******************/
       /**
        *	Checks A1 notation
@@ -312,7 +312,7 @@ var A1 = (function () {
           return re - rs + 1;
       }
       /***************
-       *	CONSTRUCTOR
+       * CONSTRUCTOR
        ***************/
       /**
        *	It handles case:
@@ -428,13 +428,13 @@ var A1 = (function () {
           this._rowEnd = re;
       }
       /***********
-       *	METHODS
+       * METHODS
        ***********/
       /**
        *	@return {string} in A1 notation
        */
       get() {
-          let start = colNumberToString(this._colStart) + rowNumberToString(this._rowStart), end = colNumberToString(this._colEnd) + rowNumberToString(this._rowEnd);
+          const start = colNumberToString(this._colStart) + rowNumberToString(this._rowStart), end = colNumberToString(this._colEnd) + rowNumberToString(this._rowEnd);
           return start === end ? start : `${start}:${end}`;
       }
       /**
@@ -453,7 +453,7 @@ var A1 = (function () {
        *	@property {number} rowsCount
        *	@property {number} colsCount
        *
-       *	@return {Result} full information about range
+       *	@return {Result} full information about the range
        */
       toJSON() {
           return {
@@ -550,9 +550,7 @@ var A1 = (function () {
        *	@return {this}
        */
       add(countX, countY) {
-          this.addX(countX);
-          this.addY(countY);
-          return this;
+          return this.addX(countX).addY(countY);
       }
       /**
        *	Removes N cells from range along the x-axis
@@ -604,9 +602,7 @@ var A1 = (function () {
        *	@return {this}
        */
       remove(countX, countY) {
-          this.removeX(countX);
-          this.removeY(countY);
-          return this;
+          return this.removeX(countX).removeY(countY);
       }
       /**
        *	Shifts the range along the x-axis
@@ -619,7 +615,7 @@ var A1 = (function () {
       shiftX(offset) {
           if (!isNumber(offset))
               throw new A1Error(offset).wasUnknown();
-          let diff = this._colEnd - this._colStart, start = this._colStart + offset, end = this._colEnd + offset;
+          const diff = this._colEnd - this._colStart, start = this._colStart + offset, end = this._colEnd + offset;
           this._colStart = start > 0 ? start : 1;
           this._colEnd = start > 0 ? end : diff + 1;
           return this;
@@ -635,7 +631,7 @@ var A1 = (function () {
       shiftY(offset) {
           if (!isNumber(offset))
               throw new A1Error(offset).wasUnknown();
-          let diff = this._rowEnd - this._rowStart, start = this._rowStart + offset, end = this._rowEnd + offset;
+          const diff = this._rowEnd - this._rowStart, start = this._rowStart + offset, end = this._rowEnd + offset;
           this._rowStart = start > 0 ? start : 1;
           this._rowEnd = start > 0 ? end : diff + 1;
           return this;
@@ -648,9 +644,7 @@ var A1 = (function () {
        *	@return {this}
        */
       shift(offsetX, offsetY) {
-          this.shiftX(offsetX);
-          this.shiftY(offsetY);
-          return this;
+          return this.shiftX(offsetX).shiftY(offsetY);
       }
   }
   // Regular expression for parsing
