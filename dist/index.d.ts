@@ -308,8 +308,7 @@ declare class A1 {
     /**
      * Adds N cells to the range along the x/y-axis
      * @param {number} count
-     * @param {string} fieldStart
-     * @param {string} fieldEnd
+     * @param {'col' | 'row'} axis
      *
      * @returns {this}
      */
@@ -317,8 +316,7 @@ declare class A1 {
     /**
      * Removes N cells from the range along the x/y-axis
      * @param {number} count
-     * @param {string} fieldStart
-     * @param {string} fieldEnd
+     * @param {'col' | 'row'} axis
      *
      * @returns {this}
      */
@@ -326,8 +324,7 @@ declare class A1 {
     /**
      * Shifts the specified fields along x/y-axis
      * @param {number} offset
-     * @param {string} fieldStart
-     * @param {string} fieldEnd
+     * @param {'col' | 'row'} axis
      *
      * @returns {this}
      */
