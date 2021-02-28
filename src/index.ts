@@ -394,8 +394,8 @@ class A1
    */
   get(): string
   {
-    let start 	= colNumberToString(this._colStart)+rowNumberToString(this._rowStart),
-      end 	= colNumberToString(this._colEnd)+rowNumberToString(this._rowEnd);
+    const start = colNumberToString(this._colStart)+rowNumberToString(this._rowStart),
+          end   = colNumberToString(this._colEnd)+rowNumberToString(this._rowEnd);
     return start === end ? start : `${start}:${end}`;
   }
 
@@ -417,26 +417,26 @@ class A1
    *	@property {number} rowsCount
    *	@property {number} colsCount
    *
-   *	@return {Result} full information about range
+   *	@return {Result} full information about the range
    */
   toJSON(): {
-    colStart: 	number,
-    rowStart: 	number,
-    colEnd: 	number,
-    rowEnd: 	number,
-    a1: 		string,
-    rowsCount: 	number,
-    colsCount: 	number,
+    colStart:  number,
+    rowStart:  number,
+    colEnd:    number,
+    rowEnd:    number,
+    a1:        string,
+    rowsCount: number,
+    colsCount: number,
   }
   {
     return {
-      colStart: 	this._colStart,
-      rowStart: 	this._rowStart,
-      colEnd: 	this._colEnd,
-      rowEnd: 	this._rowEnd,
-      a1: 		this.get(),
-      rowsCount: 	this._rowEnd - this._rowStart + 1,
-      colsCount: 	this._colEnd - this._colStart + 1,
+      colStart:  this._colStart,
+      rowStart:  this._rowStart,
+      colEnd:    this._colEnd,
+      rowEnd:    this._rowEnd,
+      a1:        this.get(),
+      rowsCount: this._rowEnd - this._rowStart + 1,
+      colsCount: this._colEnd - this._colStart + 1,
     }
   }
 
@@ -543,9 +543,7 @@ class A1
    */
   add(countX: number, countY: number): this
   {
-    this.addX(countX);
-    this.addY(countY);
-    return this;
+    return this.addX(countX).addY(countY);
   }
 
   /**
@@ -607,9 +605,7 @@ class A1
    */
   remove(countX: number, countY: number): this
   {
-    this.removeX(countX);
-    this.removeY(countY);
-    return this;
+    return this.removeX(countX).removeY(countY);
   }
 
   /**
@@ -624,11 +620,11 @@ class A1
   {
     if(!isNumber(offset))
       throw new A1Error(offset).wasUnknown();
-    let diff 	= this._colEnd - this._colStart,
-      start 	= this._colStart + offset,
-      end 	= this._colEnd 	 + offset;
-    this._colStart 	= start > 0 ? start : 1;
-    this._colEnd 	= start > 0 ? end 	: diff + 1;
+    const diff  = this._colEnd - this._colStart,
+          start = this._colStart + offset,
+          end   = this._colEnd   + offset;
+    this._colStart = start > 0 ? start : 1;
+    this._colEnd   = start > 0 ? end   : diff + 1;
     return this;
   }
 
@@ -644,11 +640,11 @@ class A1
   {
     if(!isNumber(offset))
       throw new A1Error(offset).wasUnknown();
-    let diff 	= this._rowEnd - this._rowStart,
-      start 	= this._rowStart + offset,
-      end 	= this._rowEnd 	 + offset;
-    this._rowStart 	= start > 0 ? start : 1;
-    this._rowEnd 	= start > 0 ? end 	: diff + 1;
+    const diff  = this._rowEnd - this._rowStart,
+          start = this._rowStart + offset,
+          end   = this._rowEnd   + offset;
+    this._rowStart = start > 0 ? start : 1;
+    this._rowEnd   = start > 0 ? end   : diff + 1;
     return this;
   }
 
@@ -661,9 +657,7 @@ class A1
    */
   shift(offsetX: number, offsetY: number): this
   {
-    this.shiftX(offsetX);
-    this.shiftY(offsetY);
-    return this;
+    return this.shiftX(offsetX).shiftY(offsetY);
   }
 }
 
