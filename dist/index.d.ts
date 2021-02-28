@@ -300,7 +300,7 @@ declare class A1 {
      * Sets a value to the specified field
      * @param {string | number} val
      * @param {string} field
-     * @param {'col' | 'row'} axis
+     * @param {Axis} axis
      * @param {boolean} [canBeLetter = true]
      *
      * @returns {this}
@@ -309,7 +309,7 @@ declare class A1 {
     /**
      * Adds N cells to the range along the x/y-axis
      * @param {number} count
-     * @param {'col' | 'row'} axis
+     * @param {Axis} axis
      *
      * @returns {this}
      */
@@ -317,7 +317,7 @@ declare class A1 {
     /**
      * Removes N cells from the range along the x/y-axis
      * @param {number} count
-     * @param {'col' | 'row'} axis
+     * @param {Axis} axis
      *
      * @returns {this}
      */
@@ -325,7 +325,7 @@ declare class A1 {
     /**
      * Shifts the specified fields along x/y-axis
      * @param {number} offset
-     * @param {'col' | 'row'} axis
+     * @param {Axis} axis
      *
      * @returns {this}
      */

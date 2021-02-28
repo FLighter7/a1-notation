@@ -1977,6 +1977,13 @@ var A1 = (function () {
 	  return A1Error;
 	}( /*#__PURE__*/_wrapNativeSuper(Error));
 
+	var Axis;
+
+	(function (Axis) {
+	  Axis["X"] = "col";
+	  Axis["Y"] = "row";
+	})(Axis || (Axis = {}));
+
 	var A1 = /*#__PURE__*/function () {
 	  function A1(something, something2, nRows, nCols) {
 	    _classCallCheck(this, A1);
@@ -2297,7 +2304,7 @@ var A1 = (function () {
 	  }, {
 	    key: "setCol",
 	    value: function setCol(val) {
-	      return this._setFields(val, '_colStart', 'col');
+	      return this._setFields(val, '_colStart', Axis.X);
 	    }
 	    /**
 	     * Sets a value to the end column
@@ -2309,7 +2316,7 @@ var A1 = (function () {
 	  }, {
 	    key: "setLastCol",
 	    value: function setLastCol(val) {
-	      return this._setFields(val, '_colEnd', 'col');
+	      return this._setFields(val, '_colEnd', Axis.X);
 	    }
 	    /**
 	     * Sets a value to the start row
@@ -2321,7 +2328,7 @@ var A1 = (function () {
 	  }, {
 	    key: "setRow",
 	    value: function setRow(val) {
-	      return this._setFields(val, '_rowStart', 'row', false);
+	      return this._setFields(val, '_rowStart', Axis.Y, false);
 	    }
 	    /**
 	     * Sets a value to the end row
@@ -2333,7 +2340,7 @@ var A1 = (function () {
 	  }, {
 	    key: "setLastRow",
 	    value: function setLastRow(val) {
-	      return this._setFields(val, '_rowEnd', 'row', false);
+	      return this._setFields(val, '_rowEnd', Axis.Y, false);
 	    }
 	    /**
 	     *	Adds N cells to range along the x-axis
@@ -2347,7 +2354,7 @@ var A1 = (function () {
 	  }, {
 	    key: "addX",
 	    value: function addX(count) {
-	      return this._addFields(count, 'col');
+	      return this._addFields(count, Axis.X);
 	    }
 	    /**
 	     *	Adds N cells to range along the y-axis
@@ -2361,7 +2368,7 @@ var A1 = (function () {
 	  }, {
 	    key: "addY",
 	    value: function addY(count) {
-	      return this._addFields(count, 'row');
+	      return this._addFields(count, Axis.Y);
 	    }
 	    /**
 	     *	Adds N cells to range along the x/y-axis
@@ -2388,7 +2395,7 @@ var A1 = (function () {
 	  }, {
 	    key: "removeX",
 	    value: function removeX(count) {
-	      return this._removeFields(count, 'col');
+	      return this._removeFields(count, Axis.X);
 	    }
 	    /**
 	     *	Removes N cells from range along the y-axis
@@ -2402,7 +2409,7 @@ var A1 = (function () {
 	  }, {
 	    key: "removeY",
 	    value: function removeY(count) {
-	      return this._removeFields(count, 'row');
+	      return this._removeFields(count, Axis.Y);
 	    }
 	    /**
 	     *	Removes N cells from range along the x/y-axis
@@ -2429,7 +2436,7 @@ var A1 = (function () {
 	  }, {
 	    key: "shiftX",
 	    value: function shiftX(offset) {
-	      return this._shiftFields(offset, 'col');
+	      return this._shiftFields(offset, Axis.X);
 	    }
 	    /**
 	     *	Shifts the range along the y-axis
@@ -2443,7 +2450,7 @@ var A1 = (function () {
 	  }, {
 	    key: "shiftY",
 	    value: function shiftY(offset) {
-	      return this._shiftFields(offset, 'row');
+	      return this._shiftFields(offset, Axis.Y);
 	    }
 	    /**
 	     *	Shifts the range along the x/y-axis
@@ -2462,7 +2469,7 @@ var A1 = (function () {
 	     * Sets a value to the specified field
 	     * @param {string | number} val
 	     * @param {string} field
-	     * @param {'col' | 'row'} axis
+	     * @param {Axis} axis
 	     * @param {boolean} [canBeLetter = true]
 	     *
 	     * @returns {this}
@@ -2479,7 +2486,7 @@ var A1 = (function () {
 	    /**
 	     * Adds N cells to the range along the x/y-axis
 	     * @param {number} count
-	     * @param {'col' | 'row'} axis
+	     * @param {Axis} axis
 	     *
 	     * @returns {this}
 	     */
@@ -2497,7 +2504,7 @@ var A1 = (function () {
 	    /**
 	     * Removes N cells from the range along the x/y-axis
 	     * @param {number} count
-	     * @param {'col' | 'row'} axis
+	     * @param {Axis} axis
 	     *
 	     * @returns {this}
 	     */
@@ -2522,7 +2529,7 @@ var A1 = (function () {
 	    /**
 	     * Shifts the specified fields along x/y-axis
 	     * @param {number} offset
-	     * @param {'col' | 'row'} axis
+	     * @param {Axis} axis
 	     *
 	     * @returns {this}
 	     */
