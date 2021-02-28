@@ -154,16 +154,19 @@ var A1 = (function () {
   }
 
   /**
-   * @file Math operations and converting in A1 notation
-   * Supports A1 notation like "A1" and "A1:B2"
-   * @author FLighter
+   * @file Contains enums
    */
-  // import {Axis} from './enums';
   var Axis;
   (function (Axis) {
       Axis["X"] = "col";
       Axis["Y"] = "row";
   })(Axis || (Axis = {}));
+
+  /**
+   * @file Math operations and converting in A1 notation
+   * Supports A1 notation like "A1" and "A1:B2"
+   * @author FLighter
+   */
   class A1 {
       constructor(something, something2, nRows, nCols) {
           /**

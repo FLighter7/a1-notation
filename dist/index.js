@@ -1977,6 +1977,9 @@ var A1 = (function () {
 	  return A1Error;
 	}( /*#__PURE__*/_wrapNativeSuper(Error));
 
+	/**
+	 * @file Contains enums
+	 */
 	var Axis;
 
 	(function (Axis) {
