@@ -497,6 +497,50 @@ class A1
   }
 
   /**
+   * Sets a value to the start column
+   * @param {string | number} val
+   *
+   * @returns {this}
+   */
+  setCol(val: string | number): this
+  {
+    return this._setField(val, '_colStart');
+  }
+
+  /**
+   * Sets a value to the end column
+   * @param {string | number} val
+   *
+   * @returns {this}
+   */
+  setLastCol(val: string | number): this
+  {
+    return this._setField(val, '_colEnd');
+  }
+
+  /**
+   * Sets a value to the start row
+   * @param {string | number} val
+   *
+   * @returns {this}
+   */
+  setRow(val: string | number): this
+  {
+    return this._setField(val, '_rowStart', false);
+  }
+
+  /**
+   * Sets a value to the end row
+   * @param {string | number} val
+   *
+   * @returns {this}
+   */
+  setLastRow(val: string | number): this
+  {
+    return this._setField(val, '_rowEnd', false);
+  }
+
+  /**
    *	Adds N cells to range along the x-axis
    *	if count >= 0 - adds to right
    *	if count <  0 - adds to left
@@ -658,6 +702,25 @@ class A1
   shift(offsetX: number, offsetY: number): this
   {
     return this.shiftX(offsetX).shiftY(offsetY);
+  }
+
+  /**
+   * Sets a value to the specified field
+   * @param {string | number} val
+   * @param {string} field
+   * @param {boolean} [canBeLetter = true]
+   *
+   * @returns {this}
+   */
+  private _setField(val: string | number, field: string, canBeLetter: boolean = true): this
+  {
+    if(isPositiveNumber(val) || isStringifiedNumber(val))
+      this[field] = +val;
+    else if(canBeLetter && isLetter(val))
+      this[field] = A1._A1Col(val as string, this._converter);
+    else
+      throw new A1Error(val).u();
+    return this;
   }
 }
 
