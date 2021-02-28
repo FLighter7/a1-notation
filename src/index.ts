@@ -27,14 +27,15 @@ class A1
 {
   // Regular expression for parsing
   private static _reg:RegExp = /^([A-Z]+)(\d+)(?::([A-Z]+)(\d+))?$/;
+
   /**
    *	Example: A1:B2
    */
-  private _colStart: 	number 	= 0;// A -> 1
-  private _rowStart: 	number 	= 0;// 1 -> 1
-  private _colEnd: 	number 	= 0;// B -> 2
-  private _rowEnd: 	number 	= 0;// 2 -> 2
-  private _converter: 1 | 2 	= 1;// converter 1 | 2
+  private _colStart: number = 0;// A -> 1
+  private _rowStart: number = 0;// 1 -> 1
+  private _colEnd:   number = 0;// B -> 2
+  private _rowEnd:   number = 0;// 2 -> 2
+  private _converter: 1 | 2 = 1;// converter 1 | 2
 
   /**
    *	Parses A1 notation
@@ -66,6 +67,7 @@ class A1
       re: rowEnd > rowStart ? rowEnd 	 : rowStart,
     }
   }
+
   /**
    *	Converts column letter to number using converter 1 or 2
    *	@param {string} a1
@@ -79,8 +81,9 @@ class A1
   }
 
   /******************
-   *	STATIC METHODS
+   * STATIC METHODS
    ******************/
+
   /**
    *	Checks A1 notation
    *	@param {string} a1
@@ -91,6 +94,7 @@ class A1
   {
     return isValidA1(a1);
   }
+
   /**
    *	Converts the first column letter from A1 to number
    *	@param {string} a1
@@ -104,6 +108,7 @@ class A1
       throw new A1Error(a1).wasString();
     return this._parse(a1, converter).cs;
   }
+
   /**
    *	Converts the last column letter from A1 to number
    *	@param {string} a1
@@ -117,6 +122,7 @@ class A1
       throw new A1Error(a1).wasString();
     return this._parse(a1, converter).ce;
   }
+
   /**
    *	Converts number to column letter in A1
    *	@param {number} col
@@ -129,6 +135,7 @@ class A1
       throw new A1Error(col).wasNumber();
     return colNumberToString(col);
   }
+
   /**
    *	Converts the first row string to number
    *	@param {string} a1
@@ -141,6 +148,7 @@ class A1
       throw new A1Error(a1).wasString();
     return this._parse(a1, 1).rs;
   }
+
   /**
    *	Converts the last row string to number
    *	@param {string} a1
@@ -153,6 +161,7 @@ class A1
       throw new A1Error(a1).wasString();
     return this._parse(a1, 1).re;
   }
+
   /**
    *	Converts number to row string in A1
    *	@param {number} row
@@ -165,6 +174,7 @@ class A1
       throw new A1Error(row).wasNumber();
     return rowNumberToString(row);
   }
+
   /**
    *	@param {string} a1
    *	@param {1 | 2} [converter = 1]
@@ -178,6 +188,7 @@ class A1
     let {ce, cs} = this._parse(a1, converter);
     return ce - cs + 1;
   }
+
   /**
    *	@param {string} a1
    *
@@ -192,7 +203,7 @@ class A1
   }
 
   /***************
-   *	CONSTRUCTOR
+   * CONSTRUCTOR
    ***************/
 
   /**
@@ -347,7 +358,7 @@ class A1
   }
 
   /**
-   *	Constructor
+   * Constructor
    */
   constructor(object: options)
   constructor(range: string)
@@ -375,8 +386,9 @@ class A1
   }
 
   /***********
-   *	METHODS
+   * METHODS
    ***********/
+
   /**
    *	@return {string} in A1 notation
    */
@@ -386,6 +398,7 @@ class A1
       end 	= colNumberToString(this._colEnd)+rowNumberToString(this._rowEnd);
     return start === end ? start : `${start}:${end}`;
   }
+
   /**
    *	@return {string} in A1 notation
    */
@@ -393,6 +406,7 @@ class A1
   {
     return this.get();
   }
+
   /**
    *	@typedef {Object} Result
    *	@property {number} colStart
@@ -425,6 +439,7 @@ class A1
       colsCount: 	this._colEnd - this._colStart + 1,
     }
   }
+
   /**
    *	@return {number} start column
    */
@@ -432,6 +447,7 @@ class A1
   {
     return this._colStart;
   }
+
   /**
    *	@return {number} end column
    */
@@ -439,6 +455,7 @@ class A1
   {
     return this._colEnd;
   }
+
   /**
    *	@return {number} start row
    */
@@ -446,6 +463,7 @@ class A1
   {
     return this._rowStart;
   }
+
   /**
    *	@return {number} end row
    */
@@ -453,6 +471,7 @@ class A1
   {
     return this._rowEnd;
   }
+
   /**
    *	@return {number} columns count
    */
@@ -460,6 +479,7 @@ class A1
   {
     return this._colEnd - this._colStart + 1;
   }
+
   /**
    *	@return {number} rows count
    */
@@ -467,6 +487,7 @@ class A1
   {
     return this._rowEnd - this._rowStart + 1;
   }
+
   /**
    *	@return {A1} copy of this object
    */
@@ -474,6 +495,7 @@ class A1
   {
     return new A1(this.get());
   }
+
   /**
    *	Adds N cells to range along the x-axis
    *	if count >= 0 - adds to right
@@ -492,6 +514,7 @@ class A1
     (this._colStart <= 0) && (this._colStart = 1);
     return this;
   }
+
   /**
    *	Adds N cells to range along the y-axis
    *	if count >= 0 - adds to bottom
@@ -510,6 +533,7 @@ class A1
     (this._rowStart <= 0) && (this._rowStart = 1);
     return this;
   }
+
   /**
    *	Adds N cells to range along the x/y-axis
    *	@param {number} countX
@@ -523,6 +547,7 @@ class A1
     this.addY(countY);
     return this;
   }
+
   /**
    *	Removes N cells from range along the x-axis
    *	if count >= 0 - removes from right
@@ -547,6 +572,7 @@ class A1
     }
     return this;
   }
+
   /**
    *	Removes N cells from range along the y-axis
    *	if count >= 0 - removes from bottom
@@ -571,6 +597,7 @@ class A1
     }
     return this;
   }
+
   /**
    *	Removes N cells from range along the x/y-axis
    *	@param {number} countX
@@ -584,6 +611,7 @@ class A1
     this.removeY(countY);
     return this;
   }
+
   /**
    *	Shifts the range along the x-axis
    *	If offset >= 0 - shifts to right
@@ -603,6 +631,7 @@ class A1
     this._colEnd 	= start > 0 ? end 	: diff + 1;
     return this;
   }
+
   /**
    *	Shifts the range along the y-axis
    *	If offset >= 0 - shifts to bottom
@@ -622,6 +651,7 @@ class A1
     this._rowEnd 	= start > 0 ? end 	: diff + 1;
     return this;
   }
+
   /**
    *	Shifts the range along the x/y-axis
    *	@param {number} offsetX
