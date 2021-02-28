@@ -1,4 +1,4 @@
-**shiftX**
+### shiftX
 ```js
 // shiftX(offset: number): this
 
@@ -23,7 +23,7 @@ new A1('A1:B2').shiftX(-1);// A1:B2
 new A1('B3:C4').shiftX(-1);// A3:B4
 ```
 
-**shiftY**
+### shiftY
 ```js
 // shiftY(offset: number): this
 
@@ -54,7 +54,7 @@ new A1('A1:B2').shiftY(-1);// A1:B2
 new A1('B3:C4').shiftY(-1);// B2:C3
 ```
 
-**shift**
+### shift
 ```js
 // shift(offsetX: number, offsetY: number): this
 

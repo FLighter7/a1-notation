@@ -24,8 +24,8 @@ yarn add @flighter/a1-notation
 ### What is the difference?
 
 [11]: https://www.google.com/search?q=js+umd+is
-[12]: src/converters.ts
-[13]: src/converters.ts
+[12]: src/converters.ts#L13
+[13]: src/converters.ts#L30
 
 * **converter 1** or **converter 2**? The difference is in the algorithm of convertation. You can compare [the first method][12] with [the second method][13].
 * **"ES5" or "ESNext"?** ES5 has already converted to ES5 standard with all needed polyfills. ESNext uses the original syntax of the code.
@@ -40,7 +40,7 @@ import A1 from '@flighter/a1-notation';
 const A1 = require('@flighter/a1-notation');
 ```
 
-## Methods
+## API
 
 **Note:** A1 string could be represented in any register. `A1 === a1`, `A1:B2 === a1:b2 === A1:b2 === a1:B2`
 
@@ -74,6 +74,6 @@ const A1 = require('@flighter/a1-notation');
 - [removeX(count: number): this](docs/method-remove.md)
 - [removeY(count: number): this](docs/method-remove.md)
 - [remove(countX: number, countY: number): this](docs/method-remove.md)
-- [shiftX(offset: number): this](docs/method-shift.md)
-- [shiftY(offset: number): this](docs/method-shift.md)
-- [shift(offsetX: number, offsetY: number): this](docs/method-shift.md)
+- [shiftX(offset: number): this](docs/method-shift.md#shiftx)
+- [shiftY(offset: number): this](docs/method-shift.md#shifty)
+- [shift(offsetX: number, offsetY: number): this](docs/method-shift.md#shift)
