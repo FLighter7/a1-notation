@@ -550,7 +550,7 @@ class A1
    */
   addX(count: number): this
   {
-    return this._addFields(count, '_colStart', '_colEnd');
+    return this._addFields(count, 'col');
   }
 
   /**
@@ -563,7 +563,7 @@ class A1
    */
   addY(count: number): this
   {
-    return this._addFields(count, '_rowStart', '_rowEnd');
+    return this._addFields(count, 'row');
   }
 
   /**
@@ -588,7 +588,7 @@ class A1
    */
   removeX(count: number): this
   {
-    return this._removeFields(count, '_colStart', '_colEnd');
+    return this._removeFields(count, 'col');
   }
 
   /**
@@ -601,7 +601,7 @@ class A1
    */
   removeY(count: number): this
   {
-    return this._removeFields(count, '_rowStart', '_rowEnd');
+    return this._removeFields(count, 'row');
   }
 
   /**
@@ -626,7 +626,7 @@ class A1
    */
   shiftX(offset: number): this
   {
-    return this._shiftFields(offset, '_colStart', '_colEnd');
+    return this._shiftFields(offset, 'col');
   }
 
   /**
@@ -639,7 +639,7 @@ class A1
    */
   shiftY(offset: number): this
   {
-    return this._shiftFields(offset, '_rowStart', '_rowEnd');
+    return this._shiftFields(offset, 'row');
   }
 
   /**
@@ -676,15 +676,16 @@ class A1
   /**
    * Adds N cells to the range along the x/y-axis
    * @param {number} count
-   * @param {string} fieldStart
-   * @param {string} fieldEnd
+   * @param {'col' | 'row'} axis
    *
    * @returns {this}
    */
-  private _addFields(count: number, fieldStart: string, fieldEnd: string): this
+  private _addFields(count: number, axis: 'col' | 'row'): this
   {
     if(!isNumber(count))
       throw new A1Error(count).u();
+    const fieldStart = `_${axis}Start`,
+          fieldEnd   = `_${axis}End`;
     count >= 0
       ? this[fieldEnd]   += count
       : this[fieldStart] += count;
@@ -695,15 +696,16 @@ class A1
   /**
    * Removes N cells from the range along the x/y-axis
    * @param {number} count
-   * @param {string} fieldStart
-   * @param {string} fieldEnd
+   * @param {'col' | 'row'} axis
    *
    * @returns {this}
    */
-  private _removeFields(count: number, fieldStart: string, fieldEnd: string): this
+  private _removeFields(count: number, axis: 'col' | 'row'): this
   {
     if(!isNumber(count))
       throw new A1Error(count).u();
+    const fieldStart = `_${axis}Start`,
+          fieldEnd   = `_${axis}End`;
     if(count >= 0)
     {
       this[fieldEnd] -= count;
@@ -720,15 +722,16 @@ class A1
   /**
    * Shifts the specified fields along x/y-axis
    * @param {number} offset
-   * @param {string} fieldStart
-   * @param {string} fieldEnd
+   * @param {'col' | 'row'} axis
    *
    * @returns {this}
    */
-  private _shiftFields(offset: number, fieldStart: string, fieldEnd: string): this
+  private _shiftFields(offset: number, axis: 'col' | 'row'): this
   {
     if(!isNumber(offset))
       throw new A1Error(offset).u();
+    const fieldStart = `_${axis}Start`,
+          fieldEnd   = `_${axis}End`;
     const diff  = this[fieldEnd] - this[fieldStart],
           start = this[fieldStart] + offset,
           end   = this[fieldEnd]   + offset;
