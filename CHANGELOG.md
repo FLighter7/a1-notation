@@ -1,3 +1,11 @@
+# 2.0.0
+- Deleted the version "with object"
+- Optimized the library
+- Added new methods `set*`
+- Updated documentation
+- Changed tab indents to spaces
+- Updated name in the license
+
 # 1.0.7
 - Packages updated
 
