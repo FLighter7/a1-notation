@@ -31,7 +31,7 @@ Options priorities consist of two parts, where (e.g. for the range "A1:B2") the 
 
 **Warning:** `{a1Start: "A1:A1", a1End: "B2"} -> A1:A1`, because ":" is provided.
 
-**Note:** If the constructor can't define any of column/row start/end values, an error will be thrown
+**Note:** If the constructor can't define any of column/row start/end values, an error will be thrown.
 
 #### Examples
 
