@@ -21,7 +21,7 @@ import {
   isValidA1,
 } from './helpers';
 import A1Error from './A1Error';
-import options from './options/options';
+import options from './options';
 
 class A1
 {
