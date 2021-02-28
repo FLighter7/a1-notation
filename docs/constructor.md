@@ -1,4 +1,4 @@
-**constructor**
+### constructor
 ```js
 // constructor(object: options) - in version "with object"
 // constructor(range: string)

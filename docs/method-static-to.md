@@ -1,4 +1,4 @@
-*static* **toCol**
+### <a name="tocol"></a> *static* toCol
 ```js
 // static toCol(col: number): string
 
@@ -11,7 +11,7 @@ A1.toCol(1);   // 'A'
 A1.toCol('A1');// Error
 ```
 
-*static* **toRow**
+### <a name="torow"></a> *static* toRow
 ```js
 // static toRow(row: number): string
 

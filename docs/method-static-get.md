@@ -1,4 +1,4 @@
-*static* **getCol**
+### <a name="getcol"></a> *static* getCol
 ```js
 // static getCol(a1: string, converter: 1 | 2 = 1): number
 
@@ -12,7 +12,7 @@ A1.getCol('A1:B2');// 1
 A1.getCol('aaaaa');// Error
 ```
 
-*static* **getLastCol**
+### <a name="getlastcol"></a> *static* getLastCol
 ```js
 // static getLastCol(a1: string, converter: 1 | 2 = 1): number
 
@@ -26,7 +26,7 @@ A1.getLastCol('A1:B2');// 2
 A1.getLastCol('aaaaa');// Error
 ```
 
-*static* **getRow**
+### <a name="getrow"></a> *static* getRow
 ```js
 // static getRow(a1: string): number
 
@@ -40,7 +40,7 @@ A1.getRow('A1:B2');// 1
 A1.getRow('aaaaa');// Error
 ```
 
-*static* **getLastRow**
+### <a name="getlastrow"></a> *static* getLastRow
 ```js
 // static getLastRow(a1: string): number
 
@@ -54,7 +54,7 @@ A1.getLastRow('A1:B2');// 1
 A1.getLastRow('aaaaa');// Error
 ```
 
-*static* **getWidth**
+### <a name="getwidth"></a> *static* getWidth
 ```js
 // static getWidth(a1: string, converter: 1 | 2 = 1): number
 
@@ -68,7 +68,7 @@ A1.getWidth('A1:B2');// 2
 A1.getWidth('aaaaa');// Error
 ```
 
-*static* **getHeight**
+### <a name="getheight"></a> *static* getHeight
 ```js
 // static getHeight(a1: string): number
 

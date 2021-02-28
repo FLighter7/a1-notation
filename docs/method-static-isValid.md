@@ -1,4 +1,4 @@
-*static* **isValid**
+### <a name="isvalid"></a> *static* isValid
 ```js
 // static isValid(a1: string): boolean
 

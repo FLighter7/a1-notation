@@ -1,4 +1,4 @@
-**removeX**
+### removeX
 ```js
 // removeX(count: number): this
 
@@ -23,7 +23,7 @@ new A1('A1:B2').removeX(-1);// B1:B2
 new A1('B3:C4').removeX(-1);// C3:C4
 ```
 
-**removeY**
+### removeY
 ```js
 // removeY(count: number): this
 
@@ -54,7 +54,7 @@ new A1('A1:B2').removeY(-1);// A2:B2
 new A1('B3:C4').removeY(-1);// B4:C4
 ```
 
-**remove**
+### remove
 ```js
 // remove(countX: number, countY: number): this
 

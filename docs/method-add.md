@@ -1,4 +1,4 @@
-**addX**
+### addX
 ```js
 // addX(count: number): this
 
@@ -23,7 +23,7 @@ new A1('A1:B2').addX(-1);// A1:B2
 new A1('C1:E1').addX(-1);// B1:E1
 ```
 
-**addY**
+### addY
 ```js
 // addY(count: number): this
 
@@ -54,7 +54,7 @@ new A1('A1:B2').addY(-1);// A1:B2
 new A1('A3:B4').addY(-1);// A2:B4
 ```
 
-**add**
+### add
 ```js
 // add(countX: number, countY: number): this
 

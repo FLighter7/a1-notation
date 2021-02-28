@@ -1,4 +1,4 @@
-**get**
+### get
 ```js
 // get(): string
 
@@ -11,7 +11,7 @@ new A1('A1').get();   // 'A1'
 new A1('A1:B2').get();// 'A1:B2'
 ```
 
-**toString**
+### toString
 ```js
 // toString(): string
 
@@ -24,7 +24,7 @@ new A1('A1').toString();   // 'A1'
 new A1('A1:B2').toString();// 'A1:B2'
 ```
 
-**toJSON**
+### toJSON
 ```js
 // toJSON(): result
 /**
@@ -71,7 +71,7 @@ new A1('A1:B2').toJSON();
  */
 ```
 
-**getCol**
+### getCol
 ```js
 // getCol(): number
 
@@ -84,7 +84,7 @@ new A1('A1').getCol();   // 1
 new A1('A1:B2').getCol();// 1
 ```
 
-**getLastCol**
+### getLastCol
 ```js
 // getLastCol(): number
 
@@ -97,7 +97,7 @@ new A1('A1').getLastCol();   // 1
 new A1('A1:B2').getLastCol();// 2
 ```
 
-**getRow**
+### getRow
 ```js
 // getRow(): number
 
@@ -110,7 +110,7 @@ new A1('A1').getRow();   // 1
 new A1('A1:B2').getRow();// 1
 ```
 
-**getLastRow**
+### getLastRow
 ```js
 // getLastRow(): number
 
@@ -123,7 +123,7 @@ new A1('A1').getLastRow();   // 1
 new A1('A1:B2').getLastRow();// 2
 ```
 
-**getWidth**
+### getWidth
 ```js
 // getWidth(): number
 
@@ -136,7 +136,7 @@ new A1('A1').getWidth();   // 1
 new A1('A1:B2').getWidth();// 2
 ```
 
-**getHeight**
+### getHeight
 ```js
 // getHeight(): number
 
