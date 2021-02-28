@@ -1,5 +1,5 @@
 # 2.0.0
-- Deleted the version "with object"
+- Deleted the version "without object"
 - Optimized the library
 - Added new methods `set*`
 - Updated documentation
