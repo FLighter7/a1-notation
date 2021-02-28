@@ -50,7 +50,7 @@ A1.getRow('aaaaa');// Error
 
 // Example
 A1.getLastRow('A1');   // 1
-A1.getLastRow('A1:B2');// 1
+A1.getLastRow('A1:B2');// 2
 A1.getLastRow('aaaaa');// Error
 ```
 
