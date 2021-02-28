@@ -1,5 +1,5 @@
 /**
- *	@fileOverview A1 notation errors
+ * @fileOverview A1 notation errors
  */
 export default class A1Error<T> extends Error
 {
@@ -15,19 +15,28 @@ export default class A1Error<T> extends Error
 		this.message 	= str;
 	}
 
-	wasString(): A1Error<T>
+  /**
+   * Was string
+   */
+	s(): A1Error<T>
 	{
 		this.message = `Invalid A1 notation: ${this.message}`;
 		return this;
 	}
 
-	wasNumber(): A1Error<T>
+  /**
+   * Was number
+   */
+	n(): A1Error<T>
 	{
 		this.message = `Invalid A1 number(s): ${this.message}`;
 		return this;
 	}
 
-	wasUnknown(): A1Error<T>
+  /**
+   * Was unknown
+   */
+	u(): A1Error<T>
 	{
 		this.message = `Invalid A1 argument(s): ${this.message}`;
 		return this;

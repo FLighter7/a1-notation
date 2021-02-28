@@ -105,7 +105,7 @@ class A1
   static getCol(a1: string, converter: 1 | 2 = 1): number
   {
     if(!isValidA1(a1))
-      throw new A1Error(a1).wasString();
+      throw new A1Error(a1).s();
     return this._parse(a1, converter).cs;
   }
 
@@ -119,7 +119,7 @@ class A1
   static getLastCol(a1: string, converter: 1 | 2 = 1): number
   {
     if(!isValidA1(a1))
-      throw new A1Error(a1).wasString();
+      throw new A1Error(a1).s();
     return this._parse(a1, converter).ce;
   }
 
@@ -132,7 +132,7 @@ class A1
   static toCol(col: number): string
   {
     if(!isPositiveNumber(col))
-      throw new A1Error(col).wasNumber();
+      throw new A1Error(col).n();
     return colNumberToString(col);
   }
 
@@ -145,7 +145,7 @@ class A1
   static getRow(a1: string): number
   {
     if(!isValidA1(a1))
-      throw new A1Error(a1).wasString();
+      throw new A1Error(a1).s();
     return this._parse(a1, 1).rs;
   }
 
@@ -158,7 +158,7 @@ class A1
   static getLastRow(a1: string): number
   {
     if(!isValidA1(a1))
-      throw new A1Error(a1).wasString();
+      throw new A1Error(a1).s();
     return this._parse(a1, 1).re;
   }
 
@@ -171,7 +171,7 @@ class A1
   static toRow(row: number): string
   {
     if(!isPositiveNumber(row))
-      throw new A1Error(row).wasNumber();
+      throw new A1Error(row).n();
     return rowNumberToString(row);
   }
 
@@ -184,7 +184,7 @@ class A1
   static getWidth(a1: string, converter: 1 | 2 = 1): number
   {
     if(!isValidA1(a1))
-      throw new A1Error(a1).wasString();
+      throw new A1Error(a1).s();
     let {ce, cs} = this._parse(a1, converter);
     return ce - cs + 1;
   }
@@ -197,7 +197,7 @@ class A1
   static getHeight(a1: string): number
   {
     if(!isValidA1(a1))
-      throw new A1Error(a1).wasString();
+      throw new A1Error(a1).s();
     let {re, rs} = this._parse(a1, 1);
     return re - rs + 1;
   }
@@ -304,7 +304,7 @@ class A1
      * Check results
      */
     if(!cs || !rs || !ce || !re)
-      throw new A1Error(options).wasUnknown();
+      throw new A1Error(options).u();
 
     /**
      * Set ranges
@@ -329,7 +329,7 @@ class A1
     nCols = nCols || 1;
     let all = [col, row, nRows, nCols];
     if(!all.every(n => isPositiveNumber(n)))
-      throw new A1Error(all.join(', ')).wasNumber();
+      throw new A1Error(all.join(', ')).n();
     this._colStart 	= col;				// the first col
     this._rowStart 	= row;				// the first row
     this._colEnd 	= col + nCols - 1;	// how many cols in total (cols length)
@@ -349,7 +349,7 @@ class A1
       ? `${rangeStart}:${rangeEnd}`// rangeStart: string, rangeEnd: string
       : rangeStart;                // range: string
     if(!isValidA1(range))
-      throw new A1Error(range).wasString();
+      throw new A1Error(range).s();
     const {cs, rs, ce, re} = A1._parse(range, this._converter);
     this._colStart = cs;
     this._rowStart = rs;
@@ -370,7 +370,7 @@ class A1
   {
     // No arguments
     if(!arguments.length)
-      throw new A1Error().wasUnknown();
+      throw new A1Error().u();
     // Object
     if(something && type(something) === 'object')
       this._initObject(something as options);
@@ -382,7 +382,7 @@ class A1
       this._initString.apply(this, arguments);
     // Unknown argument
     else
-      throw new A1Error(something).wasUnknown();
+      throw new A1Error(something).u();
   }
 
   /***********
@@ -507,7 +507,7 @@ class A1
   addX(count: number): this
   {
     if(!isNumber(count))
-      throw new A1Error(count).wasUnknown();
+      throw new A1Error(count).u();
     count >= 0
       ? this._colEnd 	 += count
       : this._colStart += count;
@@ -526,7 +526,7 @@ class A1
   addY(count: number): this
   {
     if(!isNumber(count))
-      throw new A1Error(count).wasUnknown();
+      throw new A1Error(count).u();
     count >= 0
       ? this._rowEnd 	 += count
       : this._rowStart += count;
@@ -557,7 +557,7 @@ class A1
   removeX(count: number): this
   {
     if(!isNumber(count))
-      throw new A1Error(count).wasUnknown();
+      throw new A1Error(count).u();
     if(count >= 0)
     {
       this._colEnd -= count;
@@ -582,7 +582,7 @@ class A1
   removeY(count: number): this
   {
     if(!isNumber(count))
-      throw new A1Error(count).wasUnknown();
+      throw new A1Error(count).u();
     if(count >= 0)
     {
       this._rowEnd -= count;
@@ -619,7 +619,7 @@ class A1
   shiftX(offset: number): this
   {
     if(!isNumber(offset))
-      throw new A1Error(offset).wasUnknown();
+      throw new A1Error(offset).u();
     const diff  = this._colEnd - this._colStart,
           start = this._colStart + offset,
           end   = this._colEnd   + offset;
@@ -639,7 +639,7 @@ class A1
   shiftY(offset: number): this
   {
     if(!isNumber(offset))
-      throw new A1Error(offset).wasUnknown();
+      throw new A1Error(offset).u();
     const diff  = this._rowEnd - this._rowStart,
           start = this._rowStart + offset,
           end   = this._rowEnd   + offset;
