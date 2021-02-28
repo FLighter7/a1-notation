@@ -1923,7 +1923,7 @@ var A1 = (function () {
 	}
 
 	/**
-	 *	@fileOverview A1 notation errors
+	 * @fileOverview A1 notation errors
 	 */
 	var A1Error = /*#__PURE__*/function (_Error) {
 	  _inherits(A1Error, _Error);
@@ -1941,22 +1941,34 @@ var A1 = (function () {
 	    _this.message = str;
 	    return _this;
 	  }
+	  /**
+	   * Was string
+	   */
+
 
 	  _createClass(A1Error, [{
-	    key: "wasString",
-	    value: function wasString() {
+	    key: "s",
+	    value: function s() {
 	      this.message = "Invalid A1 notation: ".concat(this.message);
 	      return this;
 	    }
+	    /**
+	     * Was number
+	     */
+
 	  }, {
-	    key: "wasNumber",
-	    value: function wasNumber() {
+	    key: "n",
+	    value: function n() {
 	      this.message = "Invalid A1 number(s): ".concat(this.message);
 	      return this;
 	    }
+	    /**
+	     * Was unknown
+	     */
+
 	  }, {
-	    key: "wasUnknown",
-	    value: function wasUnknown() {
+	    key: "u",
+	    value: function u() {
 	      this.message = "Invalid A1 argument(s): ".concat(this.message);
 	      return this;
 	    }
@@ -1983,12 +1995,12 @@ var A1 = (function () {
 	    this._converter = 1; // converter 1 | 2
 	    // No arguments
 
-	    if (!arguments.length) throw new A1Error().wasUnknown(); // Object
+	    if (!arguments.length) throw new A1Error().u(); // Object
 
 	    if (something && type(something) === 'object') this._initObject(something); // Number
 	    else if (isNumber(something)) this._initNumber.apply(this, arguments); // String
 	      else if (isString(something)) this._initString.apply(this, arguments); // Unknown argument
-	        else throw new A1Error(something).wasUnknown();
+	        else throw new A1Error(something).u();
 	  }
 	  /**
 	   *	Parses A1 notation
@@ -2087,7 +2099,7 @@ var A1 = (function () {
 	       * Check results
 	       */
 
-	      if (!cs || !rs || !ce || !re) throw new A1Error(options).wasUnknown();
+	      if (!cs || !rs || !ce || !re) throw new A1Error(options).u();
 	      /**
 	       * Set ranges
 	       */
@@ -2121,7 +2133,7 @@ var A1 = (function () {
 	      var all = [col, row, nRows, nCols];
 	      if (!all.every(function (n) {
 	        return isPositiveNumber(n);
-	      })) throw new A1Error(all.join(', ')).wasNumber();
+	      })) throw new A1Error(all.join(', ')).n();
 	      this._colStart = col; // the first col
 
 	      this._rowStart = row; // the first row
@@ -2149,7 +2161,7 @@ var A1 = (function () {
 	      var range = rangeEnd ? "".concat(rangeStart, ":").concat(rangeEnd) // rangeStart: string, rangeEnd: string
 	      : rangeStart; // range: string
 
-	      if (!isValidA1(range)) throw new A1Error(range).wasString();
+	      if (!isValidA1(range)) throw new A1Error(range).s();
 
 	      var _A1$_parse = A1._parse(range, this._converter),
 	          cs = _A1$_parse.cs,
@@ -2287,7 +2299,7 @@ var A1 = (function () {
 	  }, {
 	    key: "addX",
 	    value: function addX(count) {
-	      if (!isNumber(count)) throw new A1Error(count).wasUnknown();
+	      if (!isNumber(count)) throw new A1Error(count).u();
 	      count >= 0 ? this._colEnd += count : this._colStart += count;
 	      this._colStart <= 0 && (this._colStart = 1);
 	      return this;
@@ -2304,7 +2316,7 @@ var A1 = (function () {
 	  }, {
 	    key: "addY",
 	    value: function addY(count) {
-	      if (!isNumber(count)) throw new A1Error(count).wasUnknown();
+	      if (!isNumber(count)) throw new A1Error(count).u();
 	      count >= 0 ? this._rowEnd += count : this._rowStart += count;
 	      this._rowStart <= 0 && (this._rowStart = 1);
 	      return this;
@@ -2334,7 +2346,7 @@ var A1 = (function () {
 	  }, {
 	    key: "removeX",
 	    value: function removeX(count) {
-	      if (!isNumber(count)) throw new A1Error(count).wasUnknown();
+	      if (!isNumber(count)) throw new A1Error(count).u();
 
 	      if (count >= 0) {
 	        this._colEnd -= count;
@@ -2358,7 +2370,7 @@ var A1 = (function () {
 	  }, {
 	    key: "removeY",
 	    value: function removeY(count) {
-	      if (!isNumber(count)) throw new A1Error(count).wasUnknown();
+	      if (!isNumber(count)) throw new A1Error(count).u();
 
 	      if (count >= 0) {
 	        this._rowEnd -= count;
@@ -2395,7 +2407,7 @@ var A1 = (function () {
 	  }, {
 	    key: "shiftX",
 	    value: function shiftX(offset) {
-	      if (!isNumber(offset)) throw new A1Error(offset).wasUnknown();
+	      if (!isNumber(offset)) throw new A1Error(offset).u();
 	      var diff = this._colEnd - this._colStart,
 	          start = this._colStart + offset,
 	          end = this._colEnd + offset;
@@ -2415,7 +2427,7 @@ var A1 = (function () {
 	  }, {
 	    key: "shiftY",
 	    value: function shiftY(offset) {
-	      if (!isNumber(offset)) throw new A1Error(offset).wasUnknown();
+	      if (!isNumber(offset)) throw new A1Error(offset).u();
 	      var diff = this._rowEnd - this._rowStart,
 	          start = this._rowStart + offset,
 	          end = this._rowEnd + offset;
@@ -2506,7 +2518,7 @@ var A1 = (function () {
 	    key: "getCol",
 	    value: function getCol(a1) {
 	      var converter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-	      if (!isValidA1(a1)) throw new A1Error(a1).wasString();
+	      if (!isValidA1(a1)) throw new A1Error(a1).s();
 	      return this._parse(a1, converter).cs;
 	    }
 	    /**
@@ -2521,7 +2533,7 @@ var A1 = (function () {
 	    key: "getLastCol",
 	    value: function getLastCol(a1) {
 	      var converter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-	      if (!isValidA1(a1)) throw new A1Error(a1).wasString();
+	      if (!isValidA1(a1)) throw new A1Error(a1).s();
 	      return this._parse(a1, converter).ce;
 	    }
 	    /**
@@ -2534,7 +2546,7 @@ var A1 = (function () {
 	  }, {
 	    key: "toCol",
 	    value: function toCol(col) {
-	      if (!isPositiveNumber(col)) throw new A1Error(col).wasNumber();
+	      if (!isPositiveNumber(col)) throw new A1Error(col).n();
 	      return colNumberToString(col);
 	    }
 	    /**
@@ -2547,7 +2559,7 @@ var A1 = (function () {
 	  }, {
 	    key: "getRow",
 	    value: function getRow(a1) {
-	      if (!isValidA1(a1)) throw new A1Error(a1).wasString();
+	      if (!isValidA1(a1)) throw new A1Error(a1).s();
 	      return this._parse(a1, 1).rs;
 	    }
 	    /**
@@ -2560,7 +2572,7 @@ var A1 = (function () {
 	  }, {
 	    key: "getLastRow",
 	    value: function getLastRow(a1) {
-	      if (!isValidA1(a1)) throw new A1Error(a1).wasString();
+	      if (!isValidA1(a1)) throw new A1Error(a1).s();
 	      return this._parse(a1, 1).re;
 	    }
 	    /**
@@ -2573,7 +2585,7 @@ var A1 = (function () {
 	  }, {
 	    key: "toRow",
 	    value: function toRow(row) {
-	      if (!isPositiveNumber(row)) throw new A1Error(row).wasNumber();
+	      if (!isPositiveNumber(row)) throw new A1Error(row).n();
 	      return rowNumberToString(row);
 	    }
 	    /**
@@ -2587,7 +2599,7 @@ var A1 = (function () {
 	    key: "getWidth",
 	    value: function getWidth(a1) {
 	      var converter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-	      if (!isValidA1(a1)) throw new A1Error(a1).wasString();
+	      if (!isValidA1(a1)) throw new A1Error(a1).s();
 
 	      var _this$_parse = this._parse(a1, converter),
 	          ce = _this$_parse.ce,
@@ -2604,7 +2616,7 @@ var A1 = (function () {
 	  }, {
 	    key: "getHeight",
 	    value: function getHeight(a1) {
-	      if (!isValidA1(a1)) throw new A1Error(a1).wasString();
+	      if (!isValidA1(a1)) throw new A1Error(a1).s();
 
 	      var _this$_parse2 = this._parse(a1, 1),
 	          re = _this$_parse2.re,

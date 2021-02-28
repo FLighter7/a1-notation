@@ -121,7 +121,7 @@ var A1 = (function () {
   const isValidA1 = (some) => isString(some) && /^[A-Z]+\d+(:[A-Z]+\d+)?$/i.test(some);
 
   /**
-   *	@fileOverview A1 notation errors
+   * @fileOverview A1 notation errors
    */
   class A1Error extends Error {
       constructor(something) {
@@ -130,15 +130,24 @@ var A1 = (function () {
           this.name = 'A1Error';
           this.message = str;
       }
-      wasString() {
+      /**
+       * Was string
+       */
+      s() {
           this.message = `Invalid A1 notation: ${this.message}`;
           return this;
       }
-      wasNumber() {
+      /**
+       * Was number
+       */
+      n() {
           this.message = `Invalid A1 number(s): ${this.message}`;
           return this;
       }
-      wasUnknown() {
+      /**
+       * Was unknown
+       */
+      u() {
           this.message = `Invalid A1 argument(s): ${this.message}`;
           return this;
       }
@@ -161,7 +170,7 @@ var A1 = (function () {
           this._converter = 1; // converter 1 | 2
           // No arguments
           if (!arguments.length)
-              throw new A1Error().wasUnknown();
+              throw new A1Error().u();
           // Object
           if (something && type(something) === 'object')
               this._initObject(something);
@@ -173,7 +182,7 @@ var A1 = (function () {
               this._initString.apply(this, arguments);
           // Unknown argument
           else
-              throw new A1Error(something).wasUnknown();
+              throw new A1Error(something).u();
       }
       /**
        *	Parses A1 notation
@@ -229,7 +238,7 @@ var A1 = (function () {
        */
       static getCol(a1, converter = 1) {
           if (!isValidA1(a1))
-              throw new A1Error(a1).wasString();
+              throw new A1Error(a1).s();
           return this._parse(a1, converter).cs;
       }
       /**
@@ -241,7 +250,7 @@ var A1 = (function () {
        */
       static getLastCol(a1, converter = 1) {
           if (!isValidA1(a1))
-              throw new A1Error(a1).wasString();
+              throw new A1Error(a1).s();
           return this._parse(a1, converter).ce;
       }
       /**
@@ -252,7 +261,7 @@ var A1 = (function () {
        */
       static toCol(col) {
           if (!isPositiveNumber(col))
-              throw new A1Error(col).wasNumber();
+              throw new A1Error(col).n();
           return colNumberToString(col);
       }
       /**
@@ -263,7 +272,7 @@ var A1 = (function () {
        */
       static getRow(a1) {
           if (!isValidA1(a1))
-              throw new A1Error(a1).wasString();
+              throw new A1Error(a1).s();
           return this._parse(a1, 1).rs;
       }
       /**
@@ -274,7 +283,7 @@ var A1 = (function () {
        */
       static getLastRow(a1) {
           if (!isValidA1(a1))
-              throw new A1Error(a1).wasString();
+              throw new A1Error(a1).s();
           return this._parse(a1, 1).re;
       }
       /**
@@ -285,7 +294,7 @@ var A1 = (function () {
        */
       static toRow(row) {
           if (!isPositiveNumber(row))
-              throw new A1Error(row).wasNumber();
+              throw new A1Error(row).n();
           return rowNumberToString(row);
       }
       /**
@@ -296,7 +305,7 @@ var A1 = (function () {
        */
       static getWidth(a1, converter = 1) {
           if (!isValidA1(a1))
-              throw new A1Error(a1).wasString();
+              throw new A1Error(a1).s();
           let { ce, cs } = this._parse(a1, converter);
           return ce - cs + 1;
       }
@@ -307,7 +316,7 @@ var A1 = (function () {
        */
       static getHeight(a1) {
           if (!isValidA1(a1))
-              throw new A1Error(a1).wasString();
+              throw new A1Error(a1).s();
           let { re, rs } = this._parse(a1, 1);
           return re - rs + 1;
       }
@@ -380,7 +389,7 @@ var A1 = (function () {
            * Check results
            */
           if (!cs || !rs || !ce || !re)
-              throw new A1Error(options).wasUnknown();
+              throw new A1Error(options).u();
           /**
            * Set ranges
            */
@@ -402,7 +411,7 @@ var A1 = (function () {
           nCols = nCols || 1;
           let all = [col, row, nRows, nCols];
           if (!all.every(n => isPositiveNumber(n)))
-              throw new A1Error(all.join(', ')).wasNumber();
+              throw new A1Error(all.join(', ')).n();
           this._colStart = col; // the first col
           this._rowStart = row; // the first row
           this._colEnd = col + nCols - 1; // how many cols in total (cols length)
@@ -420,7 +429,7 @@ var A1 = (function () {
               ? `${rangeStart}:${rangeEnd}` // rangeStart: string, rangeEnd: string
               : rangeStart; // range: string
           if (!isValidA1(range))
-              throw new A1Error(range).wasString();
+              throw new A1Error(range).s();
           const { cs, rs, ce, re } = A1._parse(range, this._converter);
           this._colStart = cs;
           this._rowStart = rs;
@@ -518,7 +527,7 @@ var A1 = (function () {
        */
       addX(count) {
           if (!isNumber(count))
-              throw new A1Error(count).wasUnknown();
+              throw new A1Error(count).u();
           count >= 0
               ? this._colEnd += count
               : this._colStart += count;
@@ -535,7 +544,7 @@ var A1 = (function () {
        */
       addY(count) {
           if (!isNumber(count))
-              throw new A1Error(count).wasUnknown();
+              throw new A1Error(count).u();
           count >= 0
               ? this._rowEnd += count
               : this._rowStart += count;
@@ -562,7 +571,7 @@ var A1 = (function () {
        */
       removeX(count) {
           if (!isNumber(count))
-              throw new A1Error(count).wasUnknown();
+              throw new A1Error(count).u();
           if (count >= 0) {
               this._colEnd -= count;
               (this._colEnd < this._colStart) && (this._colEnd = this._colStart);
@@ -583,7 +592,7 @@ var A1 = (function () {
        */
       removeY(count) {
           if (!isNumber(count))
-              throw new A1Error(count).wasUnknown();
+              throw new A1Error(count).u();
           if (count >= 0) {
               this._rowEnd -= count;
               (this._rowEnd < this._rowStart) && (this._rowEnd = this._rowStart);
@@ -614,7 +623,7 @@ var A1 = (function () {
        */
       shiftX(offset) {
           if (!isNumber(offset))
-              throw new A1Error(offset).wasUnknown();
+              throw new A1Error(offset).u();
           const diff = this._colEnd - this._colStart, start = this._colStart + offset, end = this._colEnd + offset;
           this._colStart = start > 0 ? start : 1;
           this._colEnd = start > 0 ? end : diff + 1;
@@ -630,7 +639,7 @@ var A1 = (function () {
        */
       shiftY(offset) {
           if (!isNumber(offset))
-              throw new A1Error(offset).wasUnknown();
+              throw new A1Error(offset).u();
           const diff = this._rowEnd - this._rowStart, start = this._rowStart + offset, end = this._rowEnd + offset;
           this._rowStart = start > 0 ? start : 1;
           this._rowEnd = start > 0 ? end : diff + 1;
