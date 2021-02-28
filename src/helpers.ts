@@ -35,12 +35,12 @@ export const isNumber = (some: unknown): boolean => type(some) === 'number' && N
 export const isPositiveNumber = (some: unknown): boolean => isNumber(some) && some > 0;
 
 /**
- * Checks if a value is a stringified number like "1", "2", ...
+ * Checks if a value is a stringified number > 0 like "1", "2", ...
  * @param {unknown} some
  *
  * @returns {boolean}
  */
-export const isStringifiedNumber = (some: unknown): boolean => isString(some) && /^[0-9]+$/.test(some as string) && isNumber(+some);
+export const isStringifiedNumber = (some: unknown): boolean => isString(some) && /^[0-9]+$/.test(some as string) && isPositiveNumber(+some);
 
 /**
  * Checks if a value is a letter between a-zA-Z

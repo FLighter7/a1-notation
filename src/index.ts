@@ -504,7 +504,7 @@ class A1
    */
   setCol(val: string | number): this
   {
-    return this._setFields(val, '_colStart');
+    return this._setFields(val, '_colStart', 'col');
   }
 
   /**
@@ -515,7 +515,7 @@ class A1
    */
   setLastCol(val: string | number): this
   {
-    return this._setFields(val, '_colEnd');
+    return this._setFields(val, '_colEnd', 'col');
   }
 
   /**
@@ -526,7 +526,7 @@ class A1
    */
   setRow(val: string | number): this
   {
-    return this._setFields(val, '_rowStart', false);
+    return this._setFields(val, '_rowStart', 'row', false);
   }
 
   /**
@@ -537,7 +537,7 @@ class A1
    */
   setLastRow(val: string | number): this
   {
-    return this._setFields(val, '_rowEnd', false);
+    return this._setFields(val, '_rowEnd', 'row', false);
   }
 
   /**
@@ -658,11 +658,17 @@ class A1
    * Sets a value to the specified field
    * @param {string | number} val
    * @param {string} field
+   * @param {'col' | 'row'} axis
    * @param {boolean} [canBeLetter = true]
    *
    * @returns {this}
    */
-  private _setFields(val: string | number, field: string, canBeLetter: boolean = true): this
+  private _setFields(
+    val: string | number,
+    field: string,
+    axis: 'col' | 'row',
+    canBeLetter: boolean = true,
+  ): this
   {
     if(isPositiveNumber(val) || isStringifiedNumber(val))
       this[field] = +val;
@@ -670,6 +676,10 @@ class A1
       this[field] = A1._A1Col(val as string, this._converter);
     else
       throw new A1Error(val).u();
+
+    if(this[`_${axis}Start`] > this[`_${axis}End`])
+      throw new A1Error(`The first column or row can't be bigger than the last, got: ${val}`);
+
     return this;
   }
 
