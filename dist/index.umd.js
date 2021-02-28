@@ -521,6 +521,42 @@
           return new A1(this.get());
       }
       /**
+       * Sets a value to the start column
+       * @param {string | number} val
+       *
+       * @returns {this}
+       */
+      setCol(val) {
+          return this._setField(val, '_colStart');
+      }
+      /**
+       * Sets a value to the end column
+       * @param {string | number} val
+       *
+       * @returns {this}
+       */
+      setLastCol(val) {
+          return this._setField(val, '_colEnd');
+      }
+      /**
+       * Sets a value to the start row
+       * @param {string | number} val
+       *
+       * @returns {this}
+       */
+      setRow(val) {
+          return this._setField(val, '_rowStart', false);
+      }
+      /**
+       * Sets a value to the end row
+       * @param {string | number} val
+       *
+       * @returns {this}
+       */
+      setLastRow(val) {
+          return this._setField(val, '_rowEnd', false);
+      }
+      /**
        *	Adds N cells to range along the x-axis
        *	if count >= 0 - adds to right
        *	if count <  0 - adds to left
@@ -657,6 +693,23 @@
        */
       shift(offsetX, offsetY) {
           return this.shiftX(offsetX).shiftY(offsetY);
+      }
+      /**
+       * Sets a value to the specified field
+       * @param {string | number} val
+       * @param {string} field
+       * @param {boolean} [canBeLetter = true]
+       *
+       * @returns {this}
+       */
+      _setField(val, field, canBeLetter = true) {
+          if (isPositiveNumber(val) || isStringifiedNumber(val))
+              this[field] = +val;
+          else if (canBeLetter && isLetter(val))
+              this[field] = A1._A1Col(val, this._converter);
+          else
+              throw new A1Error(val).u();
+          return this;
       }
   }
   // Regular expression for parsing

@@ -191,6 +191,34 @@ declare class A1 {
      */
     copy(): A1;
     /**
+     * Sets a value to the start column
+     * @param {string | number} val
+     *
+     * @returns {this}
+     */
+    setCol(val: string | number): this;
+    /**
+     * Sets a value to the end column
+     * @param {string | number} val
+     *
+     * @returns {this}
+     */
+    setLastCol(val: string | number): this;
+    /**
+     * Sets a value to the start row
+     * @param {string | number} val
+     *
+     * @returns {this}
+     */
+    setRow(val: string | number): this;
+    /**
+     * Sets a value to the end row
+     * @param {string | number} val
+     *
+     * @returns {this}
+     */
+    setLastRow(val: string | number): this;
+    /**
      *	Adds N cells to range along the x-axis
      *	if count >= 0 - adds to right
      *	if count <  0 - adds to left
@@ -268,5 +296,14 @@ declare class A1 {
      *	@return {this}
      */
     shift(offsetX: number, offsetY: number): this;
+    /**
+     * Sets a value to the specified field
+     * @param {string | number} val
+     * @param {string} field
+     * @param {boolean} [canBeLetter = true]
+     *
+     * @returns {this}
+     */
+    private _setField;
 }
 export default A1;

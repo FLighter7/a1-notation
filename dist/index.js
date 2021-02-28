@@ -2288,6 +2288,54 @@ var A1 = (function () {
 	      return new A1(this.get());
 	    }
 	    /**
+	     * Sets a value to the start column
+	     * @param {string | number} val
+	     *
+	     * @returns {this}
+	     */
+
+	  }, {
+	    key: "setCol",
+	    value: function setCol(val) {
+	      return this._setField(val, '_colStart');
+	    }
+	    /**
+	     * Sets a value to the end column
+	     * @param {string | number} val
+	     *
+	     * @returns {this}
+	     */
+
+	  }, {
+	    key: "setLastCol",
+	    value: function setLastCol(val) {
+	      return this._setField(val, '_colEnd');
+	    }
+	    /**
+	     * Sets a value to the start row
+	     * @param {string | number} val
+	     *
+	     * @returns {this}
+	     */
+
+	  }, {
+	    key: "setRow",
+	    value: function setRow(val) {
+	      return this._setField(val, '_rowStart', false);
+	    }
+	    /**
+	     * Sets a value to the end row
+	     * @param {string | number} val
+	     *
+	     * @returns {this}
+	     */
+
+	  }, {
+	    key: "setLastRow",
+	    value: function setLastRow(val) {
+	      return this._setField(val, '_rowEnd', false);
+	    }
+	    /**
 	     *	Adds N cells to range along the x-axis
 	     *	if count >= 0 - adds to right
 	     *	if count <  0 - adds to left
@@ -2447,6 +2495,22 @@ var A1 = (function () {
 	    key: "shift",
 	    value: function shift(offsetX, offsetY) {
 	      return this.shiftX(offsetX).shiftY(offsetY);
+	    }
+	    /**
+	     * Sets a value to the specified field
+	     * @param {string | number} val
+	     * @param {string} field
+	     * @param {boolean} [canBeLetter = true]
+	     *
+	     * @returns {this}
+	     */
+
+	  }, {
+	    key: "_setField",
+	    value: function _setField(val, field) {
+	      var canBeLetter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+	      if (isPositiveNumber(val) || isStringifiedNumber(val)) this[field] = +val;else if (canBeLetter && isLetter(val)) this[field] = A1._A1Col(val, this._converter);else throw new A1Error(val).u();
+	      return this;
 	    }
 	  }], [{
 	    key: "_parse",
