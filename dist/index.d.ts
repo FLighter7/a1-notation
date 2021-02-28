@@ -304,6 +304,33 @@ declare class A1 {
      *
      * @returns {this}
      */
-    private _setField;
+    private _setFields;
+    /**
+     * Adds N cells to the range along the x/y-axis
+     * @param {number} count
+     * @param {string} fieldStart
+     * @param {string} fieldEnd
+     *
+     * @returns {this}
+     */
+    private _addFields;
+    /**
+     * Removes N cells from the range along the x/y-axis
+     * @param {number} count
+     * @param {string} fieldStart
+     * @param {string} fieldEnd
+     *
+     * @returns {this}
+     */
+    private _removeFields;
+    /**
+     * Shifts the specified fields along x/y-axis
+     * @param {number} offset
+     * @param {string} fieldStart
+     * @param {string} fieldEnd
+     *
+     * @returns {this}
+     */
+    private _shiftFields;
 }
 export default A1;

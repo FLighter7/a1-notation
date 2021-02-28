@@ -527,7 +527,7 @@
        * @returns {this}
        */
       setCol(val) {
-          return this._setField(val, '_colStart');
+          return this._setFields(val, '_colStart');
       }
       /**
        * Sets a value to the end column
@@ -536,7 +536,7 @@
        * @returns {this}
        */
       setLastCol(val) {
-          return this._setField(val, '_colEnd');
+          return this._setFields(val, '_colEnd');
       }
       /**
        * Sets a value to the start row
@@ -545,7 +545,7 @@
        * @returns {this}
        */
       setRow(val) {
-          return this._setField(val, '_rowStart', false);
+          return this._setFields(val, '_rowStart', false);
       }
       /**
        * Sets a value to the end row
@@ -554,7 +554,7 @@
        * @returns {this}
        */
       setLastRow(val) {
-          return this._setField(val, '_rowEnd', false);
+          return this._setFields(val, '_rowEnd', false);
       }
       /**
        *	Adds N cells to range along the x-axis
@@ -565,13 +565,7 @@
        *	@return {this}
        */
       addX(count) {
-          if (!isNumber(count))
-              throw new A1Error(count).u();
-          count >= 0
-              ? this._colEnd += count
-              : this._colStart += count;
-          (this._colStart <= 0) && (this._colStart = 1);
-          return this;
+          return this._addFields(count, '_colStart', '_colEnd');
       }
       /**
        *	Adds N cells to range along the y-axis
@@ -582,13 +576,7 @@
        *	@return {this}
        */
       addY(count) {
-          if (!isNumber(count))
-              throw new A1Error(count).u();
-          count >= 0
-              ? this._rowEnd += count
-              : this._rowStart += count;
-          (this._rowStart <= 0) && (this._rowStart = 1);
-          return this;
+          return this._addFields(count, '_rowStart', '_rowEnd');
       }
       /**
        *	Adds N cells to range along the x/y-axis
@@ -609,17 +597,7 @@
        *	@return {this}
        */
       removeX(count) {
-          if (!isNumber(count))
-              throw new A1Error(count).u();
-          if (count >= 0) {
-              this._colEnd -= count;
-              (this._colEnd < this._colStart) && (this._colEnd = this._colStart);
-          }
-          else {
-              this._colStart -= count;
-              (this._colStart > this._colEnd) && (this._colStart = this._colEnd);
-          }
-          return this;
+          return this._removeFields(count, '_colStart', '_colEnd');
       }
       /**
        *	Removes N cells from range along the y-axis
@@ -630,17 +608,7 @@
        *	@return {this}
        */
       removeY(count) {
-          if (!isNumber(count))
-              throw new A1Error(count).u();
-          if (count >= 0) {
-              this._rowEnd -= count;
-              (this._rowEnd < this._rowStart) && (this._rowEnd = this._rowStart);
-          }
-          else {
-              this._rowStart -= count;
-              (this._rowStart > this._rowEnd) && (this._rowStart = this._rowEnd);
-          }
-          return this;
+          return this._removeFields(count, '_rowStart', '_rowEnd');
       }
       /**
        *	Removes N cells from range along the x/y-axis
@@ -661,12 +629,7 @@
        *	@return {this}
        */
       shiftX(offset) {
-          if (!isNumber(offset))
-              throw new A1Error(offset).u();
-          const diff = this._colEnd - this._colStart, start = this._colStart + offset, end = this._colEnd + offset;
-          this._colStart = start > 0 ? start : 1;
-          this._colEnd = start > 0 ? end : diff + 1;
-          return this;
+          return this._shiftFields(offset, '_colStart', '_colEnd');
       }
       /**
        *	Shifts the range along the y-axis
@@ -677,12 +640,7 @@
        *	@return {this}
        */
       shiftY(offset) {
-          if (!isNumber(offset))
-              throw new A1Error(offset).u();
-          const diff = this._rowEnd - this._rowStart, start = this._rowStart + offset, end = this._rowEnd + offset;
-          this._rowStart = start > 0 ? start : 1;
-          this._rowEnd = start > 0 ? end : diff + 1;
-          return this;
+          return this._shiftFields(offset, '_rowStart', '_rowEnd');
       }
       /**
        *	Shifts the range along the x/y-axis
@@ -702,13 +660,67 @@
        *
        * @returns {this}
        */
-      _setField(val, field, canBeLetter = true) {
+      _setFields(val, field, canBeLetter = true) {
           if (isPositiveNumber(val) || isStringifiedNumber(val))
               this[field] = +val;
           else if (canBeLetter && isLetter(val))
               this[field] = A1._A1Col(val, this._converter);
           else
               throw new A1Error(val).u();
+          return this;
+      }
+      /**
+       * Adds N cells to the range along the x/y-axis
+       * @param {number} count
+       * @param {string} fieldStart
+       * @param {string} fieldEnd
+       *
+       * @returns {this}
+       */
+      _addFields(count, fieldStart, fieldEnd) {
+          if (!isNumber(count))
+              throw new A1Error(count).u();
+          count >= 0
+              ? this[fieldEnd] += count
+              : this[fieldStart] += count;
+          (this[fieldStart] <= 0) && (this[fieldStart] = 1);
+          return this;
+      }
+      /**
+       * Removes N cells from the range along the x/y-axis
+       * @param {number} count
+       * @param {string} fieldStart
+       * @param {string} fieldEnd
+       *
+       * @returns {this}
+       */
+      _removeFields(count, fieldStart, fieldEnd) {
+          if (!isNumber(count))
+              throw new A1Error(count).u();
+          if (count >= 0) {
+              this[fieldEnd] -= count;
+              (this[fieldEnd] < this[fieldStart]) && (this[fieldEnd] = this[fieldStart]);
+          }
+          else {
+              this[fieldStart] -= count;
+              (this[fieldStart] > this[fieldEnd]) && (this[fieldStart] = this[fieldEnd]);
+          }
+          return this;
+      }
+      /**
+       * Shifts the specified fields along x/y-axis
+       * @param {number} offset
+       * @param {string} fieldStart
+       * @param {string} fieldEnd
+       *
+       * @returns {this}
+       */
+      _shiftFields(offset, fieldStart, fieldEnd) {
+          if (!isNumber(offset))
+              throw new A1Error(offset).u();
+          const diff = this[fieldEnd] - this[fieldStart], start = this[fieldStart] + offset, end = this[fieldEnd] + offset;
+          this[fieldStart] = start > 0 ? start : 1;
+          this[fieldEnd] = start > 0 ? end : diff + 1;
           return this;
       }
   }
