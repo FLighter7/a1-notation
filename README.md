@@ -13,33 +13,25 @@ yarn add @flighter/a1-notation
 ```
 
 ### Download
-[1]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/object/index.js
-[2]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/object/index.min.js
-[3]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/object/index.next.js
-[4]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/object/index.next.min.js
-[5]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/object/index.umd.js
-[6]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/noObject/index.js
-[7]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/noObject/index.min.js
-[8]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/noObject/index.next.js
-[9]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/noObject/index.next.min.js
-[10]: https://raw.githubusercontent.com/FLighter7/a1-notation/master/dist/noObject/index.umd.js
+[1]: dist/index.js
+[2]: dist/index.min.js
+[3]: dist/index.next.js
+[4]: dist/index.next.min.js
+[5]: dist/index.umd.js
 
-With object: [ES5(76 KB)][1], [ES5.min(26 KB)][2], [ESNext(21 KB)][3], [ESNext.min(6 KB)][4], [UMD(21 KB)][5]
-
-Without object: [ES5(68 KB)][6], [ES5.min(23 KB)][7], [ESNext(16 KB)][8], [ESNext.min(4 KB)][9], [UMD(16 KB)][10]
+[ES5(81 KB)][1], [ES5.min(26 KB)][2], [ESNext(22 KB)][3], [ESNext.min(5 KB)][4], [UMD(22 KB)][5]
 
 ### What is the difference?
 
 [11]: https://www.google.com/search?q=js+umd+is
-[12]: https://github.com/FLighter7/a1-notation/blob/master/src/converters/A1-Col-1.ts
-[13]: https://github.com/FLighter7/a1-notation/blob/master/src/converters/A1-Col-2.ts
+[12]: src/converters.ts
+[13]: src/converters.ts
 
-* **"with object" or "without object"?** A1 constructor can take an object as an argument - it's a version "with object". So, "without object" is when a constructor can't take an object as an argument.
 * **converter 1** or **converter 2**? The difference is in the algorithm of convertation. You can compare [the first method][12] with [the second method][13].
 * **"ES5" or "ESNext"?** ES5 has already converted to ES5 standard with all needed polyfills. ESNext uses the original syntax of the code.
 * **"UMD"?** UMD - Unified Module Definition, more in [Google][11].
 * **".min"?** Minified version.
-* Default version in npm is UMD ESNext "with object". This version is not transpiled and minified, so you need to transpile and minify it.
+* **Default version** in npm is UMD ESNext. This version is not transpiled and minified, so you need to transpile and minify it.
 
 ## Initialization
 ```js
@@ -52,10 +44,36 @@ const A1 = require('@flighter/a1-notation');
 
 **Note:** A1 string could be represented in any register. `A1 === a1`, `A1:B2 === a1:b2 === A1:b2 === a1:B2`
 
-[static isValid(a1: string): boolean](docs/method-static-isValid.md)
-[static getCol(a1: string, converter: 1 | 2 = 1): number](docs/method-static-get.md)
-[static getLastCol(a1: string, converter: 1 | 2 = 1): number](docs/method-static-get.md)
-[static getRow(a1: string): number](docs/method-static-get.md)
-[static getLastRow(a1: string): number](docs/method-static-get.md)
-[static getWidth(a1: string, converter: 1 | 2 = 1): number](docs/method-static-get.md)
-[static getHeight(a1: string): number](docs/method-static-get.md)
+- [static isValid(a1: string): boolean](docs/method-static-isValid.md)
+- [static getCol(a1: string, converter: 1 | 2 = 1): number](docs/method-static-get.md)
+- [static getLastCol(a1: string, converter: 1 | 2 = 1): number](docs/method-static-get.md)
+- [static getRow(a1: string): number](docs/method-static-get.md)
+- [static getLastRow(a1: string): number](docs/method-static-get.md)
+- [static getWidth(a1: string, converter: 1 | 2 = 1): number](docs/method-static-get.md)
+- [static getHeight(a1: string): number](docs/method-static-get.md)
+- [static toCol(col: number): string](docs/method-static-to.md)
+- [static toRow(row: number): string](docs/method-static-to.md)
+- [constructor](docs/constructor.md)
+- [get(): string](docs/method-get.md)
+- [toString(): string](docs/method-get.md)
+- [toJSON(): result](docs/method-get.md)
+- [getCol(): number](docs/method-get.md)
+- [getLastCol(): number](docs/method-get.md)
+- [getRow(): number](docs/method-get.md)
+- [getLastRow(): number](docs/method-get.md)
+- [getWidth(): number](docs/method-get.md)
+- [getHeight(): number](docs/method-get.md)
+- [setCol(val: string | number): this](docs/method-set.md)
+- [setLastCol(val: string | number): this](docs/method-set.md)
+- [setRow(val: string | number): this](docs/method-set.md)
+- [setLastRow(val: string | number): this](docs/method-set.md)
+- [copy(): A1](docs/method-copy.md)
+- [addX(count: number): this](docs/method-add.md)
+- [addY(count: number): this](docs/method-add.md)
+- [add(countX: number, countY: number): this](docs/method-add.md)
+- [removeX(count: number): this](docs/method-remove.md)
+- [removeY(count: number): this](docs/method-remove.md)
+- [remove(countX: number, countY: number): this](docs/method-remove.md)
+- [shiftX(offset: number): this](docs/method-shift.md)
+- [shiftY(offset: number): this](docs/method-shift.md)
+- [shift(offsetX: number, offsetY: number): this](docs/method-shift.md)
