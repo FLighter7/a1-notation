@@ -30,7 +30,7 @@ export declare const isNumber: (some: unknown) => boolean;
  */
 export declare const isPositiveNumber: (some: unknown) => boolean;
 /**
- * Checks if a value is a stringified number like "1", "2", ...
+ * Checks if a value is a stringified number > 0 like "1", "2", ...
  * @param {unknown} some
  *
  * @returns {boolean}

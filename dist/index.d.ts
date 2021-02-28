@@ -300,6 +300,7 @@ declare class A1 {
      * Sets a value to the specified field
      * @param {string | number} val
      * @param {string} field
+     * @param {'col' | 'row'} axis
      * @param {boolean} [canBeLetter = true]
      *
      * @returns {this}

@@ -1870,14 +1870,14 @@ var A1 = (function () {
 	  return isNumber(some) && some > 0;
 	};
 	/**
-	 * Checks if a value is a stringified number like "1", "2", ...
+	 * Checks if a value is a stringified number > 0 like "1", "2", ...
 	 * @param {unknown} some
 	 *
 	 * @returns {boolean}
 	 */
 
 	var isStringifiedNumber = function isStringifiedNumber(some) {
-	  return isString(some) && /^[0-9]+$/.test(some) && isNumber(+some);
+	  return isString(some) && /^[0-9]+$/.test(some) && isPositiveNumber(+some);
 	};
 	/**
 	 * Checks if a value is a letter between a-zA-Z
@@ -2297,7 +2297,7 @@ var A1 = (function () {
 	  }, {
 	    key: "setCol",
 	    value: function setCol(val) {
-	      return this._setFields(val, '_colStart');
+	      return this._setFields(val, '_colStart', 'col');
 	    }
 	    /**
 	     * Sets a value to the end column
@@ -2309,7 +2309,7 @@ var A1 = (function () {
 	  }, {
 	    key: "setLastCol",
 	    value: function setLastCol(val) {
-	      return this._setFields(val, '_colEnd');
+	      return this._setFields(val, '_colEnd', 'col');
 	    }
 	    /**
 	     * Sets a value to the start row
@@ -2321,7 +2321,7 @@ var A1 = (function () {
 	  }, {
 	    key: "setRow",
 	    value: function setRow(val) {
-	      return this._setFields(val, '_rowStart', false);
+	      return this._setFields(val, '_rowStart', 'row', false);
 	    }
 	    /**
 	     * Sets a value to the end row
@@ -2333,7 +2333,7 @@ var A1 = (function () {
 	  }, {
 	    key: "setLastRow",
 	    value: function setLastRow(val) {
-	      return this._setFields(val, '_rowEnd', false);
+	      return this._setFields(val, '_rowEnd', 'row', false);
 	    }
 	    /**
 	     *	Adds N cells to range along the x-axis
@@ -2462,6 +2462,7 @@ var A1 = (function () {
 	     * Sets a value to the specified field
 	     * @param {string | number} val
 	     * @param {string} field
+	     * @param {'col' | 'row'} axis
 	     * @param {boolean} [canBeLetter = true]
 	     *
 	     * @returns {this}
@@ -2469,9 +2470,10 @@ var A1 = (function () {
 
 	  }, {
 	    key: "_setFields",
-	    value: function _setFields(val, field) {
-	      var canBeLetter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+	    value: function _setFields(val, field, axis) {
+	      var canBeLetter = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
 	      if (isPositiveNumber(val) || isStringifiedNumber(val)) this[field] = +val;else if (canBeLetter && isLetter(val)) this[field] = A1._A1Col(val, this._converter);else throw new A1Error(val).u();
+	      if (this["_".concat(axis, "Start")] > this["_".concat(axis, "End")]) throw new A1Error("The first column or row can't be bigger than the last, got: ".concat(val));
 	      return this;
 	    }
 	    /**
