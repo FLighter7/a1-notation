@@ -13,13 +13,11 @@ yarn add @flighter/a1-notation
 ```
 
 ### Download
-[1]: dist/index.js
 [2]: dist/index.min.js
-[3]: dist/index.next.js
 [4]: dist/index.next.min.js
 [5]: dist/index.umd.js
 
-[ES5(81 KB)][1], [ES5.min(26 KB)][2], [ESNext(22 KB)][3], [ESNext.min(5 KB)][4], [UMD(22 KB)][5]
+[ES5.min(26 KB)][2], [ESNext.min(5 KB)][4], [UMD(22 KB)][5]
 
 ### What is the difference?
 
