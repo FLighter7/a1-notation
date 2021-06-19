@@ -1,3 +1,7 @@
+# 2.0.2
+- Deleted ES5, ESNext full versions
+- Updated packages
+
 # 2.0.0
 - Deleted the version "without object"
 - Optimized the library
