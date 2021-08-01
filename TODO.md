@@ -1,0 +1,2 @@
+- Add `export {A1} from '@flighter/a1-notation';` support
+- Change builder to the [type](https://github.com/FLighter7/type) version (esm support, jest test tool, eslint)
