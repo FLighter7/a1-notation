@@ -1,3 +1,6 @@
+# 2.1.1
+- Fixed default exports (didn't work)
+
 # 2.1.0
 - Deleted sourcemaps
 - Deleted ES5 minified version
