@@ -38,7 +38,13 @@ export default
   isProd && {
     input,
     context,
-    output: {format, sourcemap, name, file: `${outFile}.next.min.js`},
+    output: {
+      format,
+      sourcemap,
+      name,
+      file: `${outFile}.next.min.js`,
+      exports: 'named',
+    },
     plugins:
     [
       ...plugins,
@@ -55,6 +61,7 @@ export default
       name,
       format: 'umd',
       file: `${outFile}.umd.js`,
+      exports: 'named',
     },
     plugins:
     [

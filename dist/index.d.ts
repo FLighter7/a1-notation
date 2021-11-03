@@ -331,4 +331,5 @@ declare class A1 {
      */
     private _shiftFields;
 }
+export { A1 };
 export default A1;

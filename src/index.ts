@@ -752,4 +752,5 @@ class A1
   }
 }
 
+export {A1};
 export default A1;
