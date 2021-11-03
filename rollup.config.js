@@ -13,7 +13,7 @@ const input     = './src/index.ts',
       outFile   = './dist/index',
       name      = projectName,// module name
       format    = 'iife',
-      sourcemap = true,
+      sourcemap = false,
       isProd    = process.env.IS_DEV === 'false';
 
 const typescriptConfig = (declaration = false) =>
@@ -24,7 +24,7 @@ const typescriptConfig = (declaration = false) =>
       compilerOptions:
       {
         target: 'ESNext',
-        sourceMap: true,
+        sourceMap: sourcemap,
         declaration,
       },
       exclude: ['node_modules'],
