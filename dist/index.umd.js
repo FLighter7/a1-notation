@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.A1 = {}));
-})(this, (function (exports) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.A1 = factory());
+})(this, (function () { 'use strict';
 
   /**
    * @file Contains converters from string to number and vice versa
@@ -739,10 +739,9 @@
           return this;
       }
   }
+  // @ts-ignore
+  A1.A1 = A1;
 
-  exports.A1 = A1;
-  exports["default"] = A1;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
+  return A1;
 
 }));

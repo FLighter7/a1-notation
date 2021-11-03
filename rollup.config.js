@@ -43,7 +43,6 @@ export default
       sourcemap,
       name,
       file: `${outFile}.next.min.js`,
-      exports: 'named',
     },
     plugins:
     [
@@ -61,7 +60,6 @@ export default
       name,
       format: 'umd',
       file: `${outFile}.umd.js`,
-      exports: 'named',
     },
     plugins:
     [

@@ -35,6 +35,7 @@ yarn add @flighter/a1-notation
 import A1 from '@flighter/a1-notation';
 import {A1} from '@flighter/a1-notation';
 // or
+const A1 = require('@flighter/a1-notation');
 const {A1} = require('@flighter/a1-notation');
 ```
 
