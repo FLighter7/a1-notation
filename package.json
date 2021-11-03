@@ -30,18 +30,13 @@
     "compile:prod": "npm run check && npx rollup --config rollup.config.js --environment IS_DEV:false"
   },
   "devDependencies": {
-    "@babel/core": "latest",
-    "@babel/preset-env": "latest",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
     "chai": "latest",
-    "core-js": "latest",
     "mocha": "latest",
     "rollup": "latest",
-    "rollup-plugin-babel": "latest",
-    "rollup-plugin-commonjs": "latest",
-    "rollup-plugin-node-resolve": "latest",
     "rollup-plugin-terser": "latest",
     "rollup-plugin-typescript2": "latest",
-    "rollup-plugin-uglify": "latest",
     "tslib": "latest",
     "typescript": "latest"
   }
