@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.A1 = factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.A1 = {}));
+})(this, (function (exports) { 'use strict';
 
   /**
    * @file Contains converters from string to number and vice versa
@@ -171,31 +171,16 @@
    * @author FLighter
    */
   class A1 {
-      constructor(something, something2, nRows, nCols) {
-          /**
-           *	Example: A1:B2
-           */
-          this._colStart = 0; // A -> 1
-          this._rowStart = 0; // 1 -> 1
-          this._colEnd = 0; // B -> 2
-          this._rowEnd = 0; // 2 -> 2
-          this._converter = 1; // converter 1 | 2
-          // No arguments
-          if (!arguments.length)
-              throw new A1Error().u();
-          // Object
-          if (something && type(something) === 'object')
-              this._initObject(something);
-          // Number
-          else if (isNumber(something))
-              this._initNumber.apply(this, arguments);
-          // String
-          else if (isString(something))
-              this._initString.apply(this, arguments);
-          // Unknown argument
-          else
-              throw new A1Error(something).u();
-      }
+      // Regular expression for parsing
+      static _reg = /^([A-Z]+)(\d+)(?::([A-Z]+)(\d+))?$/;
+      /**
+       *	Example: A1:B2
+       */
+      _colStart = 0; // A -> 1
+      _rowStart = 0; // 1 -> 1
+      _colEnd = 0; // B -> 2
+      _rowEnd = 0; // 2 -> 2
+      _converter = 1; // converter 1 | 2
       /**
        *	Parses A1 notation
        *	@param {string} a1
@@ -207,7 +192,8 @@
           let [, cs, // col start // A
           rs, // row start // 1
           ce, // col end 	// B
-          re,] = a1.toUpperCase().match(this._reg);
+          re, // row end 	// 2
+          ] = a1.toUpperCase().match(this._reg);
           ce = ce || cs;
           re = re || rs;
           const colStart = this._A1Col(cs, converter), colEnd = this._A1Col(ce, converter), rowStart = rowStringToNumber(rs), rowEnd = rowStringToNumber(re);
@@ -447,6 +433,23 @@
           this._rowStart = rs;
           this._colEnd = ce;
           this._rowEnd = re;
+      }
+      constructor(something, something2, nRows, nCols) {
+          // No arguments
+          if (!arguments.length)
+              throw new A1Error().u();
+          // Object
+          if (something && type(something) === 'object')
+              this._initObject(something);
+          // Number
+          else if (isNumber(something))
+              this._initNumber.apply(this, arguments);
+          // String
+          else if (isString(something))
+              this._initString.apply(this, arguments);
+          // Unknown argument
+          else
+              throw new A1Error(something).u();
       }
       /***********
        * METHODS
@@ -736,9 +739,10 @@
           return this;
       }
   }
-  // Regular expression for parsing
-  A1._reg = /^([A-Z]+)(\d+)(?::([A-Z]+)(\d+))?$/;
 
-  return A1;
+  exports.A1 = A1;
+  exports["default"] = A1;
 
-})));
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+}));
