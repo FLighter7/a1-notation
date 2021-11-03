@@ -739,8 +739,6 @@
           return this;
       }
   }
-  // @ts-ignore
-  A1.A1 = A1;
 
   return A1;
 

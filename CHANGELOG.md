@@ -1,3 +1,6 @@
+# 2.1.2
+- Removed "named" exports (didn't work)
+
 # 2.1.1
 - Fixed default exports (didn't work)
 

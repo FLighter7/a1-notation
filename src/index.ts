@@ -752,6 +752,4 @@ class A1
   }
 }
 
-// @ts-ignore
-A1.A1 = A1;
 export default A1;
