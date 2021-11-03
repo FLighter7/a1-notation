@@ -1,3 +1,9 @@
+# 2.1.0
+- Deleted sourcemaps
+- Deleted ES5 minified version
+- Added named export
+- Updated packages
+
 # 2.0.2
 - Deleted ES5, ESNext full versions
 - Updated packages
