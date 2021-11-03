@@ -1,8 +1,6 @@
 import resolve    from 'rollup-plugin-node-resolve';
 import commonjs   from 'rollup-plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
-import babel      from 'rollup-plugin-babel';
-import {uglify}   from 'rollup-plugin-uglify';
 import {terser}   from 'rollup-plugin-terser';
 import config     from './package.json';
 
@@ -32,24 +30,6 @@ const typescriptConfig = (declaration = false) =>
   }
 };
 
-const babelConfig =
-{
-  sourceMaps: true,
-  exclude: 'node_modules/**',
-  extensions: ['.ts'],
-  presets:
-  [
-    [
-      '@babel/env',
-      {
-        modules: false,
-        useBuiltIns: 'usage',
-        corejs: 3,
-      }
-    ],
-  ],
-};
-
 const plugins = [resolve(), commonjs()];
 
 export default
@@ -64,19 +44,6 @@ export default
       ...plugins,
       typescript(typescriptConfig()),
       terser(),
-    ],
-  },
-  // ES5 minified
-  isProd && {
-    input,
-    context,
-    output: {format, sourcemap, name, file: `${outFile}.min.js`},
-    plugins:
-    [
-      ...plugins,
-      typescript(typescriptConfig()),
-      babel(babelConfig),
-      uglify(),
     ],
   },
   // As UMD module
