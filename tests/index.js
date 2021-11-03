@@ -1,7 +1,7 @@
 const {readdirSync, statSync} = require('fs');
 
 // Module
-const A1 = require('../dist/index.umd.js');
+const {A1} = require('../dist/index.umd.js');
 
 // Dynamic require all tests
 const isNotPrivate = item => !item.startsWith('_'),
