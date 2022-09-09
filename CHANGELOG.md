@@ -1,3 +1,6 @@
+# 2.1.3
+- Updated packages
+
 # 2.1.2
 - Removed "named" exports (didn't work)
 
