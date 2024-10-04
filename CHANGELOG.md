@@ -1,3 +1,6 @@
+# 2.2.1
+- Updated README
+
 # 2.2.0
 - Updated packages
 - Removed UMD version
