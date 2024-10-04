@@ -30,8 +30,6 @@ yarn add @flighter/a1-notation
 ## Initialization
 ```js
 import A1 from '@flighter/a1-notation';
-// or
-const A1 = require('@flighter/a1-notation');
 ```
 
 ## API
