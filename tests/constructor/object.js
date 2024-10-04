@@ -1,10 +1,10 @@
-const 	chai 			= require('chai'),
-		doesNotThrow 	= chai.assert.doesNotThrow,
-		method 			= 'options',
-		validObjects 	= require('../_values/validObjects.js');
+import {assert} from 'chai';
+import {validObjects} from '../_values.js';
 
-module.exports = (A1) =>
-{
+const {doesNotThrow} = assert;
+const method = 'options';
+
+export default (A1) => {
 	describe(`constructor(${method}) // Positive tests only`, () =>
 	{
 		describe('Constructor was created without errors:', () =>

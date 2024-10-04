@@ -1,13 +1,10 @@
-const 	chai 	= require('chai'),
-		isOk 	= chai.assert.isOk,
-		isNotOk = chai.assert.isNotOk,
-		method 	= 'isValid',
-		{
-			a1Valid,
-			a1Invalid,
-		} = require('../_values.js');
+import {assert} from 'chai';
+import {a1Valid, a1Invalid} from '../_values.js';
 
-module.exports = (A1) =>
+const {isOk, isNotOk} = assert;
+const method 	= 'isValid';
+
+export default (A1) =>
 {
 	describe(`.${method}()`, () =>
 	{

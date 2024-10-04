@@ -1,14 +1,16 @@
-const 	chai 		= require('chai'),
-		equal 		= chai.assert.strictEqual,
+import {assert} from 'chai';
+import {dynamic} from '../_values.js';
+
+const {strictEqual} = assert;
+const equal 		= strictEqual,
 		method 		= 'shiftX',
-		{dynamic} 	= require('../_values.js'),
 		{
 			input,
 			colStart,
 		} 	= dynamic,
 		shift = 1;
 
-module.exports = (A1) =>
+export default (A1) =>
 {
 	describe(`new A1('${input}').${method}(${shift}) // Positive tests only`, () =>
 	{

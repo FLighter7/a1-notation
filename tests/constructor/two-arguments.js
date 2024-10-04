@@ -1,20 +1,16 @@
+import {assert} from 'chai';
+import {a1Valid, a1Invalid} from '../_values.js';
+
 /**
  *	rangeStart, rangeEnd
  *	col, row
  */
-const 	chai 			= require('chai'),
-		doesNotThrow 	= chai.assert.doesNotThrow,
-		throws 			= chai.assert.throws,
-		method 			= 'rangeStart, rangeEnd',
-		{
-			a1Valid,
-			a1Invalid,
-		} = require('../_values.js'),
+const {doesNotThrow, throws} = assert;
+const method 			= 'rangeStart, rangeEnd',
 		hasColon = v => v.includes(':'),
 		isNumber = v => typeof v === 'number' && v > 0 && Number.isInteger(v);
 
-module.exports = (A1) =>
-{
+export default (A1) => {
 	describe(`constructor(${method})\n  constructor(col, row)`, () =>
 	{
 		a1Valid.forEach(({value, expectedError}) =>

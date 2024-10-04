@@ -1,7 +1,7 @@
 /**
  *	Always invalid
  */
-const alwaysInvalid =
+export const alwaysInvalid =
 [
   {
     text: 			'undefined',
@@ -91,4 +91,4 @@ const alwaysInvalid =
   },
 ];
 
-module.exports = alwaysInvalid;
+export default alwaysInvalid;

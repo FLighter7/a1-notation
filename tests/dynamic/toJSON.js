@@ -1,7 +1,9 @@
-const 	chai 		= require('chai'),
-		equal 		= chai.assert.deepEqual,
+import {assert} from 'chai';
+import {dynamic} from '../_values.js';
+
+const {deepEqual} = assert;
+const equal 		= deepEqual,
 		method 		= 'toJSON',
-		{dynamic} 	= require('../_values.js'),
 		{input} 	= dynamic,
 		output 		=
 		{
@@ -14,7 +16,7 @@ const 	chai 		= require('chai'),
 			colsCount: 	dynamic.width,
 		};
 
-module.exports = (A1) =>
+export default (A1) =>
 {
 	describe(`new A1('${input}').${method}() // Positive tests only`, () =>
 	{

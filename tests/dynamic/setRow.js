@@ -1,7 +1,8 @@
-const chai      = require('chai'),
-      equal     = chai.assert.strictEqual,
-      {dynamic} = require('../_values.js');
+import {assert} from 'chai';
+import {dynamic} from '../_values.js';
 
+const {strictEqual} = assert;
+const equal = strictEqual;
 const {
   input,
 } = dynamic;
@@ -11,7 +12,7 @@ const testMmethod = 'setRow',
 const valNumber = 2,
       valStrNumber = '2';
 
-module.exports = (A1) =>
+export default (A1) =>
 {
   // Input number
   describe(`new A1('${input}').${testMmethod}(${valNumber}) // Positive tests only`, () =>

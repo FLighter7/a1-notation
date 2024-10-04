@@ -1,13 +1,11 @@
-const 	chai 	= require('chai'),
-		equal 	= chai.assert.strictEqual,
-		throws 	= chai.assert.throws,
-		method 	= 'toRow',
-		{
-			intPositiveValid,
-			intPositiveInvalid,
-		} = require('../_values.js');
+import {assert} from 'chai';
+import {intPositiveValid, intPositiveInvalid} from '../_values.js';
 
-module.exports = (A1) =>
+const {strictEqual, throws} = assert;
+const equal 	= strictEqual,
+		method 	= 'toRow';
+
+export default (A1) =>
 {
 	describe(`.${method}()`, () =>
 	{

@@ -1,13 +1,11 @@
-const 	chai 	= require('chai'),
-		equal 	= chai.assert.strictEqual,
-		throws 	= chai.assert.throws,
-		method 	= 'getHeight',
-		{
-			a1Valid,
-			a1Invalid,
-		} = require('../_values.js');
+import {assert} from 'chai';
+import {a1Valid, a1Invalid} from '../_values.js';
 
-module.exports = (A1) =>
+const {strictEqual, throws} = assert;
+const equal 	= strictEqual,
+		method 	= 'getHeight';
+
+export default (A1) =>
 {
 	describe(`.${method}()`, () =>
 	{

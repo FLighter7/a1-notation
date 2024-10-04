@@ -1,13 +1,15 @@
-const 	chai 		= require('chai'),
-		equal 		= chai.assert.strictEqual,
+import {assert} from 'chai';
+import {dynamic} from '../_values.js';
+
+const {strictEqual} = assert;
+const equal 		= strictEqual,
 		method 		= 'getLastCol',
-		{dynamic} 	= require('../_values.js'),
 		{
 			input,
 			colEnd,
 		} 	= dynamic;
 
-module.exports = (A1) =>
+export default (A1) =>
 {
 	describe(`new A1('${input}').${method}() // Positive tests only`, () =>
 	{

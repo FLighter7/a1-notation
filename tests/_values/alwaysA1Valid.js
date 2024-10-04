@@ -1,7 +1,7 @@
 /**
  *	A1 valid strings
  */
-const alwaysA1Valid =
+export const alwaysA1Valid =
 [
   {
     text: 		'A1',
@@ -178,4 +178,4 @@ const alwaysA1Valid =
   },
 ];
 
-module.exports = alwaysA1Valid;
+export default alwaysA1Valid;

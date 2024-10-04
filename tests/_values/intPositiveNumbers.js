@@ -2,7 +2,7 @@
  *	Integer positive numbers
  *	> 0
  */
-const intPositiveNumbers =
+export const intPositiveNumbers =
 [
   {
     text: '1',
@@ -41,4 +41,4 @@ const intPositiveNumbers =
   },
 ];
 
-module.exports = intPositiveNumbers;
+export default intPositiveNumbers;

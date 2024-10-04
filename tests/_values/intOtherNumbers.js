@@ -2,7 +2,7 @@
  *	Integer numbers
  *	<= 0
  */
-const intOtherNumbers =
+export const intOtherNumbers =
 [
   {
     text: '0',
@@ -26,4 +26,4 @@ const intOtherNumbers =
   },
 ];
 
-module.exports = intOtherNumbers;
+export default intOtherNumbers;

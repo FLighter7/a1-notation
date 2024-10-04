@@ -1,10 +1,11 @@
-const 	chai 		= require('chai'),
-		instanceOf 	= chai.assert.instanceOf,
-		method 		= 'copy',
-		{dynamic} 	= require('../_values.js'),
+import {assert} from 'chai';
+import {dynamic} from '../_values.js';
+
+const {instanceOf} = assert;
+const method 		= 'copy',
 		{input} 	= dynamic;
 
-module.exports = (A1) =>
+export default (A1) =>
 {
 	describe(`new A1('${input}').${method}() // Positive tests only`, () =>
 	{

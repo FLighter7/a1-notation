@@ -1,16 +1,15 @@
-const {readdirSync, statSync} = require('fs');
+import {readdirSync, statSync} from 'node:fs';
 
 // Module
-const A1 = require('../dist/index.umd.js');
+import A1 from '../dist/index.js';
 
 // Dynamic require all tests
 const isNotPrivate = item => !item.startsWith('_'),
       isDirectory  = path => statSync(path).isDirectory(),
       isFile       = path => statSync(path).isFile(),
-      root         = __dirname;
+      root         = import.meta.dirname;
 
-for(const scope of readdirSync(root))
-{
+for(const scope of readdirSync(root)) {
   const pathToScope = `${root}/${scope}`;
   const isScope = isNotPrivate(scope) && isDirectory(pathToScope);
 
@@ -24,6 +23,8 @@ for(const scope of readdirSync(root))
     if(!isMethod)
       continue;
 
-    require(`./${scope}/${method}`)(A1);// run test
+    // Run test
+    const test = await import(`./${scope}/${method}`);
+    test.default(A1);
   }
 }

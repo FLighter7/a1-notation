@@ -1,14 +1,10 @@
-const 	chai 			= require('chai'),
-		doesNotThrow 	= chai.assert.doesNotThrow,
-		throws 			= chai.assert.throws,
-		method 			= 'range',
-		{
-			a1Valid,
-			a1Invalid,
-		} = require('../_values.js');
+import {assert} from 'chai';
+import {a1Valid, a1Invalid} from '../_values.js';
 
-module.exports = (A1) =>
-{
+const {doesNotThrow, throws} = assert;
+const method = 'range';
+
+export default (A1) => {
 	describe(`constructor(${method})`, () =>
 	{
 		describe('Constructor was created without errors:', () =>

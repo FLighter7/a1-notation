@@ -1,4 +1,4 @@
-const validObjects =
+export const validObjects =
 [
   {
     a1Start: 'A1',
@@ -65,4 +65,4 @@ const validObjects =
   },
 ];
 
-module.exports = validObjects;
+export default validObjects;
