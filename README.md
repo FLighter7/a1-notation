@@ -1,7 +1,7 @@
 # A1 notation
 
 ### About
-This library is for working with A1 notations such as "A1" or "A1:B2". The library is exported as a UMD module.
+This library is for working with A1 notations such as "A1" or "A1:B2". The library is exported as a ES module.
 
 ### Install
 ```
@@ -14,21 +14,18 @@ yarn add @flighter/a1-notation
 
 ### Download
 [4]: dist/index.next.min.js
-[5]: dist/index.umd.js
+[5]: dist/index.js
 
-[ESNext.min(5 KB)][4], [UMD(22 KB)][5]
+[ESNext.min(5 KB)][4], [ESM(20 KB)][5]
 
 ### What is the difference?
 
-[11]: https://www.google.com/search?q=js+umd+is
 [12]: src/converters.ts#L13
 [13]: src/converters.ts#L30
 
 * **converter 1** or **converter 2**? The difference is in the algorithm of convertation. You can compare [the first method][12] with [the second method][13].
-* **"ES5" or "ESNext"?** ES5 has already converted to ES5 standard with all needed polyfills. ESNext uses the original syntax of the code.
-* **"UMD"?** UMD - Unified Module Definition, more in [Google][11].
 * **".min"?** Minified version.
-* **Default version** in npm is UMD ESNext. This version is not transpiled and minified, so you need to transpile and minify it.
+* **Default version** in npm is ESM. This version is not transpiled and minified, so you need to transpile and minify it.
 
 ## Initialization
 ```js
