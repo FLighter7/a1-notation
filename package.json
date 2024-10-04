@@ -4,7 +4,7 @@
   "projectName": "A1",
   "description": "Work with A1 notation like \"A1\" or \"A1:B2\"",
   "name": "@flighter/a1-notation",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "author": "FLighter",
