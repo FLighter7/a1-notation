@@ -53,7 +53,7 @@ class A1
         rs,// row start // 1
         ce,// col end 	// B
         re,// row end 	// 2
-      ] = a1.toUpperCase().match(this._reg);
+      ] = a1.toUpperCase().match(this._reg) ?? [];
     ce = ce || cs;
     re = re || rs;
     const colStart = this._A1Col(cs, converter),
@@ -229,10 +229,10 @@ class A1
     // Set converter
     this._converter = converter === 2 ? 2 : 1;
 
-    let cs: number,
-        ce: number,
-        rs: number,
-        re: number;
+    let cs: number = 0;
+    let ce: number = 0;
+    let rs: number = 0;
+    let re: number = 0;
 
     const getValue = (some: unknown, canBeLetter: boolean = true): number =>
     {
@@ -264,10 +264,13 @@ class A1
     }
 
     // From colStart & rowStart
-    if(!cs && colStart)
+    if(!cs && colStart) {
       cs = getValue(colStart);
-    if(!rs && rowStart)
+    }
+
+    if(!rs && rowStart) {
       rs = getValue(rowStart, false);
+    }
 
     /**
      * Define end range

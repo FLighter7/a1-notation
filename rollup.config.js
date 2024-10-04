@@ -1,70 +1,54 @@
-import resolve    from '@rollup/plugin-node-resolve';
-import commonjs   from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
-import {terser}   from 'rollup-plugin-terser';
-import config     from './package.json';
+import terser from '@rollup/plugin-terser';
+import config from './package.json' assert {type: 'json'};
 
-const projectName = config.projectName,
-      context     = config.projectContext;// top-level context
+const projectName = config.projectName;
+const input = './src/index.ts';
+const outFile = './dist/index';
+const name = projectName;// module name
+const isProd = process.env.IS_DEV === 'false';
 
-const input     = './src/index.ts',
-      outFile   = './dist/index',
-      name      = projectName,// module name
-      format    = 'iife',
-      sourcemap = false,
-      isProd    = process.env.IS_DEV === 'false';
-
-const typescriptConfig = (declaration = false) =>
-{
+const typescriptConfig = (declaration = false) => {
   return {
-    tsconfigDefaults:
-    {
-      compilerOptions:
-      {
-        target: 'ESNext',
-        sourceMap: sourcemap,
+    tsconfig: 'tsconfig.json',
+    tsconfigOverride: {
+      compilerOptions: {
         declaration,
       },
-      exclude: ['node_modules'],
     }
   }
 };
 
 const plugins = [resolve(), commonjs()];
 
-export default
-[
+export default [
   // ESNext minified
   isProd && {
     input,
-    context,
     output: {
-      format,
-      sourcemap,
       name,
+      format: 'iife',
       file: `${outFile}.next.min.js`,
     },
-    plugins:
-    [
+    plugins: [
       ...plugins,
       typescript(typescriptConfig()),
       terser(),
     ],
   },
-  // As UMD module
-  isProd && {
+  // ES module
+  {
     input,
-    context,
-    output:
-    {
+    output: {
       name,
-      format: 'umd',
-      file: `${outFile}.umd.js`,
+      format: 'es',
+      file: `${outFile}.js`,
     },
-    plugins:
-    [
+    plugins: [
       ...plugins,
       typescript(typescriptConfig(true)),
     ],
   },
-].filter(o => o);
+].filter(Boolean);
