@@ -1,3 +1,10 @@
+# 2.2.0
+- Updated packages
+- Removed UMD version
+- Changed package.json type to module
+- Fixed errors after update
+- Updated README
+
 # 2.1.3
 - Updated packages
 
