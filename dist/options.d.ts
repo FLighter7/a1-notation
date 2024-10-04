@@ -1,7 +1,7 @@
 /**
  * @fileOverview Constructor object options
  */
-declare type options = {
+type options = {
     colStart?: string | number;
     rowStart?: string | number;
     colEnd?: string | number;
