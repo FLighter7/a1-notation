@@ -48,15 +48,15 @@ class A1 {
     a1: string,
     converter: 1 | 2,
   ): { cs: number; rs: number; ce: number; re: number } {
-    let [
+    const [
       ,
       cs, // col start // A
       rs, // row start // 1
-      ce, // col end 	// B
-      re, // row end 	// 2
+      ceMatch, // col end 	// B
+      reMatch, // row end 	// 2
     ] = a1.toUpperCase().match(this._reg) ?? [];
-    ce = ce || cs;
-    re = re || rs;
+    const ce = ceMatch || cs;
+    const re = reMatch || rs;
     const colStart = this._A1Col(cs, converter),
       colEnd = this._A1Col(ce, converter),
       rowStart = rowStringToNumber(rs),
@@ -171,7 +171,7 @@ class A1 {
    */
   static getWidth(a1: string, converter: 1 | 2 = 1): number {
     if (!isValidA1(a1)) throw new A1Error(a1).s();
-    let { ce, cs } = this._parse(a1, converter);
+    const { ce, cs } = this._parse(a1, converter);
     return ce - cs + 1;
   }
 
@@ -182,7 +182,7 @@ class A1 {
    */
   static getHeight(a1: string): number {
     if (!isValidA1(a1)) throw new A1Error(a1).s();
-    let { re, rs } = this._parse(a1, 1);
+    const { re, rs } = this._parse(a1, 1);
     return re - rs + 1;
   }
 
@@ -261,10 +261,10 @@ class A1 {
     /**
      * If only start/end range was defined
      */
-    cs && !ce && (ce = cs);
-    !cs && ce && (cs = ce);
-    rs && !re && (re = rs);
-    !rs && re && (rs = re);
+    if (cs && !ce) ce = cs;
+    if (!cs && ce) cs = ce;
+    if (rs && !re) re = rs;
+    if (!rs && re) rs = re;
 
     /**
      * Check results
@@ -288,10 +288,10 @@ class A1 {
    *	@param {number[]} args
    */
   private _initNumber(...args: number[]): void {
-    let [col, row, nRows, nCols] = args;
-    nRows = nRows || 1;
-    nCols = nCols || 1;
-    let all = [col, row, nRows, nCols];
+    const [col, row, nRowsArg, nColsArg] = args;
+    const nRows = nRowsArg || 1;
+    const nCols = nColsArg || 1;
+    const all = [col, row, nRows, nCols];
     if (!all.every((n) => isPositiveNumber(n))) throw new A1Error(all.join(', ')).n();
     this._colStart = col; // the first col
     this._rowStart = row; // the first row
@@ -327,20 +327,16 @@ class A1 {
   constructor(col: number, row: number);
   constructor(col: number, row: number, nRows: number);
   constructor(col: number, row: number, nRows: number, nCols: number);
-  constructor(
-    something: string | number | options,
-    something2?: string | number,
-    nRows?: number,
-    nCols?: number,
-  ) {
+  constructor(...args: Array<string | number | options>) {
     // No arguments
-    if (!arguments.length) throw new A1Error().u();
+    if (!args.length) throw new A1Error().u();
+    const [something] = args;
     // Object
     if (something && type(something) === 'object') this._initObject(something as options);
     // Number
-    else if (isNumber(something)) this._initNumber.apply(this, arguments);
+    else if (isNumber(something)) this._initNumber(...(args as number[]));
     // String
-    else if (isString(something)) this._initString.apply(this, arguments);
+    else if (isString(something)) this._initString(...(args as string[]));
     // Unknown argument
     else throw new A1Error(something).u();
   }
@@ -627,8 +623,9 @@ class A1 {
     if (!isNumber(count)) throw new A1Error(count).u();
     const fieldStart = `_${axis}Start`,
       fieldEnd = `_${axis}End`;
-    count >= 0 ? (this[fieldEnd] += count) : (this[fieldStart] += count);
-    this[fieldStart] <= 0 && (this[fieldStart] = 1);
+    if (count >= 0) this[fieldEnd] += count;
+    else this[fieldStart] += count;
+    if (this[fieldStart] <= 0) this[fieldStart] = 1;
     return this;
   }
 
@@ -645,10 +642,10 @@ class A1 {
       fieldEnd = `_${axis}End`;
     if (count >= 0) {
       this[fieldEnd] -= count;
-      this[fieldEnd] < this[fieldStart] && (this[fieldEnd] = this[fieldStart]);
+      if (this[fieldEnd] < this[fieldStart]) this[fieldEnd] = this[fieldStart];
     } else {
       this[fieldStart] -= count;
-      this[fieldStart] > this[fieldEnd] && (this[fieldStart] = this[fieldEnd]);
+      if (this[fieldStart] > this[fieldEnd]) this[fieldStart] = this[fieldEnd];
     }
     return this;
   }

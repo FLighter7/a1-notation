@@ -27,12 +27,12 @@ export const colStringToNumber1 = (col: string): number => {
  * @returns {number}
  */
 export const colStringToNumber2 = (col: string): number => {
+  const A = 'A'.charCodeAt(0),
+    radix = 'Z'.charCodeAt(0) - A + 1;
   let i,
     l,
     chr,
-    sum = 0,
-    A = 'A'.charCodeAt(0),
-    radix = 'Z'.charCodeAt(0) - A + 1;
+    sum = 0;
   for (i = 0, l = col.length; i < l; i++) {
     chr = col.charCodeAt(i);
     sum = sum * radix + chr - A + 1;
