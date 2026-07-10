@@ -1,7 +1,7 @@
 import { readdirSync, statSync } from 'node:fs';
 
 // Module
-import A1 from '../dist/index.js';
+import A1 from '../dist/index.mjs';
 
 // Dynamic require all tests
 const isNotPrivate = (item) => !item.startsWith('_'),
