@@ -2,7 +2,7 @@
 
 ### About
 
-This library is for working with A1 notations such as "A1" or "A1:B2". The library is exported as a ES module.
+This library is for working with A1 notations such as "A1" or "A1:B2". It's published for both ESM (`import`) and CommonJS (`require`), so it works on new and old Node alike.
 
 ### Install
 
@@ -18,10 +18,11 @@ yarn add @flighter/a1-notation
 
 ### Download
 
-[4]: dist/index.next.min.js
-[5]: dist/index.js
+[4]: dist/index.global.iife.js
+[5]: dist/index.mjs
+[6]: dist/index.cjs
 
-[ESNext.min(5 KB)][4], [ESM(20 KB)][5]
+[Browser IIFE, minified (5 KB)][4], [ESM][5], [CommonJS][6]
 
 ### What is the difference?
 
@@ -29,13 +30,19 @@ yarn add @flighter/a1-notation
 [13]: src/converters.ts#L30
 
 - **converter 1** or **converter 2**? The difference is in the algorithm of convertation. You can compare [the first method][12] with [the second method][13].
-- **".min"?** Minified version.
-- **Default version** in npm is ESM. This version is not transpiled and minified, so you need to transpile and minify it.
+- **Browser IIFE?** Minified bundle for a direct `<script>` tag (exposes a global `A1`).
+- **ESM/CommonJS?** Both are the same code, published untranspiled/unminified so your own bundler can process them; `import`/`require` resolve to the right one automatically via `package.json#exports`.
 
 ## Initialization
 
 ```js
+// ESM
 import A1 from '@flighter/a1-notation';
+```
+
+```js
+// CommonJS
+const A1 = require('@flighter/a1-notation');
 ```
 
 ## API

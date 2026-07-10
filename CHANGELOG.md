@@ -1,3 +1,11 @@
+# 3.0.0
+
+- Updated all dependencies
+- Added Prettier and reformatted the whole codebase to a single consistent style
+- Added ESLint (flat config) and fixed all findings
+- **Breaking:** rebuilt the package with tsdown to publish both ESM (`dist/index.mjs`) and CommonJS (`dist/index.cjs`) with matching `.d.mts`/`.d.cts` types, wired up via `package.json#exports`. The browser bundle moved from `dist/index.next.min.js` to `dist/index.global.iife.js`
+- Added `engines.node >= 14`
+
 # 2.2.1
 
 - Updated README
