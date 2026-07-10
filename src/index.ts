@@ -103,7 +103,9 @@ class A1 {
    *	@return {number}
    */
   static getCol(a1: string, converter: 1 | 2 = 1): number {
-    if (!isValidA1(a1)) throw new A1Error(a1).s();
+    if (!isValidA1(a1)) {
+      throw new A1Error(a1).s();
+    }
     return this._parse(a1, converter).cs;
   }
 
@@ -115,7 +117,9 @@ class A1 {
    *	@return {number}
    */
   static getLastCol(a1: string, converter: 1 | 2 = 1): number {
-    if (!isValidA1(a1)) throw new A1Error(a1).s();
+    if (!isValidA1(a1)) {
+      throw new A1Error(a1).s();
+    }
     return this._parse(a1, converter).ce;
   }
 
@@ -126,7 +130,9 @@ class A1 {
    *	@return {string}
    */
   static toCol(col: number): string {
-    if (!isPositiveNumber(col)) throw new A1Error(col).n();
+    if (!isPositiveNumber(col)) {
+      throw new A1Error(col).n();
+    }
     return colNumberToString(col);
   }
 
@@ -137,7 +143,9 @@ class A1 {
    *	@return {number}
    */
   static getRow(a1: string): number {
-    if (!isValidA1(a1)) throw new A1Error(a1).s();
+    if (!isValidA1(a1)) {
+      throw new A1Error(a1).s();
+    }
     return this._parse(a1, 1).rs;
   }
 
@@ -148,7 +156,9 @@ class A1 {
    *	@return {number}
    */
   static getLastRow(a1: string): number {
-    if (!isValidA1(a1)) throw new A1Error(a1).s();
+    if (!isValidA1(a1)) {
+      throw new A1Error(a1).s();
+    }
     return this._parse(a1, 1).re;
   }
 
@@ -159,7 +169,9 @@ class A1 {
    *	@return {string}
    */
   static toRow(row: number): string {
-    if (!isPositiveNumber(row)) throw new A1Error(row).n();
+    if (!isPositiveNumber(row)) {
+      throw new A1Error(row).n();
+    }
     return rowNumberToString(row);
   }
 
@@ -170,7 +182,9 @@ class A1 {
    *	@return {number} columns count
    */
   static getWidth(a1: string, converter: 1 | 2 = 1): number {
-    if (!isValidA1(a1)) throw new A1Error(a1).s();
+    if (!isValidA1(a1)) {
+      throw new A1Error(a1).s();
+    }
     const { ce, cs } = this._parse(a1, converter);
     return ce - cs + 1;
   }
@@ -181,7 +195,9 @@ class A1 {
    *	@return {number} rows count
    */
   static getHeight(a1: string): number {
-    if (!isValidA1(a1)) throw new A1Error(a1).s();
+    if (!isValidA1(a1)) {
+      throw new A1Error(a1).s();
+    }
     const { re, rs } = this._parse(a1, 1);
     return re - rs + 1;
   }
@@ -207,8 +223,12 @@ class A1 {
     let re: number = 0;
 
     const getValue = (some: unknown, canBeLetter: boolean = true): number => {
-      if (isPositiveNumber(some) || isStringifiedNumber(some)) return +some;
-      if (canBeLetter && isLetter(some)) return A1._A1Col(some as string, this._converter);
+      if (isPositiveNumber(some) || isStringifiedNumber(some)) {
+        return +some;
+      }
+      if (canBeLetter && isLetter(some)) {
+        return A1._A1Col(some as string, this._converter);
+      }
       return 0;
     };
 
@@ -251,25 +271,43 @@ class A1 {
     }
 
     // From colEnd & rowEnd
-    if (!ce && colEnd) ce = getValue(colEnd);
-    if (!re && rowEnd) re = getValue(rowEnd, false);
+    if (!ce && colEnd) {
+      ce = getValue(colEnd);
+    }
+    if (!re && rowEnd) {
+      re = getValue(rowEnd, false);
+    }
 
     // From nCols & nRows
-    if (!ce && cs && isPositiveNumber(nCols)) ce = cs + nCols - 1;
-    if (!re && rs && isPositiveNumber(nRows)) re = rs + nRows - 1;
+    if (!ce && cs && isPositiveNumber(nCols)) {
+      ce = cs + nCols - 1;
+    }
+    if (!re && rs && isPositiveNumber(nRows)) {
+      re = rs + nRows - 1;
+    }
 
     /**
      * If only start/end range was defined
      */
-    if (cs && !ce) ce = cs;
-    if (!cs && ce) cs = ce;
-    if (rs && !re) re = rs;
-    if (!rs && re) rs = re;
+    if (cs && !ce) {
+      ce = cs;
+    }
+    if (!cs && ce) {
+      cs = ce;
+    }
+    if (rs && !re) {
+      re = rs;
+    }
+    if (!rs && re) {
+      rs = re;
+    }
 
     /**
      * Check results
      */
-    if (!cs || !rs || !ce || !re) throw new A1Error(options).u();
+    if (!cs || !rs || !ce || !re) {
+      throw new A1Error(options).u();
+    }
 
     /**
      * Set ranges
@@ -292,7 +330,9 @@ class A1 {
     const nRows = nRowsArg || 1;
     const nCols = nColsArg || 1;
     const all = [col, row, nRows, nCols];
-    if (!all.every((n) => isPositiveNumber(n))) throw new A1Error(all.join(', ')).n();
+    if (!all.every((n) => isPositiveNumber(n))) {
+      throw new A1Error(all.join(', ')).n();
+    }
     this._colStart = col; // the first col
     this._rowStart = row; // the first row
     this._colEnd = col + nCols - 1; // how many cols in total (cols length)
@@ -310,7 +350,9 @@ class A1 {
     const range = rangeEnd
       ? `${rangeStart}:${rangeEnd}` // rangeStart: string, rangeEnd: string
       : rangeStart; // range: string
-    if (!isValidA1(range)) throw new A1Error(range).s();
+    if (!isValidA1(range)) {
+      throw new A1Error(range).s();
+    }
     const { cs, rs, ce, re } = A1._parse(range, this._converter);
     this._colStart = cs;
     this._rowStart = rs;
@@ -329,16 +371,26 @@ class A1 {
   constructor(col: number, row: number, nRows: number, nCols: number);
   constructor(...args: Array<string | number | options>) {
     // No arguments
-    if (!args.length) throw new A1Error().u();
+    if (!args.length) {
+      throw new A1Error().u();
+    }
     const [something] = args;
     // Object
-    if (something && type(something) === 'object') this._initObject(something as options);
+    if (something && type(something) === 'object') {
+      this._initObject(something as options);
+    }
     // Number
-    else if (isNumber(something)) this._initNumber(...(args as number[]));
+    else if (isNumber(something)) {
+      this._initNumber(...(args as number[]));
+    }
     // String
-    else if (isString(something)) this._initString(...(args as string[]));
+    else if (isString(something)) {
+      this._initString(...(args as string[]));
+    }
     // Unknown argument
-    else throw new A1Error(something).u();
+    else {
+      throw new A1Error(something).u();
+    }
   }
 
   /***********
@@ -602,12 +654,17 @@ class A1 {
     axis: Axis,
     canBeLetter: boolean = true,
   ): this {
-    if (isPositiveNumber(val) || isStringifiedNumber(val)) this[field] = +val;
-    else if (canBeLetter && isLetter(val)) this[field] = A1._A1Col(val as string, this._converter);
-    else throw new A1Error(val).u();
+    if (isPositiveNumber(val) || isStringifiedNumber(val)) {
+      this[field] = +val;
+    } else if (canBeLetter && isLetter(val)) {
+      this[field] = A1._A1Col(val as string, this._converter);
+    } else {
+      throw new A1Error(val).u();
+    }
 
-    if (this[`_${axis}Start`] > this[`_${axis}End`])
+    if (this[`_${axis}Start`] > this[`_${axis}End`]) {
       throw new A1Error(`The first column or row can't be bigger than the last, got: ${val}`);
+    }
 
     return this;
   }
@@ -620,12 +677,19 @@ class A1 {
    * @returns {this}
    */
   private _addFields(count: number, axis: Axis): this {
-    if (!isNumber(count)) throw new A1Error(count).u();
+    if (!isNumber(count)) {
+      throw new A1Error(count).u();
+    }
     const fieldStart = `_${axis}Start`,
       fieldEnd = `_${axis}End`;
-    if (count >= 0) this[fieldEnd] += count;
-    else this[fieldStart] += count;
-    if (this[fieldStart] <= 0) this[fieldStart] = 1;
+    if (count >= 0) {
+      this[fieldEnd] += count;
+    } else {
+      this[fieldStart] += count;
+    }
+    if (this[fieldStart] <= 0) {
+      this[fieldStart] = 1;
+    }
     return this;
   }
 
@@ -637,15 +701,21 @@ class A1 {
    * @returns {this}
    */
   private _removeFields(count: number, axis: Axis): this {
-    if (!isNumber(count)) throw new A1Error(count).u();
+    if (!isNumber(count)) {
+      throw new A1Error(count).u();
+    }
     const fieldStart = `_${axis}Start`,
       fieldEnd = `_${axis}End`;
     if (count >= 0) {
       this[fieldEnd] -= count;
-      if (this[fieldEnd] < this[fieldStart]) this[fieldEnd] = this[fieldStart];
+      if (this[fieldEnd] < this[fieldStart]) {
+        this[fieldEnd] = this[fieldStart];
+      }
     } else {
       this[fieldStart] -= count;
-      if (this[fieldStart] > this[fieldEnd]) this[fieldStart] = this[fieldEnd];
+      if (this[fieldStart] > this[fieldEnd]) {
+        this[fieldStart] = this[fieldEnd];
+      }
     }
     return this;
   }
@@ -658,7 +728,9 @@ class A1 {
    * @returns {this}
    */
   private _shiftFields(offset: number, axis: Axis): this {
-    if (!isNumber(offset)) throw new A1Error(offset).u();
+    if (!isNumber(offset)) {
+      throw new A1Error(offset).u();
+    }
     const fieldStart = `_${axis}Start`,
       fieldEnd = `_${axis}End`;
     const diff = this[fieldEnd] - this[fieldStart],

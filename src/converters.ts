@@ -13,8 +13,9 @@
 export const colStringToNumber1 = (col: string): number => {
   const length = col.length;
   let column = 0;
-  for (let i = 0; i < length; i++)
+  for (let i = 0; i < length; i++) {
     column += (col.charCodeAt(i) - 64) * Math.pow(26, length - i - 1);
+  }
   return column;
 };
 

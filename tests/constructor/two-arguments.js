@@ -13,20 +13,22 @@ const method = 'rangeStart, rangeEnd',
 export default (A1) => {
   describe(`constructor(${method})\n  constructor(col, row)`, () => {
     a1Valid.forEach(({ value, expectedError }) => {
-      if (hasColon(value))
+      if (hasColon(value)) {
         it(`An error should be shown: ${value}`, () =>
           throws(() => new A1(value, value), Error, expectedError));
-      else
+      } else {
         it(`Constructor was created without errors: ${value}`, () =>
           doesNotThrow(() => new A1(value, value)));
+      }
     });
     a1Invalid.forEach(({ text, value, expectedError }) => {
-      if (isNumber(value))
+      if (isNumber(value)) {
         it(`Constructor was created without errors: ${value}`, () =>
           doesNotThrow(() => new A1(value, value)));
-      else
+      } else {
         it(`An error should be shown: ${text}`, () =>
           throws(() => new A1(value, value), Error, expectedError));
+      }
     });
   });
 };

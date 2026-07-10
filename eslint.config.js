@@ -22,4 +22,12 @@ export default tseslint.config(
     },
   },
   eslintConfigPrettier,
+  {
+    // eslint-config-prettier turns "curly" off (it's not a formatting rule,
+    // but it can interact with how Prettier prints the block); re-enable it
+    // explicitly so every if/else/for/while body is always braced.
+    rules: {
+      curly: ['error', 'all'],
+    },
+  },
 );
