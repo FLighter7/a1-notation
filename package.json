@@ -26,7 +26,10 @@
   },
   "author": "FLighter",
   "license": "MIT",
-  "repository": "github:FLighter7/a1-notation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FLighter7/a1-notation.git"
+  },
   "keywords": [
     "A1",
     "spreadsheet",
