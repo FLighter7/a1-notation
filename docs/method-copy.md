@@ -1,4 +1,5 @@
 ### copy
+
 ```js
 // copy(): A1
 
@@ -7,6 +8,6 @@
  */
 
 // Example
-new A1('A1').copy();   // instance of A1
-new A1('A1:B2').copy();// instance of A1
+new A1('A1').copy(); // instance of A1
+new A1('A1:B2').copy(); // instance of A1
 ```

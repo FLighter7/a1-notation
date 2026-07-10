@@ -2,8 +2,7 @@
  *	Integer numbers
  *	<= 0
  */
-export const intOtherNumbers =
-[
+export const intOtherNumbers = [
   {
     text: '0',
     value: 0,

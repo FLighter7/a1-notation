@@ -1,18 +1,23 @@
 # A1 notation
 
 ### About
+
 This library is for working with A1 notations such as "A1" or "A1:B2". The library is exported as a ES module.
 
 ### Install
+
 ```
 npm i @flighter/a1-notation -d
 ```
+
 Or
+
 ```
 yarn add @flighter/a1-notation
 ```
 
 ### Download
+
 [4]: dist/index.next.min.js
 [5]: dist/index.js
 
@@ -23,11 +28,12 @@ yarn add @flighter/a1-notation
 [12]: src/converters.ts#L13
 [13]: src/converters.ts#L30
 
-* **converter 1** or **converter 2**? The difference is in the algorithm of convertation. You can compare [the first method][12] with [the second method][13].
-* **".min"?** Minified version.
-* **Default version** in npm is ESM. This version is not transpiled and minified, so you need to transpile and minify it.
+- **converter 1** or **converter 2**? The difference is in the algorithm of convertation. You can compare [the first method][12] with [the second method][13].
+- **".min"?** Minified version.
+- **Default version** in npm is ESM. This version is not transpiled and minified, so you need to transpile and minify it.
 
 ## Initialization
+
 ```js
 import A1 from '@flighter/a1-notation';
 ```
@@ -71,7 +77,9 @@ import A1 from '@flighter/a1-notation';
 - [shift(offsetX: number, offsetY: number): this](docs/method-shift.md#shift)
 
 ## License
+
 [MIT](LICENSE)
 
 ## Changelog
+
 [The latest updates](CHANGELOG.md)

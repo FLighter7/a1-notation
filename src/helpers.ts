@@ -24,7 +24,8 @@ export const isString = (some: unknown): some is string => type(some) === 'strin
  *
  * @returns {boolean}
  */
-export const isNumber = (some: unknown): some is number => type(some) === 'number' && Number.isInteger(some);
+export const isNumber = (some: unknown): some is number =>
+  type(some) === 'number' && Number.isInteger(some);
 
 /**
  * Checks if a value is a positive number
@@ -40,7 +41,8 @@ export const isPositiveNumber = (some: unknown): some is number => isNumber(some
  *
  * @returns {boolean}
  */
-export const isStringifiedNumber = (some: unknown): some is string => isString(some) && /^[0-9]+$/.test(some as string) && isPositiveNumber(+some);
+export const isStringifiedNumber = (some: unknown): some is string =>
+  isString(some) && /^[0-9]+$/.test(some as string) && isPositiveNumber(+some);
 
 /**
  * Checks if a value is a letter between a-zA-Z
@@ -48,7 +50,8 @@ export const isStringifiedNumber = (some: unknown): some is string => isString(s
  *
  * @returns {boolean}
  */
-export const isLetter = (some: unknown): some is string => isString(some) && /^[a-z]+$/i.test(some as string);
+export const isLetter = (some: unknown): some is string =>
+  isString(some) && /^[a-z]+$/i.test(some as string);
 
 /**
  * Checks validation of A1 notation
@@ -56,4 +59,5 @@ export const isLetter = (some: unknown): some is string => isString(some) && /^[
  *
  * @returns {boolean}
  */
-export const isValidA1 = (some: unknown): some is string => isString(some) && /^[A-Z]+\d+(:[A-Z]+\d+)?$/i.test(some as string);
+export const isValidA1 = (some: unknown): some is string =>
+  isString(some) && /^[A-Z]+\d+(:[A-Z]+\d+)?$/i.test(some as string);

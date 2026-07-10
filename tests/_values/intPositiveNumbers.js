@@ -2,8 +2,7 @@
  *	Integer positive numbers
  *	> 0
  */
-export const intPositiveNumbers =
-[
+export const intPositiveNumbers = [
   {
     text: '1',
     value: 1,

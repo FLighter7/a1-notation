@@ -10,14 +10,13 @@
  *
  * @returns {number}
  */
-export const colStringToNumber1 = (col: string): number =>
-{
+export const colStringToNumber1 = (col: string): number => {
   const length = col.length;
   let column = 0;
-  for(let i = 0; i < length; i++)
+  for (let i = 0; i < length; i++)
     column += (col.charCodeAt(i) - 64) * Math.pow(26, length - i - 1);
   return column;
-}
+};
 
 /**
  * Converts column letter to number
@@ -27,21 +26,19 @@ export const colStringToNumber1 = (col: string): number =>
  *
  * @returns {number}
  */
-export const colStringToNumber2 = (col: string): number =>
-{
+export const colStringToNumber2 = (col: string): number => {
   let i,
-      l,
-      chr,
-      sum   = 0,
-      A     = 'A'.charCodeAt(0),
-      radix = 'Z'.charCodeAt(0) - A + 1;
-  for(i = 0, l = col.length; i < l; i++)
-  {
+    l,
+    chr,
+    sum = 0,
+    A = 'A'.charCodeAt(0),
+    radix = 'Z'.charCodeAt(0) - A + 1;
+  for (i = 0, l = col.length; i < l; i++) {
     chr = col.charCodeAt(i);
     sum = sum * radix + chr - A + 1;
   }
   return sum;
-}
+};
 
 /**
  * Converts column number to letter
@@ -51,18 +48,16 @@ export const colStringToNumber2 = (col: string): number =>
  *
  * @returns {string}
  */
-export const colNumberToString = (col: number): string =>
-{
+export const colNumberToString = (col: number): string => {
   let letter = '',
-      temp;
-  while(col > 0)
-  {
-    temp   = (col - 1) % 26;
+    temp;
+  while (col > 0) {
+    temp = (col - 1) % 26;
     letter = String.fromCharCode(temp + 65) + letter;
-    col    = (col - temp - 1) / 26;
+    col = (col - temp - 1) / 26;
   }
   return letter;
-}
+};
 
 /**
  * Converts row string to number

@@ -1,4 +1,5 @@
 ### get
+
 ```js
 // get(): string
 
@@ -7,11 +8,12 @@
  */
 
 // Example
-new A1('A1').get();   // 'A1'
-new A1('A1:B2').get();// 'A1:B2'
+new A1('A1').get(); // 'A1'
+new A1('A1:B2').get(); // 'A1:B2'
 ```
 
 ### toString
+
 ```js
 // toString(): string
 
@@ -20,11 +22,12 @@ new A1('A1:B2').get();// 'A1:B2'
  */
 
 // Example
-new A1('A1').toString();   // 'A1'
-new A1('A1:B2').toString();// 'A1:B2'
+new A1('A1').toString(); // 'A1'
+new A1('A1:B2').toString(); // 'A1:B2'
 ```
 
 ### toJSON
+
 ```js
 // toJSON(): result
 /**
@@ -72,6 +75,7 @@ new A1('A1:B2').toJSON();
 ```
 
 ### getCol
+
 ```js
 // getCol(): number
 
@@ -80,11 +84,12 @@ new A1('A1:B2').toJSON();
  */
 
 // Example
-new A1('A1').getCol();   // 1
-new A1('A1:B2').getCol();// 1
+new A1('A1').getCol(); // 1
+new A1('A1:B2').getCol(); // 1
 ```
 
 ### getLastCol
+
 ```js
 // getLastCol(): number
 
@@ -93,11 +98,12 @@ new A1('A1:B2').getCol();// 1
  */
 
 // Example
-new A1('A1').getLastCol();   // 1
-new A1('A1:B2').getLastCol();// 2
+new A1('A1').getLastCol(); // 1
+new A1('A1:B2').getLastCol(); // 2
 ```
 
 ### getRow
+
 ```js
 // getRow(): number
 
@@ -106,11 +112,12 @@ new A1('A1:B2').getLastCol();// 2
  */
 
 // Example
-new A1('A1').getRow();   // 1
-new A1('A1:B2').getRow();// 1
+new A1('A1').getRow(); // 1
+new A1('A1:B2').getRow(); // 1
 ```
 
 ### getLastRow
+
 ```js
 // getLastRow(): number
 
@@ -119,11 +126,12 @@ new A1('A1:B2').getRow();// 1
  */
 
 // Example
-new A1('A1').getLastRow();   // 1
-new A1('A1:B2').getLastRow();// 2
+new A1('A1').getLastRow(); // 1
+new A1('A1:B2').getLastRow(); // 2
 ```
 
 ### getWidth
+
 ```js
 // getWidth(): number
 
@@ -132,11 +140,12 @@ new A1('A1:B2').getLastRow();// 2
  */
 
 // Example
-new A1('A1').getWidth();   // 1
-new A1('A1:B2').getWidth();// 2
+new A1('A1').getWidth(); // 1
+new A1('A1:B2').getWidth(); // 2
 ```
 
 ### getHeight
+
 ```js
 // getHeight(): number
 
@@ -145,6 +154,6 @@ new A1('A1:B2').getWidth();// 2
  */
 
 // Example
-new A1('A1').getHeight();   // 1
-new A1('A1:B2').getHeight();// 2
+new A1('A1').getHeight(); // 1
+new A1('A1:B2').getHeight(); // 2
 ```

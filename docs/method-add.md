@@ -1,4 +1,5 @@
 ### addX
+
 ```js
 // addX(count: number): this
 
@@ -18,12 +19,13 @@
  */
 
 // Example
-new A1('A1').addX(1);    // A1:B1
-new A1('A1:B2').addX(-1);// A1:B2
-new A1('C1:E1').addX(-1);// B1:E1
+new A1('A1').addX(1); // A1:B1
+new A1('A1:B2').addX(-1); // A1:B2
+new A1('C1:E1').addX(-1); // B1:E1
 ```
 
 ### addY
+
 ```js
 // addY(count: number): this
 
@@ -49,12 +51,13 @@ new A1('C1:E1').addX(-1);// B1:E1
  */
 
 // Example
-new A1('A1').addY(1);    // A1:A2
-new A1('A1:B2').addY(-1);// A1:B2
-new A1('A3:B4').addY(-1);// A2:B4
+new A1('A1').addY(1); // A1:A2
+new A1('A1:B2').addY(-1); // A1:B2
+new A1('A3:B4').addY(-1); // A2:B4
 ```
 
 ### add
+
 ```js
 // add(countX: number, countY: number): this
 
@@ -63,10 +66,10 @@ new A1('A3:B4').addY(-1);// A2:B4
  */
 
 // Example
-new A1('A1').add(1, 1);     // A1:B2
-new A1('A1:B2').add(-1, -1);// A1:B2
-new A1('A3:B4').add(-1, -1);// A2:B4
-new A1('C3:E5').add(-1, -1);// B2:E5
+new A1('A1').add(1, 1); // A1:B2
+new A1('A1:B2').add(-1, -1); // A1:B2
+new A1('A3:B4').add(-1, -1); // A2:B4
+new A1('C3:E5').add(-1, -1); // B2:E5
 new A1('C3:E5').add(-1, 1); // B3:E6
 new A1('C3:E5').add(1, -1); // C2:F5
 ```

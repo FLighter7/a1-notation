@@ -1,4 +1,5 @@
-### <a name="tocol"></a> *static* toCol
+### <a name="tocol"></a> _static_ toCol
+
 ```js
 // static toCol(col: number): string
 
@@ -7,11 +8,12 @@
  */
 
 // Example
-A1.toCol(1);   // 'A'
-A1.toCol('A1');// Error
+A1.toCol(1); // 'A'
+A1.toCol('A1'); // Error
 ```
 
-### <a name="torow"></a> *static* toRow
+### <a name="torow"></a> _static_ toRow
+
 ```js
 // static toRow(row: number): string
 
@@ -20,6 +22,6 @@ A1.toCol('A1');// Error
  */
 
 // Example
-A1.toRow(1);   // '1'
-A1.toRow('A1');// Error
+A1.toRow(1); // '1'
+A1.toRow('A1'); // Error
 ```

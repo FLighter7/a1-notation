@@ -1,4 +1,5 @@
-### <a name="getcol"></a> *static* getCol
+### <a name="getcol"></a> _static_ getCol
+
 ```js
 // static getCol(a1: string, converter: 1 | 2 = 1): number
 
@@ -7,12 +8,13 @@
  */
 
 // Example
-A1.getCol('A1');   // 1
-A1.getCol('A1:B2');// 1
-A1.getCol('aaaaa');// Error
+A1.getCol('A1'); // 1
+A1.getCol('A1:B2'); // 1
+A1.getCol('aaaaa'); // Error
 ```
 
-### <a name="getlastcol"></a> *static* getLastCol
+### <a name="getlastcol"></a> _static_ getLastCol
+
 ```js
 // static getLastCol(a1: string, converter: 1 | 2 = 1): number
 
@@ -21,12 +23,13 @@ A1.getCol('aaaaa');// Error
  */
 
 // Example
-A1.getLastCol('A1');   // 1
-A1.getLastCol('A1:B2');// 2
-A1.getLastCol('aaaaa');// Error
+A1.getLastCol('A1'); // 1
+A1.getLastCol('A1:B2'); // 2
+A1.getLastCol('aaaaa'); // Error
 ```
 
-### <a name="getrow"></a> *static* getRow
+### <a name="getrow"></a> _static_ getRow
+
 ```js
 // static getRow(a1: string): number
 
@@ -35,12 +38,13 @@ A1.getLastCol('aaaaa');// Error
  */
 
 // Example
-A1.getRow('A1');   // 1
-A1.getRow('A1:B2');// 1
-A1.getRow('aaaaa');// Error
+A1.getRow('A1'); // 1
+A1.getRow('A1:B2'); // 1
+A1.getRow('aaaaa'); // Error
 ```
 
-### <a name="getlastrow"></a> *static* getLastRow
+### <a name="getlastrow"></a> _static_ getLastRow
+
 ```js
 // static getLastRow(a1: string): number
 
@@ -49,12 +53,13 @@ A1.getRow('aaaaa');// Error
  */
 
 // Example
-A1.getLastRow('A1');   // 1
-A1.getLastRow('A1:B2');// 2
-A1.getLastRow('aaaaa');// Error
+A1.getLastRow('A1'); // 1
+A1.getLastRow('A1:B2'); // 2
+A1.getLastRow('aaaaa'); // Error
 ```
 
-### <a name="getwidth"></a> *static* getWidth
+### <a name="getwidth"></a> _static_ getWidth
+
 ```js
 // static getWidth(a1: string, converter: 1 | 2 = 1): number
 
@@ -63,12 +68,13 @@ A1.getLastRow('aaaaa');// Error
  */
 
 // Example
-A1.getWidth('A1');   // 1
-A1.getWidth('A1:B2');// 2
-A1.getWidth('aaaaa');// Error
+A1.getWidth('A1'); // 1
+A1.getWidth('A1:B2'); // 2
+A1.getWidth('aaaaa'); // Error
 ```
 
-### <a name="getheight"></a> *static* getHeight
+### <a name="getheight"></a> _static_ getHeight
+
 ```js
 // static getHeight(a1: string): number
 
@@ -77,7 +83,7 @@ A1.getWidth('aaaaa');// Error
  */
 
 // Example
-A1.getHeight('A1');   // 1
-A1.getHeight('A1:B2');// 2
-A1.getHeight('aaaaa');// Error
+A1.getHeight('A1'); // 1
+A1.getHeight('A1:B2'); // 2
+A1.getHeight('aaaaa'); // Error
 ```

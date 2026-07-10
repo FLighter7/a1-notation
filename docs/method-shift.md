@@ -1,4 +1,5 @@
 ### shiftX
+
 ```js
 // shiftX(offset: number): this
 
@@ -18,12 +19,13 @@
  */
 
 // Example
-new A1('A1').shiftX(1);    // B1:B1
-new A1('A1:B2').shiftX(-1);// A1:B2
-new A1('B3:C4').shiftX(-1);// A3:B4
+new A1('A1').shiftX(1); // B1:B1
+new A1('A1:B2').shiftX(-1); // A1:B2
+new A1('B3:C4').shiftX(-1); // A3:B4
 ```
 
 ### shiftY
+
 ```js
 // shiftY(offset: number): this
 
@@ -49,12 +51,13 @@ new A1('B3:C4').shiftX(-1);// A3:B4
  */
 
 // Example
-new A1('A1').shiftY(1);    // A2:A2
-new A1('A1:B2').shiftY(-1);// A1:B2
-new A1('B3:C4').shiftY(-1);// B2:C3
+new A1('A1').shiftY(1); // A2:A2
+new A1('A1:B2').shiftY(-1); // A1:B2
+new A1('B3:C4').shiftY(-1); // B2:C3
 ```
 
 ### shift
+
 ```js
 // shift(offsetX: number, offsetY: number): this
 
@@ -63,10 +66,10 @@ new A1('B3:C4').shiftY(-1);// B2:C3
  */
 
 // Example
-new A1('A1').shift(1, 1);     // B2:B2
-new A1('A1:B2').shift(-1, -1);// A1:B2
-new A1('A3:B4').shift(-1, -1);// A2:B3
-new A1('C3:E5').shift(-1, -1);// B2:D4
+new A1('A1').shift(1, 1); // B2:B2
+new A1('A1:B2').shift(-1, -1); // A1:B2
+new A1('A3:B4').shift(-1, -1); // A2:B3
+new A1('C3:E5').shift(-1, -1); // B2:D4
 new A1('C3:E5').shift(-1, 1); // B4:D6
 new A1('C3:E5').shift(1, -1); // D2:F4
 ```

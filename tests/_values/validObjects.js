@@ -1,5 +1,4 @@
-export const validObjects =
-[
+export const validObjects = [
   {
     a1Start: 'A1',
   },

@@ -1,4 +1,5 @@
-### <a name="isvalid"></a> *static* isValid
+### <a name="isvalid"></a> _static_ isValid
+
 ```js
 // static isValid(a1: string): boolean
 
@@ -7,7 +8,7 @@
  */
 
 // Example
-A1.isValid('A1');   // true
-A1.isValid('A1:B2');// true
-A1.isValid('aaaaa');// false
+A1.isValid('A1'); // true
+A1.isValid('A1:B2'); // true
+A1.isValid('aaaaa'); // false
 ```

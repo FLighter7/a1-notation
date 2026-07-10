@@ -16,11 +16,11 @@ export const intAllValid = [...intPositiveNumbers, ...intOtherNumbers];
 export const intAllInvalid = [...alwaysInvalid, ...alwaysA1Valid];
 // For "dynamic" tests
 export const dynamic = {
-  input:    'A3:B4',
+  input: 'A3:B4',
   colStart: 1,
   rowStart: 3,
-  colEnd:   2,
-  rowEnd:   4,
-  width:    2,
-  height:   2,
+  colEnd: 2,
+  rowEnd: 4,
+  width: 2,
+  height: 2,
 };
