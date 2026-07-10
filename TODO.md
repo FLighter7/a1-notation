@@ -1,1 +1,0 @@
-- Change builder to the [type](https://github.com/FLighter7/type) version (esm support, jest test tool, eslint)
